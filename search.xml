@@ -14716,18 +14716,8 @@ int main()
   </entry>
   <entry>
     <title>2020工业互联网安全学生组初赛WP</title>
-    <url>/2020/09/30/2020-gong-ye-hu-lian-wang-an-quan-xue-sheng-zu-chu-sai-wp/</url>
-    <content><![CDATA[<pre><code>title: 2020工业互联网安全学生组初赛WP
-date: 2020-10-25 15:10:00
-img: https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%B7%A5%E4%B8%9A%E4%BA%92%E8%81%94%E7%BD%91wp/4139D9BA-DD16-4F28-B979-1CEF63B9D9A4.png
-summary: 2020工业互联网安全学生组初赛WP，只有Web的WP。Web题AK了可是没有二进制选手，蓝瘦啊QAQ。同时还有打包的题目分享
-categories: CTF
-tags:
-  - WriteUp
-  - CTF
-author: LANVNAL
-top: false
-mathjax: false</code></pre><blockquote>
+    <url>/2020/10/25/2020-gong-ye-hu-lian-wang-an-quan-xue-sheng-zu-chu-sai-wp/</url>
+    <content><![CDATA[<blockquote>
 <p>Web题AK了可是没有二进制选手，蓝瘦啊QAQ</p>
 </blockquote>
 <blockquote>
@@ -15080,5 +15070,12 @@ abc
 <p>然后用之前的文件包含去包含：</p>
 <pre><code>http://eci-2zecngytg1no58dxm6mu.cloudeci1.ichunqiu.com/index.php?page=php://filter/read=convert.base64-decode/resource=sandbox/4e5b09b2149f7619cca155c8bd6d8ee5/aa.php</code></pre><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%B7%A5%E4%B8%9A%E4%BA%92%E8%81%94%E7%BD%91wp/16035911807851.jpg" alt=""></p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>WriteUp</tag>
+        <tag>CTF</tag>
+      </tags>
   </entry>
 </search>
