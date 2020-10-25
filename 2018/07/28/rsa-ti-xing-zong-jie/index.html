@@ -1,0 +1,1559 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="RSA题型总结（2018-8-5更新）, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>RSA题型总结（2018-8-5更新） | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/2.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">RSA题型总结（2018-8-5更新）</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/note/">
+                                <span class="chip bg-color">note</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%8A%A0%E8%A7%A3%E5%AF%86/">
+                                <span class="chip bg-color">加解密</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/note/" class="post-category">
+                                note
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-07-28
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-18
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.8k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>参数：</p>
+<blockquote>
+<ul>
+<li>p 和 q ：大整数N的两个因子（factor）</li>
+<li>N：大整数N，我们称之为模数（modulusz)</li>
+<li>e 和 d：互为模反数的两个指数（exponent）</li>
+<li>c 和 m：分别是密文和明文，这里一般指的是一个十进制的数</li>
+</ul>
+</blockquote>
+<p>加解密公式：</p>
+<blockquote>
+<ol>
+<li>对明文m进行加密：c = pow(m, e, N)，得到的c即为密文</li>
+<li>对密文c进行解密，m = pow(c, d, N)，得到的m即为明文</li>
+</ol>
+</blockquote>
+<blockquote>
+<ul>
+<li>（N，e）：公钥</li>
+<li>（N，d）：私钥</li>
+</ul>
+</blockquote>
+<p>数学关系：</p>
+<blockquote>
+<p>N = p * q     (p,q为两个大素数)</p>
+<p>φ = (p−1) * (q−1)     即N的欧拉函数</p>
+<p> e * d ≡ 1 (mod φ)        e (1&lt;e&lt;φ)，且e和φ互质 / e的模反数为d</p>
+</blockquote>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="分解N："><a href="#分解N：" class="headerlink" title="分解N："></a>分解N：</h3><ul>
+<li><a href="http://factordb.com/" target="_blank" rel="noopener">factordb</a>(在线查询N因子的网站，存储了大量N分解的因子)</li>
+<li><a href="https://github.com/DarkenCode/yafu" target="_blank" rel="noopener">yafu</a></li>
+</ul>
+<h3 id="提取N-e-amp-amp-私钥解密"><a href="#提取N-e-amp-amp-私钥解密" class="headerlink" title="提取N, e &amp;&amp; 私钥解密"></a>提取N, e &amp;&amp; 私钥解密</h3><ul>
+<li>给出公钥提前N,e：</li>
+</ul>
+<pre><code>openssl rsa -pubin -text -modulus -in warmup -in pubkey.pem</code></pre>
+<ul>
+<li>使用私钥解密密文：</li>
+</ul>
+<pre><code>openssl rsautl -decrypt -in flag.enc -inkey private.pem -out flag.dec</code></pre>
+<ul>
+<li>从cer文件中导出pubkey.pem文件</li>
+</ul>
+<pre><code>openssl x509 -inform der -in SRL.cer -pubkey -noout &gt; rsa_public_key.pem</code></pre>
+<h3 id="Tools系列"><a href="#Tools系列" class="headerlink" title="Tools系列"></a>Tools系列</h3><ul>
+<li><a href="https://github.com/ohroot/rsatools" target="_blank" rel="noopener">rsatools</a>(公钥提取n,e / 由p,q生成私钥)</li>
+<li><a href="https://github.com/D001UM3/CTF-RSA-tool" target="_blank" rel="noopener">CTF-RSA-tool</a>(功能丰富的工具集合)</li>
+</ul>
+<h2 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h2><h3 id="N过小时"><a href="#N过小时" class="headerlink" title="N过小时"></a>N过小时</h3><p><strong>条件：</strong>N过小时</p>
+<p>可以直接爆破N的因子，但一般的N都是很大的。</p>
+<pre><code class="python">N = 1211809
+
+for i in range(2, N):
+    if N % i == 0:
+        print i</code></pre>
+<h3 id="Wiener’s-attack"><a href="#Wiener’s-attack" class="headerlink" title="Wiener’s attack"></a>Wiener’s attack</h3><p><strong>条件：</strong>针对d较小的情况下，如果给出的e很大，那么d一般不大，可以使用该攻击。</p>
+<p>d的大小范围：         $d&lt;\frac{1}{3}N^{\frac{1}{4}}$    </p>
+<p><a href="https://github.com/pablocelayes/rsa-wiener-attack" target="_blank" rel="noopener">攻击脚本</a></p>
+<p>例子：（SCTF-《it may contain ‘flag’》）</p>
+<pre><code>n=0x1fb18fb44f4449f45ea938306c47b91f64b6c176bd24dbb35aa876f73859c90f0e1677d07430a1188176bc0b901ca7b01f6a99a7df3aec3dd41c3d80f0d17292e43940295b2aa0e8e5823ffcf9f5f448a289f2d3cb27366f907ee62d1aaeba490e892dc69dacbafa941ab7be809e1f882054e26add5892b1fcf4e9f1c443d93bf
+
+e=0xe42a12145eaa816e2846200608080305c99468042450925789504307cbc54a20ed7071b68b067b703a1679d861795542f8cbd2d1cb4d3847d0940cac018cdb0fa729571afbe10c1b8be2dd8acd99ee48b77d53c435b9c2fed59e12e02ad8cfc2bcc46ad85534c266dcc1f3a1a03d87118eaf3f5b3eeeb3be84ad023a4bf34939
+
+c=0xd19d63015bdcb0b61824237b5c67cb2ef09af0c6cd30e193ff9683357b1e45ab4df607b8c1e0b96cafc49a84d7e655c3ce0f71b1d217eec9ca6cdfa57dd3dc92533b79431aa8a7d6ca67ac9cdd65b178a5a96ab7ce7bf88440f4a9b9d10151b0c942a42fdab9ea2c2f0c3706e9777c91dcc9bbdee4b0fb7f5d3001719c1dd3d3
+Tell me the msg.</code></pre>
+<p>e很大，所以d很小，可以使用Wiener’s attack来攻击得到d。</p>
+<p>攻击得到d=731297.</p>
+<pre><code class="python">&gt;&gt;&gt; test_hack_RSA(n,e)
+Hacked!
+731297
+&gt;&gt;&gt; d = 731297
+&gt;&gt;&gt; flag = pow(c,d,n)
+&gt;&gt;&gt; print hex(flag)[2:-1].decode(&#39;hex&#39;)
+flag1sH3r3_d_ist0sma1l</code></pre>
+<h3 id="共模攻击"><a href="#共模攻击" class="headerlink" title="共模攻击"></a>共模攻击</h3><p><strong>条件：</strong></p>
+<p>用相同的N，不同的私钥（不同的e）加密同一明文m。</p>
+<p><strong>原理：</strong></p>
+<p>设两个用户的公钥分别为 $e_1$ 和 $e_2$，且两者互质。明文消息为 $m$，密文分别为：</p>
+<p>$ c_1 = m^{e_1}\bmod N $</p>
+<p>$c_2 = m^{e_2}\bmod N $</p>
+<p>当攻击者截获 $c_1$ 和 $c_2$ 后，就可以恢复出明文。用扩展欧几里得算法求出 $re_1+se_2=1\bmod n$ 的两个整数 $r$ 和 $s$，由此可得：</p>
+<p>$c_{1}^{r}c_{2}^{s} \equiv m^{re_1}m^{se_2}\bmod n\ \equiv m^{(re_1+se_2)} \bmod n\ \equiv m\bmod n$</p>
+<pre><code class="python"># -*- coding:utf-8
+from libnum import n2s, s2n
+from gmpy2 import invert
+n= raw_input( &quot;Input the n: &quot;)
+e1 = raw_input( &quot; Input the e1:&quot;)
+e1 = raw_input (&quot;Input the e2:&quot;)
+def egcd(a, b) :
+    if a == O:
+        return (b , 0, 1)
+    else:
+        g,y,x=egcd(b%a,a)
+        return (g, x - (b/1a)*y,y)
+fo1 = open(&#39; flag.enc1&#39;,&#39;rb&#39; )
+fo2 = open(&#39; flag.enc2&#39;, &#39;rb&#39;)
+datafo1 = fo1.read( )
+datafo2 = fo2.read( )
+c1 = s2n(datafo1)
+c2 = s2n(datafo2)
+fo1.close()
+fo2.close()
+c2 = invert(c2, n)
+S = egcd(e1, e2)
+s1 = s[1]
+s2 = s[2]
+s2 = - s2
+m = pow(c1, s1, n)*pow(c2, s2, n) % n
+print n2s(m)</code></pre>
+<blockquote>
+<p><a href="http://www.bystudent.com/?p=236" target="_blank" rel="noopener">RSA攻击之共模攻击[转]</a></p>
+</blockquote>
+<h3 id="低加密指数攻击（小e）"><a href="#低加密指数攻击（小e）" class="headerlink" title="低加密指数攻击（小e）"></a>低加密指数攻击（小e）</h3><h4 id="爆破E"><a href="#爆破E" class="headerlink" title="爆破E"></a>爆破E</h4><p><strong>条件：</strong>e很小时，如果m也不大，那么m的e次方仍小于N，这时模N等于原值即$c=m^e mod N=m^e$.</p>
+<p>所以我们可以直接对c进行e次开放的到明文。</p>
+<p>攻击时可以采取爆破的方式。判断条件：<code>m**e==c</code></p>
+<p>例题：                         </p>
+<pre><code class="python">import libnum
+c=20007698782339834246219328724588364459038474898597431254441716723329047692482286669616878491497181438826429104573158490197780427343059002311390665150204203593904674308567972583524863664412573864470357485299378319457792659062998310715680020892095430469672971488726545126438904961637
+
+n=127736277372703302601056543119422673263688414162130452012271136376613506149677023810059879551077756689012265602068781726322860263396788055341495459092641851239465778777954763378423777055786390661741851297248439205933852145044703803764388021585419049988085302710871206091591995497858682344782684500134395300049
+
+for e in range(2,10):
+    m = libnum.nroot(c,e)
+    if m**e==c:
+      break 
+print &quot;e:&quot;,e
+print &quot;m:&quot;,m
+flag = libnum.n2s(m)
+print flag</code></pre>
+<h4 id="2-知道n-e-c（小e）"><a href="#2-知道n-e-c（小e）" class="headerlink" title="2.知道n,e,c（小e）"></a>2.知道n,e,c（小e）</h4><p>因为$c=m^e(\bmod N)$,已知条件是n,c,e，所以$m=\sqrt<a href="c+i*n">3</a>$.爆破i知道得到一个合理的整数m。</p>
+<p>例子：（从publickey得知n,e，enc得知c）</p>
+<pre><code class="python">import gmpy2
+
+c=116214698212458844423103857913441458442339925798599963213841797239355927303444100470558669928406921448510293928093943444789453829949079413240725018736039767923604391303528886458189412543467131343322985424830636686501183872258486468191992358327597581678299206152472529682824142608687221595323829204633224168225369759736250844323337223323791058404140581339609822071015073468035751326068998489516195665086364268852958930252474477661580751480498632203323212772718600
+
+n=1953100985460341348696462250270875098931515807146586756296095446519328460202594322688077959911801412881736536007030245814199784734114468379391959242638228445246656155129859794350223734103552981321896683545886584718379382489138858499065228901412805708175575610007278296746952620830529848517741610397035368508736304074009571123132231492002047409382240786830369954266084929667038697671614351425836882238175963587766360974168461069129309445949172255481878016805287109
+
+e = 3
+
+for i in range(5):
+    if gmpy2.iroot(c+i*n,3)[1] == True:        //是否成功开根
+        m = gmpy2.iroot(c+i*n,3)[0]
+        break
+print i
+print m</code></pre>
+<h3 id="d泄露攻击"><a href="#d泄露攻击" class="headerlink" title="d泄露攻击"></a>d泄露攻击</h3><p>d泄漏后如果消息还是使用该密钥对加密的话我们可以直接解密消息，如果d泄漏后更换了一组由新的e2组成的密钥，满足该攻击条件。假设原来的d我们已经知道（d1），N，e1我们可以通过openssl或<a href="https://github.com/D001UM3/CTF-RSA-tool" target="_blank" rel="noopener">RSA-Tools</a>查看公钥得到，由N，d1，e1我们可以计算出p，q，有了p，q和e2可以计算出d2.就可以解密啦。</p>
+<p><strong>例题</strong>：<a href="https://github.com/nguyenqh/hitb-xctf-2017/tree/master/HackInTheCardII" target="_blank" rel="noopener">2017 HITB - hack in the card II</a></p>
+<blockquote>
+<p>The second smart card sent to us has been added some countermeasures by that evil company. They also changed the public key(attachments -&gt; publickey.pem). However it seems that they missed something……<br>Can you decrypt the following hex-encoded ciphertext this time?</p>
+<pre><code>016d1d26a470fad51d52e5f3e90075ab77df69d2fb39905fe634ded81d10a5fd10c35e1277035a9efabb66e4d52fd2d1eaa845a93a4e0f1c4a4b70a0509342053728e89e977cfb9920d5150393fe9dcbf86bc63914166546d5ae04d83631594703db59a628de3b945f566bdc5f0ca7bdfa819a0a3d7248286154a6cc5199b99708423d0749d4e67801dff2378561dd3b0f10c8269dbef2630819236e9b0b3d3d8910f7f7afbbed29788e965a732efc05aef3194cd1f1cff97381107f2950c935980e8954f91ed2a653c91015abea2447ee2a3488a49cc9181a3b1d44f198ff9f0141badcae6a9ae45c6c75816836fb5f331c7f2eb784129a142f88b4dc22a0a977</code></pre>
+</blockquote>
+<p> 使用 <code>openssl</code> 或者<a href="https://github.com/D001UM3/CTF-RSA-tool" target="_blank" rel="noopener">RSA-Tools</a>查看 <code>publickey.pem</code> 的公钥，发现它的 N 与上一道题的 N 相同，并且上题的 N，e，d 已知。由此可直接使用<a href="https://github.com/ius/rsatool" target="_blank" rel="noopener">rsatool.py</a>得到 p，q，并通过本题的 e 计算出 d 得到明文。</p>
+<pre><code class="python">#!/usr/bin/env python2    #由n,d,e求解p,q
+import fractions, random
+
+def factor_modulus(n, d, e):
+    t = (e * d - 1)
+    s = 0
+    while True:
+        quotient, remainder = divmod(t, 2)
+        if remainder != 0:
+            break
+        s += 1
+        t = quotient
+    found = False
+    while not found:
+        i = 1
+        a = random.randint(1,n-1)
+        while i &lt;= s and not found:
+            c1 = pow(a, pow(2, i-1, n) * t, n)
+            c2 = pow(a, pow(2, i, n) * t, n)
+            found = c1 != 1 and c1 != (-1 % n) and c2 == 1
+            i += 1
+    p = fractions.gcd(c1-1, n)
+    q = n // p
+    return p, q
+
+
+if __name__ == &#39;__main__&#39;:
+    n=input(&quot;n:&quot;)
+    d=input(&quot;d:&quot;)
+    e=input(&quot;e:&quot;)
+    p,q = factor_modulus(n,d,e)
+    print p,q</code></pre>
+<h3 id="暴力分解-N"><a href="#暴力分解-N" class="headerlink" title="暴力分解 N"></a>暴力分解 N</h3><p>在 N 的比特位数小于 512 的时候，可以采用大整数分解的策略获取 p 和 q。</p>
+<p>工具：<a href="http://factordb.com/" target="_blank" rel="noopener">factordb</a>    <a href="https://github.com/DarkenCode/yafu" target="_blank" rel="noopener">yafu</a></p>
+<p><strong>例题</strong>：（JarvisOJ - Medium RSA）</p>
+<blockquote>
+<p>已知一段 RSA 加密的信息为：0xdc2eeeb2782c 且已知加密所用的公钥： N=322831561921859 e = 23 请解密出明文，提交时请将数字转化为 ascii 码提交 比如你解出的明文是 0x6162，那么请提交字符串 ab 提交格式：<code>PCTF&#123;明文字符串&#125;</code></p>
+</blockquote>
+<p>直接使用 factordb 进行分解,得到：322831561921859=13574881×23781539；p，q，e有了，可以求d进行解密了。</p>
+<pre><code class="python">import gmpy2
+p = 13574881
+q = 23781539
+n = p * q
+e = 23
+c = 0xdc2eeeb2782c
+phin = (p - 1) * (q - 1)
+d = gmpy2.invert(e, phin)
+p = gmpy2.powmod(c, d, n)
+tmp = hex(p)
+print tmp, tmp[2:].decode(&#39;hex&#39;)</code></pre>
+<h3 id="p-q-很大时"><a href="#p-q-很大时" class="headerlink" title="|p-q| 很大时"></a>|p-q| 很大时</h3><p>|p-q| 很大，那么p或q一定较小，假设q较小。我们可以穷举q来进行爆破。</p>
+<h3 id="p-q-较小时"><a href="#p-q-较小时" class="headerlink" title="|p-q| 较小时"></a>|p-q| 较小时</h3><p>|p-q| 较小说明p和q比较接近，使用费马分解。</p>
+<p>原理：</p>
+<p><img src="https://raw.githubusercontent.com/LANVNAL/LANVNAL.github.io/master/images/RSA/fermat.png" alt="format"></p>
+<pre><code class="python">def fermat(n):
+    a = isqrt(n)
+    b2 = a * a - n
+    b = isqrt(n)
+    count = 0
+    while b * b != b2:
+        a = a + 1
+        b2 = a * a - n
+        b = isqrt(b2)
+        count += 1
+    p = a + b
+    q = a - b
+    assert n == p * q
+    return p, q</code></pre>
+<h3 id="Rabin-算法"><a href="#Rabin-算法" class="headerlink" title="Rabin 算法"></a>Rabin 算法</h3><p>Rabin算法的特征在于<strong>e=2</strong>，如果一个题目的e=2时，我们可以考虑它是采用的rabin算法</p>
+<p><strong>攻击原理</strong></p>
+<p>密文：</p>
+<p>$c=m^2,mod,n$</p>
+<p>解密：</p>
+<ul>
+<li><p>计算出 $m_p$ 和 $m_q$：</p>
+<p>$m_p=\sqrt{c},mod,p$</p>
+<p>$m_q=\sqrt{c},mod,q$</p>
+</li>
+<li><p>用扩展欧几里得计算出 $y_p$ 和 $y_q$：</p>
+<p>$y_p⋅p+y_q⋅q=1$</p>
+</li>
+<li><p>解出四个明文：</p>
+<p>$a=(y_p⋅p⋅m_q+y_q⋅q⋅m_p),mod,n$</p>
+<p>$b=n−a$</p>
+<p>$c=(y_p⋅p⋅m_q−y_q⋅q⋅m_p),mod,n$</p>
+<p>$d=n−c$</p>
+</li>
+</ul>
+<p>注意：如果 $p≡q≡3,(mod,4)$，则</p>
+<p>$m_p=c^{\frac{1}{4}(p+1)}modp$</p>
+<p>$m_q=c^{\frac{1}{4}(q+1)},mod,q$</p>
+<p>而一般情况下，$p≡q≡3,(mod,4)$ 是满足的，对于不满足的情况下，请参考相应的算法解决。</p>
+<p><strong>例题</strong>（<a href="https://dn.jarvisoj.com/challengefiles/hardRSA.rar.b498edae4e73af8eb4567fb18117de46" target="_blank" rel="noopener">hard RSA – jarvis oj</a>）</p>
+<pre><code class="shell">~openssl rsa -pubin -in pubkey.pem -text -modulus
+Public-Key: (256 bit)
+Modulus:
+    00:c2:63:6a:e5:c3:d8:e4:3f:fb:97:ab:09:02:8f:
+    1a:ac:6c:0b:f6:cd:3d:70:eb:ca:28:1b:ff:e9:7f:
+    be:30:dd
+Exponent: 2 (0x2)
+Modulus=C2636AE5C3D8E43FFB97AB09028F1AAC6C0BF6CD3D70EBCA281BFFE97FBE30DD
+writing RSA key
+-----BEGIN PUBLIC KEY-----
+MDowDQYJKoZIhvcNAQEBBQADKQAwJgIhAMJjauXD2OQ/+5erCQKPGqxsC/bNPXDr
+yigb/+l/vjDdAgEC
+-----END PUBLIC KEY-----</code></pre>
+<p>发现e为2，结合题目描述，应为rabin算法。</p>
+<p>在线分解n得到p,q：</p>
+<pre><code>p=275127860351348928173285174381581152299
+q=319576316814478949870590164193048041239</code></pre>
+<p>解题代码：(来自ctf-wiki)</p>
+<pre><code class="python">#!/usr/bin/python
+# coding=utf-8
+import gmpy2
+import string
+from Crypto.PublicKey import RSA
+import libnum
+
+# 读取公钥参数
+with open(&#39;pubkey.pem&#39;, &#39;r&#39;) as f:
+    key = RSA.importKey(f)
+    N = key.n
+    e = key.e
+with open(&#39;flag.enc&#39;, &#39;r&#39;) as f:
+    cipher = f.read().encode(&#39;hex&#39;)
+    cipher = string.atoi(cipher, base=16)
+    # print cipher
+print &quot;please input p&quot;
+p = int(raw_input(), 10)
+print &#39;please input q&#39;
+q = int(raw_input(), 10)
+# 计算yp和yq
+inv_p = gmpy2.invert(p, q)
+inv_q = gmpy2.invert(q, p)
+
+# 计算mp和mq
+mp = pow(cipher, (p + 1) / 4, p)
+mq = pow(cipher, (q + 1) / 4, q)
+
+# 计算a,b,c,d
+a = (inv_p * p * mq + inv_q * q * mp) % N
+b = N - int(a)
+c = (inv_p * p * mq - inv_q * q * mp) % N
+d = N - int(c)
+
+for i in (a, b, c, d):
+    print libnum.n2s(i)</code></pre>
+<h3 id="Basic-Broadcast-Attack（低加密指数广播攻击）"><a href="#Basic-Broadcast-Attack（低加密指数广播攻击）" class="headerlink" title="Basic Broadcast Attack（低加密指数广播攻击）"></a>Basic Broadcast Attack（低加密指数广播攻击）</h3><p><strong>条件：</strong>如果一个用户使用同一个加密指数 e 加密了同一个消息，并发送给了其他 e 个用户。（相同的e，不同的N，同一明文）</p>
+<p><strong>原理：</strong></p>
+<p>m，e相同，不同的是c和n，所以：</p>
+<p>$c_1 \equiv m^e \mod n_1$     =&gt;     $ m^e\equiv c_1 \mod n_1$</p>
+<p>$c_2 \equiv m^e \mod n_2$    =&gt;     $ m^e\equiv c_2 \mod n_1$</p>
+<p>$c_3 \equiv m^e \mod n_3$     =&gt;     $ m^e\equiv c_3 \mod n_1$</p>
+<p>… </p>
+<p>$c_n \equiv m^e \mod n_n$    =&gt;     $ m^e\equiv c_3 \mod n_1$</p>
+<p>由中国剩余定理可得：</p>
+<p> $m^e \equiv C \mod n_1n_2n_3\cdot\cdot\cdot n_n$</p>
+<p>因为 $n_1n_2n_3\cdot\cdot\cdot n_n$ 比C大所以     $m^e \equiv C$</p>
+<p>$C=c_1\cdot M_1\cdot t_1+ c_2\cdot M_2\cdot t_2 + … +c_n\cdot M_n\cdot t_n$    </p>
+<p>$M_1 = n_2 \cdot n_3 \cdots \cdot n_n$    </p>
+<p>$t_1 = M_1 \mod n_1$</p>
+<p>所以m直接对C开e次方根就好。</p>
+<blockquote>
+<p><a href="https://www.wikiwand.com/zh-hans/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">中国剩余定理-维基百科</a></p>
+</blockquote>
+<p><strong>例题：</strong>（HCTF GAME 进击的 Crypto [5]）</p>
+<p>题目描述：</p>
+<pre><code>n is 17551188754807399016342420221734945766749930201727412345251590531404061480740932995199065332987719183197199448336435851015540272155441486746027315107821340969105623451575872580170978368650593880274076025520453956378539766228430429142117994616985318963125739076826635459215114946159348678398268099389525414431618517743889314085714390430972783223270985688988995257770363117225472590084489120958397189130958462784532637453482182763505791720641422686749616216521724012108378680177131928438795893866425040489551258902610047574579899692834984999209528110849342042529825594061894238371591910354584305136154355365191215400149
+e is 10
+c is 4675182605549711347653299514777826238559040200527747810846901991433127025723361807211672208052862870258047285285949212515664278410499603829663266213968511493974766674071825225536665267049044619340378438531615983696406305841945756396579371794826265549929503043134668360055027276522368879193620937457881486509311711905722483187734650127796510808637890189952840971330768913946884525594627652458745930532219238258911608744112001798136394806004726472890838481881026716605743812674350955258003794590748258523929460446986020794445478076559635145181909093786617716473870604463315696183050495143502762614767485881979217577416
+
+为了省地方省略了很多对这样的n,e,c值，下面代码中有全部n,e,c</code></pre>
+<p>题解：</p>
+<pre><code class="python">import gmpy
+
+def my_parse_number(number):
+    string = &quot;%x&quot; % number
+    erg = []
+    while string != &#39;&#39;:
+        erg = erg + [chr(int(string[:2], 16))]
+        string = string[2:]
+    return &#39;&#39;.join(erg)
+
+def e_gcd(a, b):
+    x,y = 0, 1
+    lastx, lasty = 1, 0
+    while b:
+        a, (q, b) = b, divmod(a,b)
+        x, lastx = lastx-q*x, x
+        y, lasty = lasty-q*y, y
+    return (lastx, lasty, a)
+
+def chinese_remainder_theorem(items):
+  N = 1
+  for a, n in items:
+    N *= n
+
+  result = 0
+  for a, n in items:
+    m = N/n
+    r, s, d = e_gcd(n, m)
+    if d != 1:
+      raise &quot;Input not pairwise co-prime&quot;
+    result += a*s*m
+
+  return result % N, N
+
+e=10
+
+n=[17551188754807399016342420221734945766749930201727412345251590531404061480740932995199065332987719183197199448336435851015540272155441486746027315107821340969105623451575872580170978368650593880274076025520453956378539766228430429142117994616985318963125739076826635459215114946159348678398268099389525414431618517743889314085714390430972783223270985688988995257770363117225472590084489120958397189130958462784532637453482182763505791720641422686749616216521724012108378680177131928438795893866425040489551258902610047574579899692834984999209528110849342042529825594061894238371591910354584305136154355365191215400149,21840437284422601584177601857355845296420300157767339109572377640408362726674561246210400400760474187121246893712480109326893614162779470768415282900713800983815570602250068673695044749932532689851310770087552524620857623442019428044482787965428075984951982104920901562456426672111590909100736209153905853035127247720276974050404663847547090362780729077829594684995979457326414947449083219461617302643392904522733812903141301332227357689517880801845510579518887472928083718826890369016944549160461428710615747001273521253638766267143341819170249648385341127263707417642925464809788975715332938666417316695941347477577,30015914133986758133105015082922460910471726819000479872816812806794140887209294393963063273377891203069864711466776200108173672428779293308320460116493040572826915020654293929241843686728296387400110062099074573009645563520805301899962344680821396200256042478539540675850427377958553324581371362112652752444824919601767821622038488365501031636558236126052654241662743070651213369566898998898634441261811655053789384588711547685939927721116404429914329081432990913321296964957260691148704710581681774562904924080813274984809940008968629515304859518629473284018332651831587916402539386242421630250537030688162675751761,18009718435825445649372629634867772247035138229493108362713630947680338354227735572070882390378632440365163117094233413520107070581908224239210969172094402760924055334584259678276505919418191623762998249724248379302786621689049107500760348303940112840664926231345646325964133281550765454719628161600475143792567309947330130747860125557547051843620899629217636918002929846463097841539446014019579830347356084080488561917440356848465812937246809018168582635191619622041079012450531811237168105634382108634135880887093525611263186925213027913337454706919754923593714509998062073450679720905569489304398625255143801533277,27090736422393991189249636552945539144039087911497773160371557650625344533254580764344628540515132884576739746597729079146155130899009238110101654711303800340566538298798432929136509923129089904647023409146264405964139002638684510681372633714179570768685640570209727600215295330846361754314973731753734397312932947433225732597524076563605729037998272803472953079912899867244318073144564355326520230078681106746670895643454939714423661018216469020021429142336238301775948794784776906058601395026463842070755547793192470653204078222827768950823747061655106900276571547680451953562314376913592896427730473091360051391129,22277916445389799876692954866506052125036892596099795492064670519272419621528759837318253665292779127861537748967309681231938516330289846519214661138299205082421968922350230121526530080908053297879027158545040193774647350499415863211113776785399848472712293535289113810322398103983587423306282629848367328743089145940536913390664697321526306054579656600439140061667264516070003507841618352122567379038304294976725469305215682426898731699093794930417366769249256999177339843020364367769712776225743916112170787273891225926246407201080202593858063362565931942590349178361085396799890148505959437244983447934838792051793,20851005254704933958354817552975190588383962843827122226904964048318053243049822277049715505735762051530592940514007687138882551369906711787133432792478447465241409449145625470766867280545673313710877827491010966285871747638401315338616986782370641881615238434667687936400955629642629748987839996011550408156162317201139746453148874558603034756902297066835592748562014100033050736650359512497633206350878620421058840864178654150287452573363251543090733404389037241843869379543719804499640600546216051812575335078292203435075056740907356476508423562893159958041443951220933694064510275964264723600894558623421819904501,21745680718194037861694569863678082853797244380310200176477643943644972463871360669070584682807703870684830948023158889780219716829353665600564791257912082043905122048004593803193375178269942973208249276102769671038752489438400731535367257356207098737711096953679231300720903502192144476519811856646400822239966219746455729409375771797064825552958482297097797911599808242875799342438899636328763766908154658738969614707377852147843953614178305416594819846812426828300689497046389665982817209315784313108617753052015326937047712513569322963102500122038505770232917473260057408981125469607573191926134043719437868156273,23257483042331781031320004066395973098539881870433034498180628292164825476845647596122889756396987220787263478778647199033523248861079487991256044473644515960559630792146394039814096408486541588067643811077716428015000310006227815563853161604153799667073262886506475792902392829571472354691875108497532721686076971371510238161060553858839091026451266521753830084143245517459861325880906431205328541736948784727909518259034781432825317588016829248046749554245422672923121452470552323438808591118050034108325754535134236727740460190849252647561826203675666601441506024780605194340777802389960180532831878689458096046821,27637004622327338030988157906180324667829916751358977640832765328645718696385482091781513197472066052101704131751158627239657425473994441143385613105528200215275110466263289952962400664293602133856809475295970322767309563273999319926150648399522508592521685688896842833243324070987594588134776515978198364901455727292006058624015674914131447232032058875410956114939938460192876157612457774033922125553271809409381181134668696682847583314698759337802814876161751333701826176655372126746717533228292189928645064111959824895679517476699556313948724818860906006774808944802984477517788391260149504822396276593451707118257]
+
+c=[4675182605549711347653299514777826238559040200527747810846901991433127025723361807211672208052862870258047285285949212515664278410499603829663266213968511493974766674071825225536665267049044619340378438531615983696406305841945756396579371794826265549929503043134668360055027276522368879193620937457881486509311711905722483187734650127796510808637890189952840971330768913946884525594627652458745930532219238258911608744112001798136394806004726472890838481881026716605743812674350955258003794590748258523929460446986020794445478076559635145181909093786617716473870604463315696183050495143502762614767485881979217577416,4586033930015814975553487614321341290358072960539564849589758593801587823414394351862074093343255479635303199078561905260793645869942622136164615776822867275172888812989071016687658023005838776181437470204528335444413852561895603377955959308318399246963213964044984235974352824060625970587119586612774322385216810264819426458641852166009899106655036755913322283219739741020656812034348404092018340277026844114272699170323014050087289715403989671918767712613414346320222745328800096615947138667139053339483278319521201983885423491905171167675501563556563890821756892474999549635650486944010346554641603343238490572689,12012575342366442210994368605032582129674485327006093552902983877957202172783938071684841031902396156899396879136388606996807608296316795628987877357547213450360953742947781700549506469226564975927361748596520878542651668963131021269851928174681007347771519569914690980744941965086762285630082781013781879511681353119117280354102271439057204066405072328422057721895983540492150402309552609035008272366176657384174081229798739099558539083074489500359062010164358300087124447037922844709870430218019673914305742939927888838599616520300011913022792060392260618046807788302643742874847024153198113792628046678578753632923,4249005911324898630458723491151576810198619078332972911420166645127258598519950448507640904379342817486426262054889199369385257812524759761245588973651578211291344326619317559377360319507727729535083143293335799588196976241949218037833747839545295030259115279668065886560417877204054684495047181117075603468672292268831273735956964067626837975218539840667641885621426607941950306330198897187683754687379611844278471572791816397950634388907233312117920634807989734011132718334334850592111651631323130933438007008983489782601827321396168104668493332626558911838721998173148508994771473224050827471186478106896949413831,18557109853898405974924769550105345673703067457537813607252151469933140760798378574244439559372100428971400070351173140348823652755825601433268832363575896137364288069984314151346137206115518309597389268875150549696376813277778514591532615794294637044626683931367510181612383681914421702261592233265455950023252407680604041046629667703207133146853618989187597749132650514038584280417791134426596848369417626039533740827554552117727501565841065077835398951826747855393552731497438983274201599740189743630949174610722118659019630964669901438690028070213710833335622573526403588737092869273969581607637522572757015237506,19221531342713801219971420455098666365124810169512711030444063942333694562364114172361552139176582476168134219937393468391346535097965763785916484012657401095066804857900941482772687159471483908107669892419626059680168762119954068288719303591498504050604628627299671160225276355636519961578118413913001058744164531470610279168723402009469959377794138715204862239973561494796213624769358906726186769711689962808937828553399403173762034548974335960107700638910231658795639167906700770120741974418495196827830462542130080965552102416180517600397897065113788279096066792533807104187868678848857780735334749865813019681909,2043866718532927301454127017521835945401727173760352488220517028498861777262807036566165189285730569375083406234212921588654098421290088269551352101830688429903600880691046607902396566775005694148315605616437713115424223594710186677844867273218443350479253279231960061845711898262461185970057002138523262952260834191169438764964758526877361442277664448596129451496415695776781879266732057920583336999766633938582656240607973759756021032489262381190762825081392613689817792764844409877116240223852376311404164963595040347176139494461319495285348608562589901671620063620688524249523700500144604558899272202564535295466,9018406452041117867927204674649220929160509942604290572303644183451237944912470236367308266319079349289625873447647200474598755869642999213142758825809522474810817609751187533346902667225032452694187162262683056445775455963994237202296104812386374636270188433521927503415507963477240913270879794141170568393025367891003921090015993944946205723601349149601256727433716155121883420271498265967234259068535172501445643752691860997480636101699340740265505767091920668218018002976632111256430655619061247292025654740889077014179258647084698229733160071306390020603636210736363198302407289195286953980520285032528614492926,17978671919734595201524186618868659656036765546673883938819333911564948587858876495802600244078413312462813938682090761599961604959609423010904187720748539707172853352540370208991902929002036775381503365170196838626379685712050728875172622632447875368166743751159775611642629408534890684109652648484868876710697249351895355111511281037497347712241242908563699707272843032773107477368790419109907271096351457526240471975122296483655337150130000812813081239181653384419149292970320991892073352340649237387406498087734708162094476092368665794350968924289259192893289337038201504066310173284757044802449600666007821509553,8597067880812456123669594978660135058668875834924201279924162761020137582662367704504988576614934966062323191666982943113656186783894245035267051756178331490881264629774635620179678000947771928854566239213498586078670870127924696459041295848474073879336501325437194563845414699360564571136683492426292766799121155041276162673427700999761055592609213603158576637212003771003996722743170543342885011289692845493598413965688949325670519743413071479057382602222055902593614159427186017797992219490308930116850084553033461316509457834436420821916094206010206229370273622681413176347187252950087428868295965528772832409316]
+
+data=[]
+for i in range(len(c)):
+    data += [(c[i],n[i])]
+x, n = chinese_remainder_theorem(data)
+realnum = gmpy.mpz(x).root(e)[0].digits()
+print my_parse_number(int(realnum))</code></pre>
+<h3 id="Broadcast-Attack-with-Linear-Padding"><a href="#Broadcast-Attack-with-Linear-Padding" class="headerlink" title="Broadcast Attack with Linear Padding"></a>Broadcast Attack with Linear Padding</h3><blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Coppersmith%27s_attack#Generalizations" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Coppersmith%27s_attack#Generalizations</a></p>
+</blockquote>
+<h3 id="Related-Message-Attack"><a href="#Related-Message-Attack" class="headerlink" title="Related Message Attack"></a>Related Message Attack</h3><blockquote>
+<p>先引用ctf-wiki的解释，等完全理解了再编辑</p>
+</blockquote>
+<p><strong>条件：</strong></p>
+<p>当 Alice 使用同一公钥对两个具有某种线性关系的消息 M1 与 M2 进行加密，并将加密后的消息 C1，C2 发送给了 Bob 时，我们就可能可以获得对应的消息 M1 与 M2。这里我们假设模数为 N，两者之间的线性关系如下</p>
+<p>$$ M_1 \equiv f(M_2) \bmod N $$</p>
+<p>其中 f 为一个线性函数，比如说 $f=ax+b$。</p>
+<p>在具有较小错误概率下的情况下，其复杂度为 $O(elog^2N)$。</p>
+<p>这一攻击由 Franklin，Reiter 提出。</p>
+<p><strong>原理：</strong></p>
+<p>首先，我们知道 $C_1 \equiv M_1 ^e \bmod N$，并且 $M_1 \equiv f(M_2) \bmod N$，那么我们可以知道 $M_2$ 是 $f(x)^e \equiv C_1 \bmod N$ 的一个解，即它是方程 $f(x)^e-C_1$ 在模 N 意义下的一个根。同样的，$M_2$ 是 $x^e - C_2$ 在模 N 意义下的一个根。所以说 $x-M_2$ 同时整除以上两个多项式。因此，我们可以求得两个多项式的最大公因子，如果最大公因子恰好是线性的话，那么我们就求得了 $M_2$。需要注意的是，在 $e=3$ 的情况下，最大公因子一定是线性的。</p>
+<p>这里我们关注一下 $e=3$，且 $f(x)=ax+b$ 的情况。首先我们有</p>
+<p>$$ C_1 \equiv M_1 ^3 \bmod N,M_1 \equiv aM_2+b \bmod N $$</p>
+<p>那么我们有</p>
+<p>$$ C_1 \equiv (aM_2+b)^3 \bmod N,C_2 \equiv M_2^3 \bmod N $$</p>
+<p>我们需要明确一下我们想要得到的是消息 m，所以需要将其单独构造出来。</p>
+<p>首先，我们有式 1</p>
+<p>$$ (aM_2+b)^3=a^3M_2^3+3a^2M^2b+3aM_2b^2+b^3 $$</p>
+<p>再者我们构造如下式 2</p>
+<p>$$ (aM_2)^3-b^3 \equiv (aM_2-b)(a^2M_2^2+aM_2b+b^2) \bmod N $$</p>
+<p>根据式 1 我们有</p>
+<p>$$ a^3M_2^3-2b^3+3b(a^2M_2^2+aM_2b+b^2) \equiv C_1 \bmod N $$</p>
+<p>继而我们有式 3</p>
+<p>$$ 3b(a^2M_2^2+aM_2b+b^2) \equiv C_1-a^3C_2+2b^3 \bmod N $$</p>
+<p>那么我们根据式 2 与式 3 可得</p>
+<p>$$ (a^3C_2-b^3)*3b \equiv (aM_2-b)( C_1-a^3C_2+2b^3 ) \bmod N $$</p>
+<p>进而我们有</p>
+<p>$$ aM_2-b=\frac{3a^3bC_2-3b^4}{C_1-a^3C_2+2b^3} $$</p>
+<p>进而</p>
+<p>$$ aM_2\equiv \frac{2a^3bC_2-b^4+C_1b}{C_1-a^3C_2+2b^3} $$</p>
+<p>进而</p>
+<p>$$ M_2 \equiv\frac{2a^3bC_2-b^4+C_1b}{aC_1-a^4C_2+2ab^3}=\frac{b}{a}\frac{C_1+2a^3C_2-b^3}{C_1-a^3C_2+2b^3} $$</p>
+<p>上面的式子中右边所有的内容都是已知的内容，所以我们可以直接获取对应的消息。</p>
+<p>有兴趣的可以进一步阅读 <a href="https://www.iacr.org/archive/pkc2005/33860001/33860001.pdf" target="_blank" rel="noopener">A New Related Message Attack on RSA</a> 以及 <a href="https://www.cs.unc.edu/~reiter/papers/1996/Eurocrypt.pdf" target="_blank" rel="noopener">paper</a> 这里暂不做过多的讲解。</p>
+<p><strong>题目：</strong></p>
+<p>这里我们以 SCTF RSA3 中的 level3 为例进行介绍。首先，跟踪 TCP 流可以知道，加密方式是将明文加上用户的 user id 进行加密，而且还存在多组。这里我们选择第 0 组和第 9 组，他们的模数一样，解密脚本如下</p>
+<pre><code class="python">import gmpy2
+id1 = 1002
+id2 = 2614
+
+c1 = 0x547995f4e2f4c007e6bb2a6913a3d685974a72b05bec02e8c03ba64278c9347d8aaaff672ad8460a8cf5bffa5d787c5bb724d1cee07e221e028d9b8bc24360208840fbdfd4794733adcac45c38ad0225fde19a6a4c38e4207368f5902c871efdf1bdf4760b1a98ec1417893c8fce8389b6434c0fee73b13c284e8c9fb5c77e420a2b5b1a1c10b2a7a3545e95c1d47835c2718L
+c2 = 0x547995f4e2f4c007e6bb2a6913a3d685974a72b05bec02e8c03ba64278c9347d8aaaff672ad8460a8cf5bffa5d787c72722fe4fe5a901e2531b3dbcb87e5aa19bbceecbf9f32eacefe81777d9bdca781b1ec8f8b68799b4aa4c6ad120506222c7f0c3e11b37dd0ce08381fabf9c14bc74929bf524645989ae2df77c8608d0512c1cc4150765ab8350843b57a2464f848d8e08L
+n = 25357901189172733149625332391537064578265003249917817682864120663898336510922113258397441378239342349767317285221295832462413300376704507936359046120943334215078540903962128719706077067557948218308700143138420408053500628616299338204718213283481833513373696170774425619886049408103217179262264003765695390547355624867951379789924247597370496546249898924648274419164899831191925127182066301237673243423539604219274397539786859420866329885285232179983055763704201023213087119895321260046617760702320473069743688778438854899409292527695993045482549594428191729963645157765855337481923730481041849389812984896044723939553
+a = 1
+b = id1 - id2
+
+
+def getmessage(a, b, c1, c2, n):
+    b3 = gmpy2.powmod(b, 3, n)
+    part1 = b * (c1 + 2 * c2 - b3) % n
+    part2 = a * (c1 - c2 + 2 * b3) % n
+    part2 = gmpy2.invert(part2, n)
+    return part1 * part2 % n
+
+
+message = getmessage(a, b, c1, c2, n) - id2
+message = hex(message)[2:]
+if len(message) % 2 != 0:
+    message = &#39;0&#39; + message
+
+print message.decode(&#39;hex&#39;)</code></pre>
+<p>当然，我们也可以直接使用 sage 来做，会更加简单一点。</p>
+<pre><code class="python">import binascii
+
+def attack(c1, c2, b, e, n):
+    PR.&lt;x&gt;=PolynomialRing(Zmod(n))
+    g1 = x^e - c1
+    g2 = (x+b)^e - c2
+
+    def gcd(g1, g2):
+        while g2:
+            g1, g2 = g2, g1 % g2
+        return g1.monic()
+    return -gcd(g1, g2)[0]
+
+c1 = 0x547995f4e2f4c007e6bb2a6913a3d685974a72b05bec02e8c03ba64278c9347d8aaaff672ad8460a8cf5bffa5d787c5bb724d1cee07e221e028d9b8bc24360208840fbdfd4794733adcac45c38ad0225fde19a6a4c38e4207368f5902c871efdf1bdf4760b1a98ec1417893c8fce8389b6434c0fee73b13c284e8c9fb5c77e420a2b5b1a1c10b2a7a3545e95c1d47835c2718L
+c2 = 0x547995f4e2f4c007e6bb2a6913a3d685974a72b05bec02e8c03ba64278c9347d8aaaff672ad8460a8cf5bffa5d787c72722fe4fe5a901e2531b3dbcb87e5aa19bbceecbf9f32eacefe81777d9bdca781b1ec8f8b68799b4aa4c6ad120506222c7f0c3e11b37dd0ce08381fabf9c14bc74929bf524645989ae2df77c8608d0512c1cc4150765ab8350843b57a2464f848d8e08L
+n = 25357901189172733149625332391537064578265003249917817682864120663898336510922113258397441378239342349767317285221295832462413300376704507936359046120943334215078540903962128719706077067557948218308700143138420408053500628616299338204718213283481833513373696170774425619886049408103217179262264003765695390547355624867951379789924247597370496546249898924648274419164899831191925127182066301237673243423539604219274397539786859420866329885285232179983055763704201023213087119895321260046617760702320473069743688778438854899409292527695993045482549594428191729963645157765855337481923730481041849389812984896044723939553
+e=3
+a = 1
+id1 = 1002
+id2 = 2614
+b = id2 - id1
+m1 = attack(c1,c2, b,e,n)
+print binascii.unhexlify(&quot;%x&quot; % int(m1 - id1))</code></pre>
+<h3 id="Coppersmith’s-short-pad-attack"><a href="#Coppersmith’s-short-pad-attack" class="headerlink" title="Coppersmith’s short-pad attack"></a>Coppersmith’s short-pad attack</h3><p>过短的padding长度导致的容易攻击</p>
+<h3 id="Known-High-Bits-Message-Attack（Stereotyped-messages）"><a href="#Known-High-Bits-Message-Attack（Stereotyped-messages）" class="headerlink" title="Known High Bits Message Attack（Stereotyped messages）"></a>Known High Bits Message Attack（Stereotyped messages）</h3><p><strong>条件：</strong>知道了消息m的很大一部分$m_0$</p>
+<p>现在，$c=(m_0+x)^e\mod n$，也就是$f(x)=(m + x)^e - c$有一个解满足$f(x)=k\cdot N(k=0,1,2\cdots)$,求解x。</p>
+<p>依据oppersmith定理是可以求出剩下的所有明文部分。</p>
+<pre><code class="python">dd = f.degree()
+beta = 1
+epsilon = beta / 7
+mm = ceil(beta**2 / (dd * epsilon))
+tt = floor(dd * mm * ((1/beta) - 1))
+XX = ceil(N**((beta**2/dd) - epsilon))
+roots = coppersmith_howgrave_univariate(f, N, beta, mm, tt, XX)</code></pre>
+<blockquote>
+<p><a href="https://github.com/mimoo/RSA-and-LLL-attacks" target="_blank" rel="noopener">https://github.com/mimoo/RSA-and-LLL-attacks</a></p>
+</blockquote>
+<h3 id="Factoring-with-high-bits-known"><a href="#Factoring-with-high-bits-known" class="headerlink" title="Factoring with high bits known"></a>Factoring with high bits known</h3><p><strong>条件：</strong>知道一个公钥中模数 N 的一个因子的较高位时</p>
+<h3 id="模不互素"><a href="#模不互素" class="headerlink" title="模不互素"></a>模不互素</h3><p><strong>条件：</strong>两个公钥的 N 不互素</p>
+<p><strong>原理：</strong>题目给出了两个或多个N,e或公钥，两个N如果不互素那么我们可以比较容易的找到他们的最大公因数，然后就得到p，q了，进而可以求出私钥进行解密了。</p>
+<pre><code class="python">import gmpy2
+import libnum
+
+n1 = input(&quot;n1:&quot;)
+n2 = input(&quot;n2:&quot;)
+
+p1 = gmpy2.gcd(n1, n2)
+q1 = n1 / p1
+
+e = input(&quot;e:&quot;)
+phin = (p1 - 1) * (q1 - 1)
+d = gmpy2.invert(e, phin)
+cipher = input(&quot;c:&quot;)
+
+plain = gmpy2.powmod(cipher, d, n1)
+flag = libnum.n2s(plain)
+print flag</code></pre>
+<p><strong>例题：</strong>（SCTF RSA2）</p>
+<p>在给的数据包中有10 个含数据的报文，每个格式如下：</p>
+<pre><code>Please send your public key, then We will use your public key to encrypt int(level5.passwd.encode(&#39;hex&#39;), 16), finally, we send the ciphertext to you.
+20823369114556260762913588844471869725762985812215987993867783630051420241057912385055482788016327978468318067078233844052599750813155644341123314882762057524098732961382833215291266591824632392867716174967906544356144072051132659339140155889569810885013851467056048003672165059640408394953573072431523556848077958005971533618912219793914524077919058591586451716113637770245067687598931071827344740936982776112986104051191922613616045102859044234789636058568396611030966639561922036712001911238552391625658741659644888069244729729297927279384318252191421446283531524990762609975988147922688946591302181753813360518031 65537
+We have got N is ......
+e is ......
+encrypted messages is 0x68d5702b70d18238f9d4a3ac355b2a8934328250efd4efda39a4d750d80818e6fe228ba3af471b27cc529a4b0bef70a2598b80dd251b15952e6a6849d366633ed7bb716ed63c6febd4cd0621b0c4ebfe5235de03d4ee016448de1afbbe61144845b580eed8be8127a8d92b37f9ef670b3cdd5af613c76f58ca1a9f6f03f1bc11addba30b61bb191efe0015e971b8f78375faa257a60b355050f6435d94b49eab07075f40cb20bb8723d02f5998d5538e8dafc80cc58643c91f6c0868a7a7bf3bf6a9b4b6e79e0a80e89d430f0c049e1db4883c50db066a709b89d74038c34764aac286c36907b392bc299ab8288f9d7e372868954a92cdbf634678f7294096c7</code></pre>
+<p>给了十组n,e,c，前两组的n就不互素，采用该攻击求出p,q，解密得到flag。</p>
+<pre><code class="python">~python exp.py
+n1:20823369114556260762913588844471869725762985812215987993867783630051420241057912385055482788016327978468318067078233844052599750813155644341123314882762057524098732961382833215291266591824632392867716174967906544356144072051132659339140155889569810885013851467056048003672165059640408394953573072431523556848077958005971533618912219793914524077919058591586451716113637770245067687598931071827344740936982776112986104051191922613616045102859044234789636058568396611030966639561922036712001911238552391625658741659644888069244729729297927279384318252191421446283531524990762609975988147922688946591302181753813360518031
+n2:19083821613736429958432024980074405375408953269276839696319265596855426189256865650651460460079819368923576109723079906759410116999053050999183058013281152153221170931725172009360565530214701693693990313074253430870625982998637645030077199119183041314493288940590060575521928665131467548955951797198132001987298869492894105525970519287000775477095816742582753228905458466705932162641076343490086247969277673809512472546919489077884464190676638450684714880196854445469562733561723325588433285405495368807600668761929378526978417102735864613562148766250350460118131749533517869691858933617013731291337496943174343464943
+e:65537
+c:0x68d5702b70d18238f9d4a3ac355b2a8934328250efd4efda39a4d750d80818e6fe228ba3af471b27cc529a4b0bef70a2598b80dd251b15952e6a6849d366633ed7bb716ed63c6febd4cd0621b0c4ebfe5235de03d4ee016448de1afbbe61144845b580eed8be8127a8d92b37f9ef670b3cdd5af613c76f58ca1a9f6f03f1bc11addba30b61bb191efe0015e971b8f78375faa257a60b355050f6435d94b49eab07075f40cb20bb8723d02f5998d5538e8dafc80cc58643c91f6c0868a7a7bf3bf6a9b4b6e79e0a80e89d430f0c049e1db4883c50db066a709b89d74038c34764aac286c36907b392bc299ab8288f9d7e372868954a92cdbf634678f7294096c7
+sH1R3_PRlME_1N_rsA_iS_4ulnEra5le</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2018/07/28/rsa-ti-xing-zong-jie/">https://lanvnal.com/2018/07/28/rsa-ti-xing-zong-jie/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/note/">
+                                    <span class="chip bg-color">note</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%8A%A0%E8%A7%A3%E5%AF%86/">
+                                    <span class="chip bg-color">加解密</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/11/06/2018-shan-dong-sheng-sheng-sai-ke-lai-bei-writeup/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/5.jpg" class="responsive-img" alt="2018山东省省赛(科来杯)WriteUp">
+                        
+                        <span class="card-title">2018山东省省赛(科来杯)WriteUp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-11-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/05/17/ddctf-de-bu-fen-writeup/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/4.png" class="responsive-img" alt="DDCTF的部分WriteUp">
+                        
+                        <span class="card-title">DDCTF的部分WriteUp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+因为筹备校赛当时写了一半的wp拖了快一个月才写完，今天发现DDCTF的平台和题目竟然还开着(⊙v⊙)，很良心啊，当时也没有怎么去做题，水了几个misc，web涨姿势了，好菜_(:з」∠)_
+
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-05-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

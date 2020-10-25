@@ -1,0 +1,1269 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="ISCC-WriteUp, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>ISCC-WriteUp | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">ISCC-WriteUp</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/WriteUp/">
+                                <span class="chip bg-color">WriteUp</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2017-05-02
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-18
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.9k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="ISCC-WriteUp"><a href="#ISCC-WriteUp" class="headerlink" title="ISCC-WriteUp"></a>ISCC-WriteUp</h1><h2 id="0X01-Basic"><a href="#0X01-Basic" class="headerlink" title="0X01 Basic"></a>0X01 Basic</h2><p>1.Wheel Cipher（50）</p>
+<p>Jefferson disk（杰弗逊盘），查看<a href="https://www.wikiwand.com/en/Jefferson_disk" target="_blank" rel="noopener">wiki</a>其加密方法。</p>
+<p>关键部分摘录下来。</p>
+<pre><code>Operation
+To encrypt a message, Alice rotates the disks to produce the plaintext message along one &quot;row&quot; of the stack of disks, and then selects another row as the ciphertext. To decrypt the message, Bob rotates the disks on his cylinder to produce the ciphertext along a row. It is handy if both Alice and Bob know the offset of the row, but not really necessary since Bob can simply look around the cylinder to find a row that makes sense.
+
+For example, a simplified &quot;toy&quot; Bazeries cylinder using only ten disks might be organised as shown below, with each disk &quot;unwrapped&quot; into a line and each marked with a designating number:
+
+1:    &lt; ZWAXJGDLUBVIQHKYPNTCRMOSFE &lt;
+2:    &lt; KPBELNACZDTRXMJQOYHGVSFUWI &lt;
+3:    &lt; BDMAIZVRNSJUWFHTEQGYXPLOCK &lt;
+4:    &lt; RPLNDVHGFCUKTEBSXQYIZMJWAO &lt;
+5:    &lt; IHFRLABEUOTSGJVDKCPMNZQWXY &lt;
+6:    &lt; AMKGHIWPNYCJBFZDRUSLOQXVET &lt;
+7:    &lt; GWTHSPYBXIZULVKMRAFDCEONJQ &lt;
+8:    &lt; NOZUTWDCVRJLXKISEFAPMYGHBQ &lt;
+9:    &lt; XPLTDSRFHENYVUBMCQWAOIKZGJ &lt;
+10:    &lt; UDNAJFBOWTGVRSCZQKELMXYIHP &lt;
+If the &quot;key&quot;, the sequence of disks, for this Bazeries cylinder is
+
+7,9,5,10,1,6,3,8,2,4
+and Alice wants to send the message &quot;retreat now&quot; to Bob, she rearranges the disks as per the key and rotates each disk to obtain the plaintext, which is shown at the left, with spacing added for clarity:
+
+7:    &lt; R AFDCE O NJQGWTHSPYBXIZULVKM &lt;
+9:    &lt; E NYVUB M CQWAOIKZGJXPLTDSRFH &lt;
+5:    &lt; T SGJVD K CPMNZQWXYIHFRLABEUO &lt;
+10:    &lt; R SCZQK E LMXYIHPUDNAJFBOWTGV &lt;
+1:    &lt; E ZWAXJ G DLUBVIQHKYPNTCRMOSF &lt;
+6:    &lt; A MKGHI W PNYCJBFZDRUSLOQXVET &lt;
+3:    &lt; T EQGYX P LOCKBDMAIZVRNSJUWFH &lt;
+8:    &lt; N OZUTW D CVRJLXKISEFAPMYGHBQ &lt;
+2:    &lt; O YHGVS F UWIKPBELNACZDTRXMJQ &lt;
+4:    &lt; W AORPL N DVHGFCUKTEBSXQYIZMJ &lt;
+She then selects the ciphertext from the sixth row of the cylinder up from the plaintext. This ciphertext is also highlighted above with spacing, and gives:
+
+OMKEGWPDFN
+When Bob gets the ciphertext, he rearranges the disks on his cylinder to the key arrangement, rotates the disks to give the ciphertext, and then reads the plaintext six rows down from the ciphertext, or simply looks over the cylinder for a row that makes sense.</code></pre>
+<p>简述一下解密的方法：</p>
+<blockquote>
+<p>给出了加密表，密匙和密文。</p>
+<p>1.将加密表根据密匙的数字顺序排序。</p>
+<p>2.每一行相当于一个滚轮，字母是环形首尾相接排列的，按照密文将加密表每一行重新排列，使第一个字母符合密文，排列时当作一个环进行排列。</p>
+<p>3.排好后按列读出，看看哪列成句子。</p>
+</blockquote>
+<pre><code>加密表：
+1:    &lt; ZWAXJGDLUBVIQHKYPNTCRMOSFE &lt;
+2:    &lt; KPBELNACZDTRXMJQOYHGVSFUWI &lt;
+3:    &lt; BDMAIZVRNSJUWFHTEQGYXPLOCK &lt;
+4:    &lt; RPLNDVHGFCUKTEBSXQYIZMJWAO &lt;
+5:    &lt; IHFRLABEUOTSGJVDKCPMNZQWXY &lt;
+6:    &lt; AMKGHIWPNYCJBFZDRUSLOQXVET &lt;
+7:    &lt; GWTHSPYBXIZULVKMRAFDCEONJQ &lt;
+8:    &lt; NOZUTWDCVRJLXKISEFAPMYGHBQ &lt;
+9:    &lt; XPLTDSRFHENYVUBMCQWAOIKZGJ &lt;
+10:    &lt; UDNAJFBOWTGVRSCZQKELMXYIHP &lt;
+11：    &lt; MNBVCXZQWERTPOIUYALSKDJFHG &lt;
+12：    &lt; LVNCMXZPQOWEIURYTASBKJDFHG &lt;
+13：    &lt; JZQAWSXCDERFVBGTYHNUMKILOP &lt;
+
+密钥为：2，3，7，5，13,12,9，1，8，10，4，11，6
+密文为：NFQKSEVOQOFNP
+
+2:    &lt; N ACZDTRXMJQOYHGVS FUWIKPBEL &lt;
+3:    &lt; F HTEQGYXPLOCKBDMA IZVRNSJUW &lt;
+7:    &lt; Q GWTHSPYBXIZULVKM RAFDCEONJ &lt;
+5:    &lt; K CPMNZQWXYIHFRLAB EUOTSGJVD &lt;
+13：    &lt; S XCDERFVBGTYHNUMK ILOPJZQAW &lt;
+12：    &lt; E IURYTASBKJDFHGLV NCMXZPQOW &lt;
+9:    &lt; V UBMCQWAOIKZGJXPL TDSRFHENY &lt;
+1:    &lt; O SFEZWAXJGDLUBVIQ HKYPNTCRM &lt;
+8:    &lt; Q NOZUTWDCVRJLXKIS EFAPMYGHB &lt;
+10:    &lt; O WTGVRSCZQKELMXYI HPUDNAJFB &lt;
+4:    &lt; F CUKTEBSXQYIZMJWA ORPLNDVHG &lt;
+11：    &lt; N BVCXZQWERTPOIUYA LSKDJFHGM &lt;
+6:    &lt; P NYCJBFZDRUSLOQXV ETAMKGHIW &lt;
+
+--&gt;FIREINTHEHOLE</code></pre>
+<p>2.神秘图片（100）</p>
+<p>下载附件是一png格式图片<a href="http://omfp4wyym.bkt.clouddn.com/blog/20170502/002753940.png" target="_blank" rel="noopener">下载</a></p>
+<p>放到pngcheck看一下，发现IEND块里有东西。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170502/002916852.png" alt="mark"></p>
+<p>用foremost进行恢复。</p>
+<p>执行<code>foremost -v 1.png</code>,文件生成一个文件夹。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170502/003243173.png" alt="mark"></p>
+<p>查看恢复出来的图片。</p>
+<p>发现里面有个这个，是猪圈密码。<a href="http://haojiawei.xyz/2017/02/08/%E7%8C%AA%E5%9C%88%E5%AF%86%E7%A0%81/" target="_blank" rel="noopener">猪圈密码</a></p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170502/003401527.png" alt="mark"></p>
+<p>解得-goodluck。</p>
+<p>3.告诉你个秘密（100）</p>
+<pre><code>636A56355279427363446C4A49454A7154534230526D6843
+56445A31614342354E326C4B4946467A5769426961453067
+
+-----------------------------------------------------
+16进制转字符
+cjV5RyBscDlJIEJqTSB0RmhC
+VDZ1aCB5N2lKIFFzWiBiaE0g
+-------------------------------------------------------
+解base64
+r5yG lp9I BjM tFhB
+T6uh y7iJ QsZ bhM 
+---------------------------
+tongyuan</code></pre>
+<p>4.你猜猜（100）</p>
+<p>下载得</p>
+<pre><code>504B03040A0001080000626D0A49F4B5091F1E0000001200000008000000666C61672E7478746C9F170D35D0A45826A03E161FB96870EDDFC7C89A11862F9199B4CD78E7504B01023F000A0001080000626D0A49F4B5091F1E00000012000000080024000000000000002000000000000000666C61672E7478740A0020000000000001001800AF150210CAF2D1015CAEAA05CAF2D1015CAEAA05CAF2D101504B050600000000010001005A000000440000000000</code></pre>
+<p>看到504B应该就知道是怎么回事了，这是一个zip文件的16进制数据。</p>
+<p>16进制编辑保存为zip文件，打开发现flag.txt被加密，尝试伪加密无果，转而爆破，得key：123456，得flag。</p>
+<p>5.公邮密码（100）</p>
+<p>下载得一个加密的zip文件，爆破得到密码，输入密码得到base64加密过的flag，解密即可。</p>
+<p>6.二维码（150）</p>
+<p>​    下载是一个二维码，内容是<code>The password of the router is our flag</code>说flag在路由器里。改为zip，内容被加密，文件名比较不同<code>u5bc6u7801u7eafu6570u5b57u5171u0038u4f4d</code>，是Unicode编码，解码后告诉我们密码纯数字共8位。爆破得密码为20161114.</p>
+<p>​    解压后又给出了密码提示和一个.cap的文件，用<a href="http://baike.baidu.com/link?url=UZsZItyiU4vTIpjxtz3wK3nGgLu22w-XIvKCkFGQ1LvwN_UziKZtAFzOFVDUfScM_zlZTB1NHAT0wGZu3H1DDq" target="_blank" rel="noopener">EWSA</a>爆破。根据提示<code>前四位是ISCC 后四位由大写字母和数字构成</code>，写出字典。</p>
+<pre><code>s=&#39;1234567890QWERTYUIOPASDFGHJKLZXCVBNM&#39;
+ss=&#39;ISCC&#39;
+flag=open(&#39;1.txt&#39;,&#39;w&#39;)
+for a in s:
+    for b in s:
+        for c in s:
+            for d in s:
+                key=ss+a+b+c+d
+                flag.write(key)
+                flag.write(&#39;\n&#39;)
+flag.close()
+</code></pre>
+<p>爆破得密码即flag.</p>
+<h2 id="0X02-Misc"><a href="#0X02-Misc" class="headerlink" title="0X02 Misc"></a>0X02 Misc</h2><p>1.眼见非实（100）</p>
+<p>下载的是一个word文档，出错打不开。改一下后缀解压出来，在document.xml文件中有flag。</p>
+<p>2.普通Disco（250）</p>
+<p>下载是一个disco.wav文件，频谱分析，开头一段又东西。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170520/113052128.png" alt="mark"></p>
+<p>高低位对应01，然后二进制转十进制，再转字符。</p>
+<pre><code>1100110    102
+1101100    108
+1100001    97
+1100111    103
+1111011    123
+1010111    87
+0110000    48
+1010111    87
+0101010    42
+1100110    102
+1110101    117
+1101110    110
+1101110    110
+1111001    121
+1111101    125
+
+flag&#123;W0W*funny&#125;</code></pre>
+<p>3.很普通的数独（300）</p>
+<p>下载得到25个数独图片，有数字的格涂黑，拼成二维码。（ps大法好）</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170520/120732519.png" alt="mark"></p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170520/120748410.png" alt="mark"></p>
+<p>扫码，解base64，得flag。</p>
+<p>4.就在其中（100）</p>
+<p>wireshark分析没东西，转而去binwalk分离文件，分离出的一堆东西里又个压缩包，可以解压出key.txt,但打开是乱码，文件中还有一个rsa解密key，openssl命令解密得flag。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170520/162146042.png" alt="mark"></p>
+<p>命令：</p>
+<pre><code># openssl rsautl -decrypt -in &#39;/root/output/zip/00000047/key.txt&#39; -inkey &#39;/root/_Misc-03.pcapng.extracted/AC76.key&#39; -out key.de</code></pre>
+<blockquote>
+<p>openssl -RSA资料</p>
+<p><a href="http://www.cnblogs.com/aLittleBitCool/archive/2011/09/22/2185418.html" target="_blank" rel="noopener">http://www.cnblogs.com/aLittleBitCool/archive/2011/09/22/2185418.html</a></p>
+</blockquote>
+<h2 id="0X03-Web"><a href="#0X03-Web" class="headerlink" title="0X03 Web"></a>0X03 Web</h2><p>1.自相矛盾（150）</p>
+<pre><code>
+打破常规，毁你三观！！！！
+
+&lt;!--
+$v1=0;$v2=0;$v3=0;
+$a=(array)json_decode(@$_GET[&#39;iscc&#39;]);  #json格式传入数据，get方式读入
+
+if(is_array($a))&#123;
+    is_numeric(@$a[&quot;bar1&quot;])?die(&quot;nope&quot;):NULL;
+    if(@$a[&quot;bar1&quot;])&#123;
+        ($a[&quot;bar1&quot;]&gt;2016)?$v1=1:NULL;    #iscc中的bar1不能是数字还得大于2016
+    &#125;
+    if(is_array(@$a[&quot;bar2&quot;]))&#123;
+        if(count($a[&quot;bar2&quot;])!==5 OR !is_array($a[&quot;bar2&quot;][0])) die(&quot;nope&quot;);
+            #bar2是5位数组且第0位也是数组
+        $pos = array_search(&quot;nudt&quot;, $a[&quot;bar2&quot;]); 
+        $pos===false?die(&quot;nope&quot;):NULL;   #bar2的每一位要含有nudt
+        foreach($a[&quot;bar2&quot;] as $key=&gt;$val)&#123;
+            $val===&quot;nudt&quot;?die(&quot;nope&quot;):NULL;    #bar2的每一位不能含有nudt
+        &#125;
+        $v2=1;
+
+    &#125;    
+&#125;
+$c=@$_GET[&#39;cat&#39;];
+$d=@$_GET[&#39;dog&#39;];
+if(@$c[1])&#123;
+    if(!strcmp($c[1],$d) &amp;&amp; $c[1]!==$d)&#123;  #0&amp;&amp;1
+
+        eregi(&quot;3|1|c&quot;,$d.$c[0])?die(&quot;nope&quot;):NULL;
+        strpos(($c[0].$d), &quot;isccctf2017&quot;)?$v3=1:NULL; #要有isccctf2017
+
+    &#125;
+
+&#125;
+if($v1 &amp;&amp; $v2 &amp;&amp; $v3)&#123; 
+
+   echo $flag;
+&#125;
+--&gt;
+</code></pre>
+<p>php的弱类型：当一个整形和一个其他类型行比较的时候，会先把其他类型intval再比</p>
+<p>传{“bar1”:”2017a”}就好了。</p>
+<p>intval(nudt)=0,所以{“bar2”:”[[0],0,0,0,0]”}</p>
+<p>cat要是数组，cat[1]和dog比较，要strcmp为0，cat[1]!==dog为1，所以让cat[1]为数字，dog为字符。</p>
+<p>dog又要包含isccctf2017，用%00截断。</p>
+<p>payload：<code>?iscc=&#123;&quot;bar1&quot;:&quot;2017a&quot;,&quot;bar2&quot;:[[0],0,0,0,0]&#125;&amp;cat[0]=1&amp;cat[1][]=1&amp;dog=%00isccctf2017</code></p>
+<p>2.我们一起来日站（150）</p>
+<p>看一下/robots.txt，</p>
+<pre><code>#
+# robots.txt 
+#
+User-agent: * 
+Disallow: /21232f297a57a5a743894a0e4a801fc3/
+Disallow: /api
+</code></pre>
+<p>去访问<code>http://139.129.108.53:5090/web-04/21232f297a57a5a743894a0e4a801fc3/</code>，猜测登陆页面为<code>http://139.129.108.53:5090/web-04/21232f297a57a5a743894a0e4a801fc3/admin.php</code>.</p>
+<p>正确，进入登陆页面，抓包，万能密码登陆,得到flag。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170519/210143688.png" alt="mark"></p>
+<blockquote>
+<p>后台登陆万能密码</p>
+<p><a href="https://www.douban.com/note/168041331/" target="_blank" rel="noopener">https://www.douban.com/note/168041331/</a></p>
+</blockquote>
+<p>3.交换flag（100）</p>
+<p>​    抓个包，参数传入的值为<code>f1ag</code>,这个在题目页面细心一点可以发现，再就是参数名称的问题，每一次根据反馈不断添加就好。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170519/210535245.png" alt="mark"></p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170519/210642673.png" alt="mark"></p>
+<p>4.WelcomeToMySQL（100）</p>
+<p>可以上传文件，上传图片可以，传php的马就会弹窗，从表哥那得知有.php5的这种文件，直接可以上传，传马，在base.php文件中发现username和password，登陆数据库，得到flag。</p>
+<p><img src="http://omfp4wyym.bkt.clouddn.com/blog/20170520/171613094.png" alt="mark"></p>
+<p>5.</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2017/05/02/iscc-writeup/">https://lanvnal.com/2017/05/02/iscc-writeup/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/WriteUp/">
+                                    <span class="chip bg-color">WriteUp</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2017/05/04/c-ti-mu-oj/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/4.png" class="responsive-img" alt="C++题目（OJ）">
+                        
+                        <span class="card-title">C++题目（OJ）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2017-05-04
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/other/" class="post-category">
+                                    other
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/other/">
+                        <span class="chip bg-color">other</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2017/04/29/md5-zhi-0e-kai-tou-de-shu-zi-he-zi-mu-zi-fu-chuan/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/0.jpg" class="responsive-img" alt="MD5值0e开头的数字和字母字符串">
+                        
+                        <span class="card-title">MD5值0e开头的数字和字母字符串</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2017-04-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            LANVNAL
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/websec/">
+                        <span class="chip bg-color">websec</span>
+                    </a>
+                    
+                    <a href="/tags/note/">
+                        <span class="chip bg-color">note</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

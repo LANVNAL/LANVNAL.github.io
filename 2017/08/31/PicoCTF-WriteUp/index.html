@@ -1,0 +1,1283 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="PicoCTF WriteUp, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>PicoCTF WriteUp | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">PicoCTF WriteUp</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/WriteUp/">
+                                <span class="chip bg-color">WriteUp</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2017-08-31
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-02-16
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.9k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="PicoCTF-WriteUp"><a href="#PicoCTF-WriteUp" class="headerlink" title="PicoCTF WriteUp"></a>PicoCTF WriteUp</h1><h2 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h2><h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><h4 id="1-Internet-Kitties"><a href="#1-Internet-Kitties" class="headerlink" title="1.Internet Kitties"></a>1.Internet Kitties</h4><blockquote>
+<p>I was told there was something at IP shell2017.picoctf.com with port 24369. How do I get there? Do I need a ship for the port?</p>
+<p>**** HINTS</p>
+<p>Look at using the netcat (nc) command!</p>
+<p>To figure out how to use it, you can run “man nc” or “nc -h” on the shell, or search for it on the interwebz</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>nc shell2017.picoctf.com 24369</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>648defaaba45452729b7179f0603df05</code></pre>
+<h4 id="2-Piazza"><a href="#2-Piazza" class="headerlink" title="2.Piazza"></a>2.Piazza</h4><blockquote>
+<p>Have questions about pico? You can ask <a href="http://piazza.com/picoctf/spring2017/31337" target="_blank" rel="noopener">here</a>. The access code is 31337.</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>注册Piazza的picoCTF课程。</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>flag&#123;ask_and_hop3fully_we_can_help&#125;</code></pre>
+<h4 id="3-Leaf-of-the-Tree"><a href="#3-Leaf-of-the-Tree" class="headerlink" title="3.Leaf of the Tree"></a>3.Leaf of the Tree</h4><blockquote>
+<p>We found this annoyingly named directory tree starting at /problems/5da315e9c7f1c9886ea371abee5ae8d0. It would be pretty lame to type out all of those directory names but maybe there is something in there worth finding? And maybe we dont need to type out all those names…? Follow the trunk, using cat and ls!</p>
+<p>**** HINTS</p>
+<p>Tab completion is a wonderful, wonderful thing</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>lanvnal@shell-web:~$ cd /problems/5da315e9c7f1c9886ea371abee5ae8d0    
+lanvnal@shell-web:/problems/5da315e9c7f1c9886ea371abee5ae8d0$ find | grep flag
+./trunk/trunke655/trunk8845/trunk9942/trunk2d10/trunk55d8/trunke715/trunkb041/flag                lanvnal@shellweb:/problems/5da315e9c7f1c9886ea371abee5ae8d0$cat trunk/trunke655/trunk8845/trunk9942/trunk2d10/trunk55d8/trunke715/trunkb041/flag
+42eed2e89ae8b05b56555f65e0ab81aa</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>42eed2e89ae8b05b56555f65e0ab81aa</code></pre>
+<h4 id="4-looooong"><a href="#4-looooong" class="headerlink" title="4.looooong"></a>4.looooong</h4><blockquote>
+<p>I heard you have some “delusions of grandeur” about your typing speed. How fast can you go at shell2017.picoctf.com:59858?</p>
+<p>**** HINTS</p>
+<p>Use the nc command to connect!</p>
+<p>I hear python is a good means (among many) to generate the needed input.</p>
+<p>It might help to have multiple windows open</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<p>我的方法(捂脸</p>
+<pre><code>print &quot;x&quot; * time
+然后复制
+（逃</code></pre>
+<p>dalao的方法，python</p>
+<pre><code class="python">import re
+import socket
+
+# Open socket
+s = socket.socket()
+s.connect((&quot;shell2017.picoctf.com&quot;,44909))
+
+# Receive initial instructions
+instructions = s.recv(4096).decode(&quot;utf-8&quot;)
+print(instructions)
+
+# Parse instructions
+letter = re.search(&quot;&#39;([A-Za-z])&#39; character&quot;, instructions).group(1)
+count = int(re.search(&quot;&#39;([0-9]+)&#39; times&quot;, instructions).group(1))
+end = re.search(&quot;followed by a single &#39;([a-zA-Z0-9])&#39;&quot;, instructions).group(1)
+
+# Parse reply
+reply = (letter * count) + end + &quot;\n&quot;
+
+# Send reply
+s.send(reply.encode(&quot;utf-8&quot;))
+
+# Receive reply to reply
+print(s.recv(4096).decode(&quot;utf-8&quot;))</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>Flag: with_some_recognition_and_training_delusions_become_glimpses_84bb3b369444af45f140fa500f5e54c3</code></pre>
+<h4 id="5-Leaf-of-the-Forest"><a href="#5-Leaf-of-the-Forest" class="headerlink" title="5.Leaf of the Forest"></a>5.Leaf of the Forest</h4><blockquote>
+<p>We found an even bigger directory tree hiding a flag starting at /problems/db39b5c002d8445dc6d2bbf49a8ccc37. It would be impossible to find the file named flag manually…</p>
+<p>**** HINTS</p>
+<p>Is there a search function in Linux? Like if I wanted to ‘find’ something…</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>lanvnal@shell-web:/problems/5da315e9c7f1c9886ea371abee5ae8d0$ cd /problems/db39b5c002d8445dc6d2bbf49a8ccc37                                 
+lanvnal@shell-web:/problems/db39b5c002d8445dc6d2bbf49a8ccc37$ find | grep flag
+./forest/treeada53a/trunkb393/trunkb8ea/trunka3c4/trunk639d/trunk324e/trunk0bf8/trunkf462/branchd463/flag
+lanvnal@shell-web:/problems/db39b5c002d8445dc6d2bbf49a8ccc37$ cat forest/treeada53a/trunkb393/trunkb8ea/trunka3c4/trunk639d/trunk324e/trunk0bf8/trunkf462/branchd463/flag
+c99501b0fe95402ed1c9191102fe1b68l</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>c99501b0fe95402ed1c9191102fe1b68l</code></pre>
+<h4 id="6-WorldChat"><a href="#6-WorldChat" class="headerlink" title="6.WorldChat"></a>6.WorldChat</h4><blockquote>
+<p>We think someone is trying to transmit a flag over WorldChat. Unfortunately, there are so many other people talking that we can’t really keep track of what is going on! Go see if you can find the messenger at shell2017.picoctf.com:48145. Remember to use Ctrl-C to cut the connection if it overwhelms you!</p>
+<p>**** HINTS</p>
+<p>There are cool command line tools that can filter out lines with specific keywords in them. Check out ‘grep’! You can use the ‘|’ character to put all the output into another process or command (like the grep process)</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>nc shell2017.picoctf.com 48145 | grep -E &quot;this is part&quot;</code></pre>
+<pre><code>14:02:34 flagperson: this is part 1/8 of the flag - 748a
+14:02:35 flagperson: this is part 2/8 of the flag - 3a37
+14:02:37 flagperson: this is part 3/8 of the flag - ce62
+14:02:38 flagperson: this is part 4/8 of the flag - e537
+14:02:42 flagperson: this is part 5/8 of the flag - 4552
+14:02:43 flagperson: this is part 6/8 of the flag - c31f
+14:02:46 flagperson: this is part 7/8 of the flag - 5319
+14:02:48 flagperson: this is part 8/8 of the flag - 30dc
+14:02:49 flagperson: this is part 1/8 of the flag - 748a
+14:02:50 flagperson: this is part 2/8 of the flag - 3a37
+14:02:50 flagperson: this is part 3/8 of the flag - ce62
+14:02:55 flagperson: this is part 4/8 of the flag - e537
+14:03:02 flagperson: this is part 5/8 of the flag - 4552
+14:03:14 flagperson: this is part 6/8 of the flag - c31f
+14:03:20 flagperson: this is part 7/8 of the flag - 5319
+14:03:26 flagperson: this is part 8/8 of the flag - 30dc
+14:03:28 flagperson: this is part 1/8 of the flag - 748a
+14:03:29 flagperson: this is part 2/8 of the flag - 3a37
+14:03:30 flagperson: this is part 3/8 of the flag - ce62
+14:03:31 flagperson: this is part 4/8 of the flag - e537
+14:03:32 flagperson: this is part 5/8 of the flag - 4552</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>748a3a37ce62e5374552c31f531930dc</code></pre>
+<h3 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h3><h4 id="1-What-Is-Web"><a href="#1-What-Is-Web" class="headerlink" title="1.What Is Web"></a>1.What Is Web</h4><blockquote>
+<p>Someone told me that <a href="https://en.wikipedia.org/wiki/Tim_Berners-Lee" target="_blank" rel="noopener">some guy</a> came up with the “World Wide Web”, using “HTML” and “stuff”. Can you help me figure out what that is? <a href="http://shell2017.picoctf.com:52334/" target="_blank" rel="noopener">Website</a>.</p>
+<p>**** HINTS</p>
+<p>How can you figure out how the webpage is actually built?</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>源码--&gt;
+&lt;!-- The first part of the flag (there are 3 parts) is fab79c49d9e --&gt;
+kacker.css--&gt;
+The second part of the flag is 5ba511a0f24 
+script.js--&gt;
+The final part of the flag is 36308e33e85</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>fab79c49d9e5ba511a0f2436308e33e85</code></pre>
+<h3 id="FORENSICS"><a href="#FORENSICS" class="headerlink" title="FORENSICS"></a>FORENSICS</h3><h4 id="1-Digital-Camouflage"><a href="#1-Digital-Camouflage" class="headerlink" title="1.Digital Camouflage"></a>1.Digital Camouflage</h4><blockquote>
+<p>We need to gain access to some routers. Let’s try and see if we can find the password in the captured network data: <a href="https://webshell2017.picoctf.com/static/24b38c9557c7c1e23957cc68bdae34ef/data.pcap" target="_blank" rel="noopener">data.pcap</a>.</p>
+<p>**** HINTS</p>
+<p>It looks like someone logged in with their password earlier. Where would log in data be located in a network capture?</p>
+<p>If you think you found the flag, but it doesn’t work, consider that the data may be encrypted.</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<p>Wireshark分析，找到数据包#122，main.html</p>
+<pre><code>HTML Form URL Encoded: application/x-www-form-urlencoded
+    Form item: &quot;userid&quot; = &quot;spiveyp&quot;
+    Form item: &quot;pswrd&quot; = &quot;S04xWjZQWFZ5OQ==&quot;</code></pre>
+<p>Base64解码得到flag。</p>
+<p><strong>Flag</strong></p>
+<pre><code>KN1Z6PXVy9</code></pre>
+<h4 id="2-Special-Agent-User"><a href="#2-Special-Agent-User" class="headerlink" title="2.Special Agent User"></a>2.Special Agent User</h4><blockquote>
+<p>We can get into the Administrator’s computer with a browser exploit. But first, we need to figure out what browser they’re using. Perhaps this information is located in a network packet capture we took: <a href="https://webshell2017.picoctf.com/static/497f84833d05996a9f2b17015ed9b360/data.pcap" target="_blank" rel="noopener">data.pcap</a>. Enter the browser and version as “BrowserName BrowserVersion”. NOTE: We’re just looking for up to 3 levels of subversions for the browser version (ie. Version 1.2.3 for Version 1.2.3.4) and ignore any 0th subversions (ie. 1.2 for 1.2.0)</p>
+<p>** HINTS**</p>
+<p>Where can we find information on the browser in networking data? Maybe try <a href="http://www.useragentstring.com./" target="_blank" rel="noopener">reading up on user-agent strings</a>.</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>找UA
+User-Agent: Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>Chrome 40.0.2214</code></pre>
+<h3 id="CRYPTOGRAPHY"><a href="#CRYPTOGRAPHY" class="headerlink" title="CRYPTOGRAPHY"></a>CRYPTOGRAPHY</h3><h4 id="1-Keyz"><a href="#1-Keyz" class="headerlink" title="1.Keyz"></a>1.Keyz</h4><blockquote>
+<p>While webshells are nice, it’d be nice to be able to login directly. To do so, please add your own public key to ~/.ssh/authorized_keys, using the webshell. Make sure to copy it correctly! The key is in the ssh banner, displayed when you login remotely with ssh, to shell2017.picoctf.com</p>
+<p>**** HINTS</p>
+<p>There are plenty of tutorials out there. This one covers key generation: <a href="https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html" target="_blank" rel="noopener">https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html</a></p>
+<p>Then, use the web shell to copy/paste it, and use the appropriate tool to ssh to the server using your key</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<p><a href="http://www.laozuo.org/2811.html" target="_blank" rel="noopener">http://www.laozuo.org/2811.html</a></p>
+<p><strong>Flag</strong></p>
+<pre><code>who_needs_pwords_anyways</code></pre>
+<h4 id="2-Substitute"><a href="#2-Substitute" class="headerlink" title="2.Substitute"></a>2.Substitute</h4><blockquote>
+<p>A wizard (he seemed kinda odd…) handed me <a href="https://webshell2017.picoctf.com/static/44e178de57175cfc0e24f69d21e63f59/cipher.txt" target="_blank" rel="noopener">this</a>. Can you figure out what it says?</p>
+<p>**** HINTS</p>
+<p>There are tools that make this easy this.</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code class="php+HTML">字母替换
+工具解决。
+http://quipqiup.com/</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>    THE FLAG IS IFONLYMODERNCRYPTOWASLIKETHIS.</code></pre>
+<h3 id="MASTER-CHALLENGE"><a href="#MASTER-CHALLENGE" class="headerlink" title="MASTER CHALLENGE"></a>MASTER CHALLENGE</h3><blockquote>
+<p>Lazy Dev</p>
+<p>I really need to login to this <a href="http://shell2017.picoctf.com:35895/" target="_blank" rel="noopener">website</a>, but the developer hasn’t implemented login yet. Can you help?</p>
+<p>**** HINTS</p>
+<p>Where does the password check actually occur?</p>
+<p>Can you interact with the javascript directly?</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>看一下源码，js文件中有一段有问题导致总是返回false。
+//Validate the password. TBD!
+function validate(pword)&#123;
+  //TODO: Implement me
+  return true;
+&#125;
+
+//Make an ajax request to the server
+function make_ajax_req(input)&#123;
+  var text_response;
+  var http_req = new XMLHttpRequest();
+  var params = &quot;pword_valid=&quot; + input.toString();
+  http_req.open(&quot;POST&quot;, &quot;login&quot;, true);
+  http_req.setRequestHeader(&quot;Content-type&quot;, &quot;application/x-www-form-urlencoded&quot;);
+  http_req.onreadystatechange = function() &#123;//Call a function when the state changes.
+      if(http_req.readyState == 4 &amp;&amp; http_req.status == 200) &#123;
+      document.getElementById(&quot;res&quot;).innerHTML = http_req.responseText;
+    &#125;
+  &#125;
+  http_req.send(params);
+&#125;
+
+//Called when the user submits the password
+function process_password()&#123;
+  var pword = document.getElementById(&quot;password&quot;).value;
+  var res = validate(pword);
+  var server_res = make_ajax_req(res);
+&#125;
+有问题的就是--&gt;
+function validate(pword)&#123;
+  //TODO: Implement me
+  return true;
+&#125;
+导致的就是pword_valid=false。（ var params = &quot;pword_valid=&quot; + input.toString();）
+F12进行调试，改为true。</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>client_side_is_the_dark_sidebde1f567656f8c9b654a1ec24e1ff889</code></pre>
+<h2 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h2><h3 id="Web-1"><a href="#Web-1" class="headerlink" title="Web"></a>Web</h3><h4 id="1-My-First-SQL"><a href="#1-My-First-SQL" class="headerlink" title="1.My First SQL"></a>1.My First SQL</h4><blockquote>
+<p>I really need access to <a href="http://shell2017.picoctf.com:54020/" target="_blank" rel="noopener">website</a>, but I forgot my password and there is no reset. Can you help?</p>
+<p>**** HINTS</p>
+<p>Have you heard about SQL injection?</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>payload:
+user:1&#39; or &#39;&#39;=&#39;
+password:1&#39; or &#39;&#39;=&#39;</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>be_careful_what_you_let_people_ask_104d9ea430b41fb4c5560eecc0652111</code></pre>
+<h4 id="2-TW-GR-E1-ART"><a href="#2-TW-GR-E1-ART" class="headerlink" title="2.TW_GR_E1_ART"></a>2.TW_GR_E1_ART</h4><blockquote>
+<p>Oh, sweet, they made a spinoff game to Toaster Wars! That last room has a lot of flags in it though. I wonder which is the right one…? Check it out <a href="http://shell2017.picoctf.com:55830/" target="_blank" rel="noopener">here</a>.</p>
+<p>**** HINTS</p>
+<p>I think this game is running on a Node.js server. If it’s configured poorly, you may be able to access the server’s source. If my memory serves me correctly, Node servers have a special file that lists dependencies and a start command; maybe you can use that file to figure out where the other files are?</p>
+</blockquote>
+<h3 id="MISC-1"><a href="#MISC-1" class="headerlink" title="MISC"></a>MISC</h3><h4 id="1-Yarn"><a href="#1-Yarn" class="headerlink" title="1.Yarn"></a>1.Yarn</h4><blockquote>
+<p>I was told to use the linux strings command on <a href="https://webshell2017.picoctf.com/static/9adb6ebf01d8755201564dba69bc1a92/yarn" target="_blank" rel="noopener">yarn</a>, but it doesn’t work. Can you help? I lost the flag in the binary somewhere, and would like it back</p>
+<p>**** HINTS</p>
+<p>What does the strings command use to determine if something is a string?</p>
+<p>Is there an option to change the length of what strings considers as valid?</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>winhex打开可以看到Submit_me_for_I_am_the_flag，这就是flag。
+或
+linux下执行命令
+strings -n 2 -d flag yarn</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>Submit_me_for_I_am_the_flag</code></pre>
+<p>####2.Mystery Box</p>
+<blockquote>
+<p>You’ve found a mystery machine with a sticky <a href="https://webshell2017.picoctf.com/static/65c2504106ce38d8c2971ebaada542c7/note.txt" target="_blank" rel="noopener">note</a> attached to it! Oh, there’s also this <a href="https://webshell2017.picoctf.com/static/65c2504106ce38d8c2971ebaada542c7/MysteryBox.png" target="_blank" rel="noopener">picture</a> of the machine you found.</p>
+<p>**** HINTS</p>
+<p>It really gets your gears Turing.</p>
+<p>I hear there’s something Naval about it.</p>
+</blockquote>
+<p><strong>WriteUp</strong></p>
+<pre><code>Enigma密码机
+http://enigma.louisedade.co.uk/enigma.html?m3;b;b123;ALOG;APPP;FH-GL
+在线解密</code></pre>
+<p><strong>Flag</strong></p>
+<pre><code>QUITEPUZZLINGINDEED</code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2017/08/31/picoctf-writeup/">https://lanvnal.com/2017/08/31/picoctf-writeup/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/WriteUp/">
+                                    <span class="chip bg-color">WriteUp</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2017/09/04/xnuca-2017/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/3.jpg" class="responsive-img" alt="XNUCA-WriteUp">
+                        
+                        <span class="card-title">XNUCA-WriteUp</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2017-09-04
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            LANVNAL
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/WriteUp/">
+                        <span class="chip bg-color">WriteUp</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2017/08/27/finecms-dai-ma-shen-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/2.jpg" class="responsive-img" alt="Finecms代码审计">
+                        
+                        <span class="card-title">Finecms代码审计</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2017-08-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
+                                    代码审计
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">代码审计</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">120.6k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
