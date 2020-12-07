@@ -15897,7 +15897,7 @@ c<span class="token punctuation">.</span>interactive<span class="token punctuati
       </tags>
   </entry>
   <entry>
-    <title>typora-vue-theme主题介绍</title>
+    <title>通过adb获取隐私信息</title>
     <url>/2020/12/07/tong-guo-adb-huo-qu-yin-si-xin-xi/</url>
     <content><![CDATA[<blockquote>
 <p>主要测试了对于照片和通讯录、短信的一些操作，当然还有其他的攻击或信息获取方式，之后实现了再来更新总结。</p>
@@ -15928,7 +15928,7 @@ c<span class="token punctuation">.</span>interactive<span class="token punctuati
 <li>主要内容在 conversations 表</li>
 </ul>
 <h2 id="修改内容"><a href="#修改内容" class="headerlink" title="修改内容"></a>修改内容</h2><p>根据之前的各个表的字段关系进行修改就可以了。</p>
-<p>![<a href="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/adb-attack/Screenshot_20201206-165409.png" target="_blank" rel="noopener">https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/adb-attack/Screenshot_20201206-165409.png</a>)</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/adb-attack/Screenshot_20201206-165409.png" alt=""></p>
 ]]></content>
       <categories>
         <category>other</category>
