@@ -16190,21 +16190,21 @@ tomcat 9.0.39</code></pre><h2 id="2、创建项目"><a href="#2、创建项目" 
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>S2-001</title>
-</head>
-<body>
-<h2>S2-001 Demo</h2>
-<p>link: <a href="https://cwiki.apache.org/confluence/display/WW/S2-001">https://cwiki.apache.org/confluence/display/WW/S2-001</a></p>
-<s:form action="login">
-    <s:textfield name="username" label="username" />
-    <s:textfield name="password" label="password" />
-    <s:submit></s:submit>
-</s:form>
-</body>
-</html></code></pre>
+&lt;html>
+&lt;head>
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    &lt;title>S2-001&lt;/title>
+&lt;/head>
+&lt;body>
+&lt;h2>S2-001 Demo&lt;/h2>
+&lt;p>link: &lt;a href="https://cwiki.apache.org/confluence/display/WW/S2-001">https://cwiki.apache.org/confluence/display/WW/S2-001&lt;/a>&lt;/p>
+&lt;s:form action="login">
+    &lt;s:textfield name="username" label="username" />
+    &lt;s:textfield name="password" label="password" />
+    &lt;s:submit>&lt;/s:submit>
+&lt;/s:form>
+&lt;/body>
+&lt;/html></code></pre>
 <p><strong>welcome.jsp</strong></p>
 <pre class=" language-jsp"><code class="language-jsp"><%--
   Created by IntelliJ IDEA.
@@ -16217,15 +16217,15 @@ tomcat 9.0.39</code></pre><h2 id="2、创建项目"><a href="#2、创建项目" 
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>S2-001</title>
-</head>
-<body>
-<p>Hello <s:property value="username"></s:property></p>
-</body>
-</html></code></pre>
+&lt;html>
+&lt;head>
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    &lt;title>S2-001&lt;/title>
+&lt;/head>
+&lt;body>
+&lt;p>Hello &lt;s:property value="username">&lt;/s:property>&lt;/p>
+&lt;/body>
+&lt;/html></code></pre>
 <p>然后在 <code>main</code> 文件夹下创建一个 <code>resources</code> 文件夹，内部添加一个 <code>struts.xml</code>，内容为：</p>
 <pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
 
@@ -16762,14 +16762,14 @@ abc
       </tags>
   </entry>
   <entry>
-    <title>JavaWeb安全入门之 S2-001漏洞分析</title>
+    <title>JavaWeb安全入门之 S2-002漏洞分析</title>
     <url>/2021/01/05/s2-002-lou-dong-fen-xi/</url>
     <content><![CDATA[<h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1-漏洞简介"></a>1-漏洞简介</h2><p><code>Struts2-002</code>是一个 <code>XSS</code> 漏洞，该漏洞发生在 <code>s:url</code> 和 <code>s:a</code> 标签中，当标签的属性 <code>includeParams=all</code> 时，即可触发该漏洞。</p>
 <p>漏洞影响版本： <code>Struts 2.0.0 - Struts 2.1.8.1</code> 。更多详情可参考官方通告：<br><a href="https://cwiki.apache.org/confluence/display/WW/S2-002" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/WW/S2-002</a></p>
 <h2 id="2-环境搭建"><a href="#2-环境搭建" class="headerlink" title="2-环境搭建"></a>2-环境搭建</h2><p>在S2-001的环境基础上稍微修改一下就可以。<br>s2_002的环境也传到了github上，直接idea打开文件夹，配置一下tomcat就行。</p>
 <p>修改<code>index.jsp</code> ,去掉001中的form标签内容，添加如下内容：</p>
-<pre class=" language-jsp"><code class="language-jsp"><s:url action="login" includeParams="all"></s:url>
-<s:a href="%{url}">click</s:a></code></pre>
+<pre class=" language-jsp"><code class="language-jsp">&lt;s:url action="login" includeParams="all">&lt;/s:url>
+&lt;s:a href="%{url}">click&lt;/s:a></code></pre>
 <p>struts.xml</p>
 <pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>struts</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>package</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>S2-002<span class="token punctuation">"</span></span> <span class="token attr-name">extends</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>struts-default<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -16795,10 +16795,10 @@ abc
         <span class="token keyword">this</span><span class="token punctuation">.</span>url <span class="token operator">=</span> url<span class="token punctuation">;</span>
     <span class="token punctuation">}</span></code></pre>
 <h2 id="3-漏洞复现"><a href="#3-漏洞复现" class="headerlink" title="3-漏洞复现"></a>3-漏洞复现</h2><p>xss payload:<br><code>s:a</code>标签:</p>
-<pre class=" language-url"><code class="language-url">http://localhost:8009/S2_002_vul_war/login.action?"><script>alert(1)</script><"</code></pre>
+<pre class=" language-url"><code class="language-url">http://localhost:8009/S2_002_vul_war/login.action?&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;&quot;</code></pre>
 <p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_002/16097450915896.jpg" alt="-w1040"></p>
 <p><code>s:url</code> 标签</p>
-<pre class=" language-url"><code class="language-url">http://localhost:8009/S2_002_vul_war/login.action?<script>alert(1);</script>=1</code></pre>
+<pre class=" language-url"><code class="language-url">http://localhost:8009/S2_002_vul_war/login.action?&lt;script&gt;alert(1);&lt;/script&gt;=1</code></pre>
 <p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_002/16097451165005.jpg" alt="-w1008"></p>
 <h2 id="4-漏洞分析"><a href="#4-漏洞分析" class="headerlink" title="4-漏洞分析"></a>4-漏洞分析</h2><p>根据官方通告，问题是出在 <code>s:url</code> 和 <code>s:a</code> 标签里，在渲染模板的时候没有做好转义编码导致了XSS，先分析<code>s:url</code>标签。</p>
 <h3 id="s-url-标签"><a href="#s-url-标签" class="headerlink" title="s:url 标签"></a>s:url 标签</h3><p>根据大佬之前的分析文章知道我们先从找到标签的实现对象入手。</p>

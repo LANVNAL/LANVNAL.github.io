@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="JavaWeb安全入门之 S2-001漏洞分析, LANVNAL&#39;S Blog">
+    <meta name="keywords" content="JavaWeb安全入门之 S2-002漏洞分析, LANVNAL&#39;S Blog">
     <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>JavaWeb安全入门之 S2-001漏洞分析 | LANVNAL&#39;S Blog</title>
+    <title>JavaWeb安全入门之 S2-002漏洞分析 | LANVNAL&#39;S Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -334,7 +334,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">JavaWeb安全入门之 S2-001漏洞分析</h1>
+                    <h1 class="description center-align post-title">JavaWeb安全入门之 S2-002漏洞分析</h1>
                 </div>
             </div>
         </div>
@@ -494,7 +494,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    475
+                    1.8k
                 </div>
                 
 
@@ -515,8 +515,8 @@
 <p>漏洞影响版本： <code>Struts 2.0.0 - Struts 2.1.8.1</code> 。更多详情可参考官方通告：<br><a href="https://cwiki.apache.org/confluence/display/WW/S2-002" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/WW/S2-002</a></p>
 <h2 id="2-环境搭建"><a href="#2-环境搭建" class="headerlink" title="2-环境搭建"></a>2-环境搭建</h2><p>在S2-001的环境基础上稍微修改一下就可以。<br>s2_002的环境也传到了github上，直接idea打开文件夹，配置一下tomcat就行。</p>
 <p>修改<code>index.jsp</code> ,去掉001中的form标签内容，添加如下内容：</p>
-<pre class=" language-jsp"><code class="language-jsp"><s:url action="login" includeParams="all"></s:url>
-<s:a href="%{url}">click</s:a></code></pre>
+<pre class=" language-jsp"><code class="language-jsp">&lt;s:url action="login" includeParams="all">&lt;/s:url>
+&lt;s:a href="%{url}">click&lt;/s:a></code></pre>
 <p>struts.xml</p>
 <pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>struts</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>package</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>S2-002<span class="token punctuation">"</span></span> <span class="token attr-name">extends</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>struts-default<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -542,10 +542,10 @@
         <span class="token keyword">this</span><span class="token punctuation">.</span>url <span class="token operator">=</span> url<span class="token punctuation">;</span>
     <span class="token punctuation">}</span></code></pre>
 <h2 id="3-漏洞复现"><a href="#3-漏洞复现" class="headerlink" title="3-漏洞复现"></a>3-漏洞复现</h2><p>xss payload:<br><code>s:a</code>标签:</p>
-<pre class=" language-url"><code class="language-url">http://localhost:8009/S2_002_vul_war/login.action?"><script>alert(1)</script><"</code></pre>
+<pre class=" language-url"><code class="language-url">http://localhost:8009/S2_002_vul_war/login.action?&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;&quot;</code></pre>
 <p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_002/16097450915896.jpg" alt="-w1040"></p>
 <p><code>s:url</code> 标签</p>
-<pre class=" language-url"><code class="language-url">http://localhost:8009/S2_002_vul_war/login.action?<script>alert(1);</script>=1</code></pre>
+<pre class=" language-url"><code class="language-url">http://localhost:8009/S2_002_vul_war/login.action?&lt;script&gt;alert(1);&lt;/script&gt;=1</code></pre>
 <p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/All_S2_Vuls/S2_002/16097451165005.jpg" alt="-w1008"></p>
 <h2 id="4-漏洞分析"><a href="#4-漏洞分析" class="headerlink" title="4-漏洞分析"></a>4-漏洞分析</h2><p>根据官方通告，问题是出在 <code>s:url</code> 和 <code>s:a</code> 标签里，在渲染模板的时候没有做好转义编码导致了XSS，先分析<code>s:url</code>标签。</p>
 <h3 id="s-url-标签"><a href="#s-url-标签" class="headerlink" title="s:url 标签"></a>s:url 标签</h3><p>根据大佬之前的分析文章知道我们先从找到标签的实现对象入手。</p>
@@ -829,9 +829,9 @@ String<span class="token punctuation">[</span><span class="token punctuation">]<
                 <a href="/2021/01/05/s2-002-lou-dong-fen-xi/">
                     <div class="card-image">
                         
-                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/struts2.png" class="responsive-img" alt="JavaWeb安全入门之 S2-001漏洞分析">
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/struts2.png" class="responsive-img" alt="JavaWeb安全入门之 S2-002漏洞分析">
                         
-                        <span class="card-title">JavaWeb安全入门之 S2-001漏洞分析</span>
+                        <span class="card-title">JavaWeb安全入门之 S2-002漏洞分析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1066,7 +1066,7 @@ String<span class="token punctuation">[</span><span class="token punctuation">]<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">132.9k</span>&nbsp;字
+                class="white-color">134.4k</span>&nbsp;字
             
             
             
