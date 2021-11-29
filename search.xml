@@ -17644,11 +17644,11 @@ $http->end($response);</code></pre>
 
             <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token string">'/\s+/'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">,</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">"/flag/i"</span><span class="token punctuation">,</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'&lt;h2> no flag..'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">"/flag/i"</span><span class="token punctuation">,</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'no flag..'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
 
             <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">file_exists</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 
-                <span class="token keyword">echo</span> <span class="token string">"file_exists() return true..&lt;/br>"</span><span class="token punctuation">;</span>
+                <span class="token keyword">echo</span> <span class="token string">"file_exists() return true.."</span><span class="token punctuation">;</span>
 
                 <span class="token keyword">die</span><span class="token punctuation">(</span> <span class="token string">"hacker!!!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -17666,7 +17666,7 @@ $http->end($response);</code></pre>
 
 
 
-            <span class="token keyword">echo</span> <span class="token string">"Error! no file parameter &lt;br/>"</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token string">"Error! no file parameter "</span><span class="token punctuation">;</span>
 
             <span class="token keyword">echo</span> <span class="token string">"highlight_file Error"</span><span class="token punctuation">;</span>
 
@@ -17698,7 +17698,7 @@ $http->end($response);</code></pre>
 
                 <span class="token punctuation">{</span>
 
-                    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'&lt;/br> &lt;h1>Hacking?'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'Hacking?'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
                     <span class="token function">exit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
