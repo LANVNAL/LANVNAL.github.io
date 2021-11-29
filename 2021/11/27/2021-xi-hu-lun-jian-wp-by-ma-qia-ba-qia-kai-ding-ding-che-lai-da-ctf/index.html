@@ -494,7 +494,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.3k
                 </div>
                 
 
@@ -573,107 +573,107 @@ $response->send();
 
 $http->end($response);</code></pre>
 <p>通过这种方式能去读到文件，读了一通后读Index.php，解码后内容如下：</p>
-<pre class=" language-HTML"><code class="language-HTML"><?php
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 
 
 
-namespace app\controller;
+<span class="token keyword">namespace</span> <span class="token package">app<span class="token punctuation">\</span>controller</span><span class="token punctuation">;</span>
 
 
 
-use app\BaseController;
+<span class="token keyword">use</span> <span class="token package">app<span class="token punctuation">\</span>BaseController</span><span class="token punctuation">;</span>
 
 
 
-class Index extends BaseController
+<span class="token keyword">class</span> <span class="token class-name">Index</span> <span class="token keyword">extends</span> <span class="token class-name">BaseController</span>
 
-{
+<span class="token punctuation">{</span>
 
-    public function index()
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-    {
+    <span class="token punctuation">{</span>
 
-        //return <htmlxxx13载初心不改 - 你值得信赖的PHP框架>;
+        <span class="token comment" spellcheck="true">//return "htmlxxx13载初心不改 - 你值得信赖的PHP框架";</span>
 
-        if (isset($_GET['file'])) {
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'file'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
-            $file = $_GET['file'];
+            <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'file'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-            $file = trim($file);
+            <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token function">trim</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            $file = preg_replace('/\s+/','',$file);
+            <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token string">'/\s+/'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">,</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            if(preg_match("/flag/i",$file)){ die('<h2> no flag..');}
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">"/flag/i"</span><span class="token punctuation">,</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'&lt;h2> no flag..'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
 
-            if(file_exists($file)){
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">file_exists</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 
-                echo "file_exists() return true..</br>";
+                <span class="token keyword">echo</span> <span class="token string">"file_exists() return true..&lt;/br>"</span><span class="token punctuation">;</span>
 
-                die( "hacker!!!");
+                <span class="token keyword">die</span><span class="token punctuation">(</span> <span class="token string">"hacker!!!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            }else {
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
 
-                echo "file_exists() return false..";
+                <span class="token keyword">echo</span> <span class="token string">"file_exists() return false.."</span><span class="token punctuation">;</span>
 
-                @highlight_file($file);
+                @<span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            }
-
-
-
-        } else {
+            <span class="token punctuation">}</span>
 
 
 
-            echo "Error! no file parameter <br/>";
-
-            echo "highlight_file Error";
-
-        }
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
 
 
 
-    }
+            <span class="token keyword">echo</span> <span class="token string">"Error! no file parameter &lt;br/>"</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">echo</span> <span class="token string">"highlight_file Error"</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
 
 
 
-    public function unser(){
-
-        if(isset($_GET['vulvul'])){
-
-            $ser = $_GET['vulvul'];
-
-            $vul = parse_url($_SERVER['REQUEST_URI']);
-
-            parse_str($vul['query'],$query);
+    <span class="token punctuation">}</span>
 
 
 
-            foreach($query as $value)
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">unser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 
-            {
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'vulvul'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 
-                if(preg_match("/O/i",$value))
+            <span class="token variable">$ser</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'vulvul'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-                {
+            <span class="token variable">$vul</span> <span class="token operator">=</span> <span class="token function">parse_url</span><span class="token punctuation">(</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string">'REQUEST_URI'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-                    die('</br> <h1>Hacking?');
-
-                    exit();
-
-                }
-
-            }
-
-            unserialize($ser);
-
-        }
+            <span class="token function">parse_str</span><span class="token punctuation">(</span><span class="token variable">$vul</span><span class="token punctuation">[</span><span class="token string">'query'</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token variable">$query</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 
 
-    }
+            <span class="token keyword">foreach</span><span class="token punctuation">(</span><span class="token variable">$query</span> <span class="token keyword">as</span> <span class="token variable">$value</span><span class="token punctuation">)</span>
 
-}</code></pre>
+            <span class="token punctuation">{</span>
+
+                <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">"/O/i"</span><span class="token punctuation">,</span><span class="token variable">$value</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+                <span class="token punctuation">{</span>
+
+                    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'&lt;/br> &lt;h1>Hacking?'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token punctuation">}</span>
+
+            <span class="token punctuation">}</span>
+
+            <span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token variable">$ser</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
+
+
+
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
 <p>参考<a href="https://www.shawroot.cc/1044.html这个url用///public/?payload=来来绕过O的检测" target="_blank" rel="noopener">https://www.shawroot.cc/1044.html这个url用///public/?payload=来来绕过O的检测</a></p>
 <p><a href="https://xz.aliyun.com/t/9310#toc-6" target="_blank" rel="noopener">https://xz.aliyun.com/t/9310#toc-6</a> 链子能用</p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
@@ -1871,7 +1871,7 @@ print(long_to_bytes(pow(c,dp,int(p))))</code></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">142k</span>&nbsp;字
+                class="white-color">142.2k</span>&nbsp;字
             
             
             
