@@ -18774,4 +18774,33 @@ requests<span class="token punctuation">.</span>get<span class="token punctuatio
         <tag>HTB</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ESXI安装黑群晖DSM7</title>
+    <url>/2021/12/08/esxi7-an-zhuang-hei-qun-hui-dsm7/</url>
+    <content><![CDATA[<h1 id="ESXI安装黑群晖"><a href="#ESXI安装黑群晖" class="headerlink" title="ESXI安装黑群晖"></a>ESXI安装黑群晖</h1><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><blockquote>
+<p>ESXI: ESXI7.0 U2</p>
+<p>用到的文件：链接: <a href="https://pan.baidu.com/s/1iTV58aY9HqYMX7GYDV641w" target="_blank" rel="noopener">https://pan.baidu.com/s/1iTV58aY9HqYMX7GYDV641w</a> 提取码: 89w7 </p>
+</blockquote>
+<h2 id="安装指南"><a href="#安装指南" class="headerlink" title="安装指南"></a>安装指南</h2><p>参考这两个教程，非常感谢：</p>
+<p><a href="https://www.bilibili.com/video/BV1fq4y1R7qA" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1fq4y1R7qA</a></p>
+<p><a href="https://blog.csdn.net/hahofe/article/details/117599105" target="_blank" rel="noopener">https://blog.csdn.net/hahofe/article/details/117599105</a></p>
+<p>PS：镜像已经转换好在文章开始的百度云了</p>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>1、虚拟机设置，需要将“控制器位置”修改成“SATA 控制器0 SATA（0:0）”这样系统启动的时候就优先启动引导系统了。</p>
+<p><img src="https://s2.loli.net/2021/12/08/vPeuNZl1jCE3SwU.png" alt="image-20211208013219966"></p>
+<p>2、网络适配器类型要选择E1000e</p>
+<p><img src="https://s2.loli.net/2021/12/08/3mVwOt9oeyTq7gU.png" alt="image-20211208013236693"></p>
+<p>3、需要修改“标准虚拟交换机”的安全选项，把默认的“拒绝”都修改成“接受”，这个是个大坑，不改搜不到nas。mac地址更改默认是关闭的，esxi6.7默认是开启的。这里必须开启，不然群晖无法联网，搜索不到</p>
+<p><img src="https://s2.loli.net/2021/12/08/4t3KDRmb8zn92Bo.png" alt="image-20211208013343804"></p>
+<p>还有就是因为我是远程使用的vpn配置的服务器，所以使用群晖软件搜索的时候可能有问题，所以在同服务器上开了个Windows机器用来搜索和安装系统。</p>
+<h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p><img src="https://s2.loli.net/2021/12/08/Ov98nDeSPJA3sb7.png" alt="image-20211208013720491"></p>
+<p>不过分配的是8核CPU不知道为啥是显示4核，其他显示的信息是对的。</p>
+]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>踩坑记录</tag>
+      </tags>
+  </entry>
 </search>
