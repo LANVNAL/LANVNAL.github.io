@@ -19184,4 +19184,46 @@ No resources found <span class="token keyword">in</span> default namespace.</cod
         <tag>安全学习</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MAC定期需要更改密码的问题的解决</title>
+    <url>/2022/02/11/mac-ding-qi-xu-yao-geng-gai-mi-ma-de-wen-ti-jie-jue/</url>
+    <content><![CDATA[<h1 id="MAC定期需要更改密码的问题"><a href="#MAC定期需要更改密码的问题" class="headerlink" title="MAC定期需要更改密码的问题"></a>MAC定期需要更改密码的问题</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>电脑登陆提示 <code>密码将在X天后过期</code></p>
+<p>一般来说，消费或者个人用户的机器上不会有用户账户密码时效规则，而企业用户中比较常见。主要原因是之前实习的时候为了入域，安装了ioa，但是卸载的话没使用正确的方式，直接拖垃圾桶了，当时软件设置的密码策略就还在，所以就会定期提示更改密码</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>执行 <code>pwpolicy -getaccountpolicies</code> 来查看当前的用户策略</p>
+<p>搜索 <code>policyCategoryPasswordChange</code> 关键字，发现果然有如下策略内容：</p>
+<pre class=" language-xml"><code class="language-xml">    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>policyCategoryPasswordChange<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>array</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>policyContent<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>policyAttributeCurrentTime <span class="token entity" title="&gt;">&amp;gt;</span> policyAttributeLastPasswordChangeTime + (policyAttributeExpiresEveryNDays * 24 * 60 * 60)<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>policyIdentifier<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>ProfilePayload:c4c9d4c0-9f7f-0139-d063-003ee1c5a824:maxPINAgeInDays<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>policyParameters<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>policyAttributeExpiresEveryNDays<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>integer</span><span class="token punctuation">></span></span>90<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>integer</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>array</span><span class="token punctuation">></span></span></code></pre>
+<p>执行如下命令保存原本xml:</p>
+<pre class=" language-shell"><code class="language-shell">pwpolicy -getaccountpolicies > accountpolicies.xml</code></pre>
+<p>记得删除第一行的内容，因为是命令领导输出，不属于xml</p>
+<p>然后删除上面关于定期更改密码的设置，再通过如下指令设定：</p>
+<pre class=" language-shell"><code class="language-shell">➜ pwpolicy -setaccountpolicies accountpolicies.xml
+Password for authenticator lanvnal:
+Setting global account policies</code></pre>
+<p>就OK了</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://discussionschinese.apple.com/thread/252149877" target="_blank" rel="noopener">https://discussionschinese.apple.com/thread/252149877</a></li>
+<li><a href="https://mlog.club/article/5247734" target="_blank" rel="noopener">https://mlog.club/article/5247734</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>踩坑记录</tag>
+        <tag>macOS</tag>
+      </tags>
+  </entry>
 </search>
