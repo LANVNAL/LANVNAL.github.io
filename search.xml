@@ -19226,4 +19226,188 @@ Setting global account policies</code></pre>
         <tag>macOS</tag>
       </tags>
   </entry>
+  <entry>
+    <title>eBPF编程入门学习笔记--C编程</title>
+    <url>/2022/09/28/ebpf-bian-cheng-ru-men-xue-xi-bi-ji-c-bian-cheng/</url>
+    <content><![CDATA[<h1 id="eBPF编程入门学习笔记–C编程"><a href="#eBPF编程入门学习笔记–C编程" class="headerlink" title="eBPF编程入门学习笔记–C编程"></a>eBPF编程入门学习笔记–C编程</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前的BPF编程方式：<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/ebpf_learn/note1/16642980254809.jpg" alt=""></p>
+<blockquote>
+<p>其中ply目前也应该已经比较完善了，他的仓库是：<a href="https://github.com/iovisor/ply" target="_blank" rel="noopener">https://github.com/iovisor/ply</a></p>
+</blockquote>
+<p>可以看出目前BPF编程主要分成3种方式，指令集编程、C编程和BPF前端。<br>指令集编程就是直接写BPF的指令集，我们通过单个指令的组合进行编程，比较困难。可参考<a href="https://zhuanlan.zhihu.com/p/487995137" target="_blank" rel="noopener">这篇文章</a>。<br>C编程 编出就是本文下面的内容，我们需要实现 kern.c（bpf程序） 和 user.c（加载器）。<br>BPF前端，更友好的编程方式，提供了编程的框架，将一些操作封装成了函数，方便开发。详细的区别将在后续学习中进行记录。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://www.bilibili.com/video/BV1f54y1h74r" target="_blank" rel="noopener">Linux内核之旅-BPF C编程入门</a></li>
+<li><a href="https://www.cnblogs.com/lfri/p/15402973.html" target="_blank" rel="noopener">博客笔记</a></li>
+<li><a href="https://cloudnative.to/blog/compile-bpf-examples/" target="_blank" rel="noopener">编译运行Linux内核源码中的eBPF示例代码</a></li>
+</ul>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>使用ubuntu20版本</p>
+<p>1.1.下载内核源码<br>下载的内核版本应与你系统的版本一致，查看当前内核版本 uname -r</p>
+<p>然后在源码镜像站点(<a href="http://ftp.sjtu.edu.cn/sites/ftp.kernel.org/pub/linux/kernel)下载对应版本的内核源码" target="_blank" rel="noopener">http://ftp.sjtu.edu.cn/sites/ftp.kernel.org/pub/linux/kernel)下载对应版本的内核源码</a></p>
+<p>我是 5.13.0版本，所以下载对应的源码：</p>
+<pre><code>http://ftp.sjtu.edu.cn/sites/ftp.kernel.org/pub/linux/kernel/v5.x/linux-5.13.tar.gz</code></pre><p>解压到/usr/src/目录下</p>
+<p>1.2.安装依赖项</p>
+<pre><code>apt install libncurses5-dev flex bison libelf-dev binutils-dev libssl-dev</code></pre><p>1.3.安装Clang和LLVM<br>然后使用以下两条命令分别安装 clang 和 llvm</p>
+<pre><code>apt install clang
+apt install llvm</code></pre><blockquote>
+<p>这个下面几个过程中可能会遇到各种 fatal error 错误，基本上是依赖缺失导致的，关键报错搜索就有解决办法，安装对应缺失的文件即可</p>
+</blockquote>
+<p>1.4.配置内核<br>在源码根目录下使用make defconfig生成.config&lt;c/ode&gt;文件</p>
+<p>1.5.解决modpost: not found错误<br>因为直接make M=samples/bpf时，会报错缺少modules的错误。修复modpost的错误，以下两种解决方案二选一</p>
+<pre><code>make modules_prepare
+make script</code></pre><p>1.6.关联内核头文件</p>
+<pre><code>make headers_install</code></pre><p>1.7.编译内核程序样例<br>在源码根目录下执行make M=samples/bpf,</p>
+<p>此时进入linux-source-4.15.0/smaples/bpf中，会看到生成了BPF字节码文件*_kern.o和用户态的可执行文件</p>
+<p><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/ebpf_learn/note1/16635940859516.jpg" alt=""></p>
+<p>我们可以运行demo试一下：<br><img src="https://lanvnal-blog.oss-cn-qingdao.aliyuncs.com/article_imgs/ebpf_learn/note1/16635941096474.jpg" alt=""></p>
+<h2 id="开始编写程序"><a href="#开始编写程序" class="headerlink" title="开始编写程序"></a>开始编写程序</h2><h3 id="hello-world"><a href="#hello-world" class="headerlink" title="hello-world"></a>hello-world</h3><p>第一个实例程序<br>编写hello_kern.c：</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;linux/bpf.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"bpf_helpers.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">define</span> SEC(NAME) __attribute__((section(NAME), used))</span>
+
+<span class="token function">SEC</span><span class="token punctuation">(</span><span class="token string">"tracepoint/syscalls/sys_enter_execve"</span><span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">bpf_prog</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ctx<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">char</span> msg<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Hello World\n"</span><span class="token punctuation">;</span>
+        <span class="token function">bpf_trace_printk</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">char</span> _license<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">SEC</span><span class="token punctuation">(</span><span class="token string">"license"</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token string">"GPL"</span><span class="token punctuation">;</span></code></pre>
+<p>这个程序的作用就是当发生系统调用(sys_enter_execve)时在终端输出”Hello World”，其实bpf_trace_printk只是将msg写到一个管道文件中</p>
+<p>编写hello_user.c:</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"bpf_load.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">load_bpf_file</span><span class="token punctuation">(</span><span class="token string">"hello_kern.o"</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The kernel didn't load BPF program\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token function">read_trace_pipe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这个程序的作用是将包含BPF的文件hello_kern.o通过系统调用的方式加载进内核，read_trace_pipe()读取管道文件并打印到终端</p>
+<p><strong>修改Makefile文件</strong>，这里有点坑，不同内核版本的Makefile文件有些差异，网上不同文章的版本可能不同，不能完全按照进行修改，所以依据我当前的Makefile文件进行修改。</p>
+<pre><code># List of programs to build
+tprogs-y += hello
+
+xxx</code></pre><p><strong>编译</strong><br>返回源码根目录用 <code>make M=samples/bpf</code> 或 <code>make samples/bpf/</code> 编译</p>
+<p>或者直接在当前目录(samples/bpf) 执行make 编译</p>
+<p>这里遇到如下报错：</p>
+<pre class=" language-bash"><code class="language-bash">/usr/src/linux-5.13/samples/bpf/hello_user.c:3:10: fatal error: bpf_load.h: No such <span class="token function">file</span> or directory
+    3 <span class="token operator">|</span> <span class="token comment" spellcheck="true">#include "bpf_load.h"</span>
+      <span class="token operator">|</span>          ^~~~~~~~~~~~
+compilation terminated.
+make<span class="token punctuation">[</span>2<span class="token punctuation">]</span>: *** <span class="token punctuation">[</span>/usr/src/linux-5.13/samples/bpf/Makefile.target:75: /usr/src/linux-5.13/samples/bpf/hello_user.o<span class="token punctuation">]</span> Error 1
+make<span class="token punctuation">[</span>1<span class="token punctuation">]</span>: *** <span class="token punctuation">[</span>Makefile:1847: /usr/src/linux-5.13/samples/bpf<span class="token punctuation">]</span> Error 2
+make<span class="token punctuation">[</span>1<span class="token punctuation">]</span>: Leaving directory <span class="token string">'/usr/src/linux-5.13'</span>
+make: *** <span class="token punctuation">[</span>Makefile:269: all<span class="token punctuation">]</span> Error 2
+</code></pre>
+<p>可以看到，提示缺失 bpf_load.h 头文件，这个头文件是内核给做的示范文件中一个，在较新版本的内核中没有了。 bpf_load 被认为是bpf loader并在2020年一次更新中删除了：<a href="https://www.spinics.net/lists/xdp-newbies/msg01866.html" target="_blank" rel="noopener">https://www.spinics.net/lists/xdp-newbies/msg01866.html</a></p>
+<p>不过还有很多可以学习的东西值得记录。</p>
+<h3 id="Makefile文件分析"><a href="#Makefile文件分析" class="headerlink" title="Makefile文件分析"></a>Makefile文件分析</h3><p>来学习一下Makefile文件有什么内容，什么作用，make怎么工作的。</p>
+<blockquote>
+<p>不同内核版本的Makefile内容会有差异，但总体逻辑是一致的。</p>
+</blockquote>
+<ul>
+<li><a href="https://www.ruanyifeng.com/blog/2015/02/make.html" target="_blank" rel="noopener">Make命令教程</a></li>
+<li>make命令，利用的是根目录下的Makefile，完成“生成头文件”和“生成.config文件”</li>
+</ul>
+<h4 id="关键内容分析："><a href="#关键内容分析：" class="headerlink" title="关键内容分析："></a>关键内容分析：</h4><ul>
+<li>hostprogs -y 或者新版本中是 tprogs -y</li>
+</ul>
+<p>它是Makefile文件中最开始的一段变量，官方的注释是List of programs to build，就是说明要构建的目标可执行程序，比如我们要构建新的hello程序，就添加一条 <code>hostprogs-y += hello</code>。kbuild默认会去同一个目录下查找名为hello.c作为构建这个可执行文件的源文件。<br>之后将显式依赖关系添加到可执行文件中，一种是为Makefile中某个target添加这个可执行文件，作为prerequisites，形成依赖关系，这样就可以触发这个可执行文件的构建任务，另一种是直接利用变量 always，即无需指定第一种方式中的依赖关系，只要Makefile被执行，变量always中包含的可执行文件都会被构建。文件中有如下内容：</p>
+<pre class=" language-bash"><code class="language-bash">always :<span class="token operator">=</span> <span class="token variable"><span class="token variable">$(</span>hostprogs-y<span class="token variable">)</span></span></code></pre>
+<ul>
+<li>变量 <code>&lt;executeable&gt;-objs</code></li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">LIBBPF :<span class="token operator">=</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/tools/lib/bpf/bpf.o
+CGROUP_HELPERS :<span class="token operator">=</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/tools/testing/selftests/bpf/cgroup_helpers.o
+
+test_lru_dist-objs :<span class="token operator">=</span> test_lru_dist.o <span class="token variable"><span class="token variable">$(</span>LIBBPF<span class="token variable">)</span></span>
+sock_example-objs :<span class="token operator">=</span> sock_example.o <span class="token variable"><span class="token variable">$(</span>LIBBPF<span class="token variable">)</span></span>
+fds_example-objs :<span class="token operator">=</span> bpf_load.o <span class="token variable"><span class="token variable">$(</span>LIBBPF<span class="token variable">)</span></span> fds_example.o
+sockex1-objs :<span class="token operator">=</span> bpf_load.o <span class="token variable"><span class="token variable">$(</span>LIBBPF<span class="token variable">)</span></span> sockex1_user.o
+sockex2-objs :<span class="token operator">=</span> bpf_load.o <span class="token variable"><span class="token variable">$(</span>LIBBPF<span class="token variable">)</span></span> sockex2_user.o
+sockex3-objs :<span class="token operator">=</span> bpf_load.o <span class="token variable"><span class="token variable">$(</span>LIBBPF<span class="token variable">)</span></span> sockex3_user.o</code></pre>
+<p>如上代码，前两行是声明变量，在后续会进行引用。后续的变量名称和定义都有着这样的规律：<code>&lt;executeable&gt;-objs</code>，右边是多个.o文件， 可执行文件可以由多个其他文件复合组成，通过<code>&lt;executeable&gt;-objs</code>这样的语法，可以列出并指定所有用于生成最终可执行文件（命名为executeable）的文件清单。以如下代码为例，可执行文件sockex1是由bpf_load.o、bpf.o和sockex1_usr.o链接生成的。</p>
+<pre class=" language-bash"><code class="language-bash">sockex1-objs :<span class="token operator">=</span> bpf_load.o <span class="token variable"><span class="token variable">$(</span>LIBBPF<span class="token variable">)</span></span> sockex1_user.o</code></pre>
+<ul>
+<li>变量HOSTCFLAGS和HOSTLOADLIBES</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">HOSTCFLAGS +<span class="token operator">=</span> -I<span class="token variable"><span class="token variable">$(</span>objtree<span class="token variable">)</span></span>/usr/include
+HOSTCFLAGS +<span class="token operator">=</span> -I<span class="token variable"><span class="token variable">$(</span>srctree<span class="token variable">)</span></span>/tools/lib/
+HOSTCFLAGS +<span class="token operator">=</span> -I<span class="token variable"><span class="token variable">$(</span>srctree<span class="token variable">)</span></span>/tools/testing/selftests/bpf/
+HOSTCFLAGS +<span class="token operator">=</span> -I<span class="token variable"><span class="token variable">$(</span>srctree<span class="token variable">)</span></span>/tools/lib/ -I<span class="token variable"><span class="token variable">$(</span>srctree<span class="token variable">)</span></span>/tools/include
+HOSTCFLAGS +<span class="token operator">=</span> -I<span class="token variable"><span class="token variable">$(</span>srctree<span class="token variable">)</span></span>/tools/perf
+
+HOSTCFLAGS_bpf_load.o +<span class="token operator">=</span> -I<span class="token variable"><span class="token variable">$(</span>objtree<span class="token variable">)</span></span>/usr/include -Wno-unused-variable
+HOSTLOADLIBES_fds_example +<span class="token operator">=</span> -lelf
+HOSTLOADLIBES_sockex1 +<span class="token operator">=</span> -lelf
+HOSTLOADLIBES_sockex2 +<span class="token operator">=</span> -lelf
+HOSTLOADLIBES_sockex3 +<span class="token operator">=</span> -lelf
+<span class="token punctuation">..</span>.
+HOSTLOADLIBES_tracex4 +<span class="token operator">=</span> -lelf -lrt
+<span class="token punctuation">..</span>.</code></pre>
+<ol>
+<li>变量HOSTCFLAGS, 它是在编译host program（即可执行文件）时，为编译操作指定的特殊选项，如上面代码中使用-I参数指定依赖的头文件所在目录。默认情况下，这个变量的配置会作用到当前Makefile涉及的所有host program。如果你想为某个host program单独指定一个编译选项，可以像上文的这行代码：(只为bpf_load.o这个object文件指定特殊选项。)<pre><code> HOSTCFLAGS_bpf_load.o += -I$(objtree)/usr/include -Wno-unused-variable</code></pre></li>
+<li>HOSTLOADLIBES是用于链接（link）操作时指定的特殊选项，如上面代码中使用两个library（因为代码中使用了相关的函数），通过选项-l加到最终生成的可执行文件中：<ul>
+<li>libelf，这个库用来管理elf格式的文件，bpf程序一般都会使用elf作为最终格式，因此需要加载这个library。</li>
+<li>librt，这个库其实很常用，一般含有#include&lt;time.h&gt;头文件的代码，都需要加载这个library，用来支持real time相关功能。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>如何编译BPF程序源文件</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># Trick to allow make to be run from this directory</span>
+all:
+    <span class="token variable"><span class="token variable">$(</span>MAKE<span class="token variable">)</span></span> -C <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/ <span class="token variable"><span class="token variable">$(</span>CURDIR<span class="token variable">)</span></span>/
+
+<span class="token punctuation">..</span>.
+<span class="token variable"><span class="token variable">$(</span>obj<span class="token variable">)</span></span>/%.o: <span class="token variable"><span class="token variable">$(</span>src<span class="token variable">)</span></span>/%.c
+    <span class="token variable"><span class="token variable">$(</span>CLANG<span class="token variable">)</span></span> <span class="token variable"><span class="token variable">$(</span>NOSTDINC_FLAGS<span class="token variable">)</span></span> <span class="token variable"><span class="token variable">$(</span>LINUXINCLUDE<span class="token variable">)</span></span> <span class="token variable"><span class="token variable">$(</span>EXTRA_CFLAGS<span class="token variable">)</span></span> -I<span class="token variable"><span class="token variable">$(</span>obj<span class="token variable">)</span></span> \
+              -I<span class="token variable"><span class="token variable">$(</span>srctree<span class="token variable">)</span></span>/tools/testing/selftests/bpf/ \
+              -D__KERNEL__ -Wno-unused-value -Wno-pointer-sign \
+              -D__TARGET_ARCH_<span class="token variable"><span class="token variable">$(</span>ARCH<span class="token variable">)</span></span> -Wno-compare-distinct-pointer-types \
+              -Wno-gnu-variable-sized-type-not-at-end \
+              -Wno-address-of-packed-member -Wno-tautological-compare \
+              -Wno-unknown-warning-option <span class="token variable"><span class="token variable">$(</span>CLANG_ARCH_ARGS<span class="token variable">)</span></span> \
+              -O2 -emit-llvm -c $<span class="token operator">&lt;</span> -o -<span class="token operator">|</span> <span class="token variable"><span class="token variable">$(</span>LLC<span class="token variable">)</span></span> -march<span class="token operator">=</span>bpf -filetype<span class="token operator">=</span>obj -o <span class="token variable">$@</span></code></pre>
+<p>其中有两个系统变量：第一个 <code>$@</code> 代表的是target所指的文件名；第二个 <code>$&lt;</code> 代表的是第一个prerequisite的文件名。这里看过前面提到的<a href="https://www.ruanyifeng.com/blog/2015/02/make.html" target="_blank" rel="noopener">阮一峰的Make教程</a>的话就知道这两个变量的意思，他们属于自动变量:</p>
+<blockquote>
+<p><code>$@</code> 指代当前目标，就是Make命令当前构建的那个目标。比如，make foo的 <code>$@</code> 就指代fo</p>
+<pre><code>a.txt b.txt: 
+touch $@</code></pre><p>等同于下面的写法:</p>
+<pre><code>a.txt:
+touch a.txt
+b.txt:
+touch b.txt</code></pre><p><code>$&lt;</code> 指代第一个前置条件。比如，规则为 <code>t: p1 p2</code>，那么 <code>$&lt;</code> 就指代p1。</p>
+<p>综上：</p>
+<pre class=" language-bash"><code class="language-bash">a.txt: b.txt c.txt
+<span class="token function">cp</span> $<span class="token operator">&lt;</span> <span class="token variable">$@</span> </code></pre>
+<p>等同于：</p>
+<pre class=" language-bash"><code class="language-bash">a.txt: b.txt c.txt
+<span class="token function">cp</span> b.txt a.txt </code></pre>
+</blockquote>
+<p>上面的编译代码抽取出核心部分如下：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token variable"><span class="token variable">$(</span>obj<span class="token variable">)</span></span>/%.o: <span class="token variable"><span class="token variable">$(</span>src<span class="token variable">)</span></span>/%.c
+    clang -I <span class="token variable"><span class="token variable">$(</span>srctree<span class="token variable">)</span></span>/tools/testing/selftests/bpf/ \ 
+            -O2 -emit-llvm -c $<span class="token operator">&lt;</span> -o -<span class="token operator">|</span> \ 
+            llc -march<span class="token operator">=</span>bpf -filetype<span class="token operator">=</span>obj -o <span class="token variable">$@</span></code></pre>
+<p>可以看出最后一行make命令的本质，就是把所有.c源代码文件，通过clang全部编译成.o目标文件。其中通配符匹配的 .o 文件和 .c 文件分别是Makefile规则 <code>&lt;target&gt; : &lt;prerequisites&gt;</code> 中的两个参数。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>对samples/bpf/Makefile这个文件执行make命令的本质就是：</p>
+<ol>
+<li>为运行在内核空间的示例源代码（一般文件名称后缀为kern.c），编译生成.o后缀的目标文件，以便加载到对应BPF提供的hook中去。</li>
+<li>为运行在用户空间的示例源代码(一般文件文件后缀为user.c)，编译生成可以在本机直接运行的可执行文件，以便用户可以直接运行测试。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在学习这部分内容的文章和课程的时候，发现新版本的内核源码已经有了一些变化，其中 load.h 的缺失也是在发展过程被抛弃的，虽然导致了编译的问题。 但是也学习了关于编译过程进行了哪些工作和 Makefile 的规范，以及 BPF C编程的一些入门。</p>
+<p>这里后续我转为使用libbpf-bootstrap进行编程工作。本章节学习结束，后续会在libbpf-bootstrap的学习基础上进行文章分享。</p>
+]]></content>
+      <categories>
+        <category>eBPF</category>
+      </categories>
+      <tags>
+        <tag>eBPF</tag>
+      </tags>
+  </entry>
 </search>
